@@ -1,30 +1,30 @@
 package com.example.androidtutorial.launchmode
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.androidtutorial.MainActivity.Companion.instanceCount
 import com.example.androidtutorial.R
-import com.example.androidtutorial.databinding.ActivitySingleTaskBinding
+import com.example.androidtutorial.databinding.ActivitySingleInstanceBinding
+import com.example.androidtutorial.databinding.ActivitySingleInstancePreTaskBinding
 
-class SingleTaskActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySingleTaskBinding
-    @SuppressLint("MissingInflatedId")
+class SingleInstancePerTaskActivity : AppCompatActivity() {
+    private lateinit var binding: ActivitySingleInstancePreTaskBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_single_task)
+        setContentView(R.layout.activity_single_instance_pre_task)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        binding.btnClick.setOnClickListener {
+        binding.btnClickInstancePre.setOnClickListener {
             val intent = Intent(this, SingleTaskActivity::class.java)
             startActivity(intent)
         }
@@ -43,7 +43,7 @@ class SingleTaskActivity : AppCompatActivity() {
         instanceCount++
         val instanceId = System.identityHashCode(this)
         Log.d("LaunchMode", "-----------------------------")
-        Log.d("LaunchMode", "SingleTask Activity created")
+        Log.d("LaunchMode", "SingleInstance Activity created")
         Log.d("LaunchMode", "Task ID: $taskId")
         Log.d("LaunchMode", "Instance ID: $instanceId")
         Log.d("LaunchMode", "Total instances: $instanceCount")

@@ -7,15 +7,124 @@
     android:layout_height="match_parent"
     tools:context=".SecondActivity">
 
-    <Button
-        android:id="@+id/btnBack"
+    <TextView
+        android:id="@+id/txt_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Back"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/header_second"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintVertical_bias="0.083" />
+
+    <EditText
+        android:id="@+id/edt_receive"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:hint="Return info to MainActivity..."
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.168"
+        tools:ignore="LabelFor" />
+
+    <ImageView
+        android:id="@+id/img_view"
+        android:layout_width="254dp"
+        android:layout_height="147dp"
+        android:contentDescription="@string/update_image"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_receive"
+        app:layout_constraintVertical_bias="0.209"
+        tools:ignore="MissingConstraints"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.309"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/img_view"
+        app:layout_constraintVertical_bias="0.482">
+
+        <TextView
+            android:id="@+id/txt_image_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/name_image"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txt_image_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/note_image"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txt_image_old"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/old_image"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txt_image_higher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/higher_image"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="400dp"
+        android:layout_height="171dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.835"
+        tools:ignore="MissingConstraints">
+
+        <Button
+            android:id="@+id/btn_update_image"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/start_border"
+            android:text="@string/update_image"
+            android:textColor="@color/black"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/start_border"
+            android:text="@string/back"
+            android:textColor="@color/black"
+            tools:ignore="MissingConstraints" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

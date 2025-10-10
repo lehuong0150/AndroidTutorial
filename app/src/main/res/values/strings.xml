@@ -1,3 +1,32 @@
 <resources>
     <string name="app_name">AndroidTutorial</string>
+    <string name="header_main">MainActivity </string>
+    <string name="edit_send">Input information to send ...</string>
+    <string name="choose">Choose: </string>
+    <string name="finish">Finish</string>
+    <string name="rotation">Rotation</string>
+    <string name="share">Share Text</string>
+    <string name="second_activity">To Second Activity</string>
+    <string name="standard">Standard</string>
+    <string name="single_top">SingleTop</string>
+    <string name="single_task">SingleTask</string>
+    <string name="single_instance">SingleInstance</string>
+    <string name="single_instance_pre_task">SingleInstancePreTask</string>
+
+
+    <string name="header_second">SecondActivity</string>
+    <string name="back">Back</string>
+    <string name="update_image">Update Image</string>
+    <string name="name_image">Name: </string>
+    <string name="note_image">Note: </string>
+    <string name="old_image">Old: </string>
+    <string name="higher_image">Higher: </string>
+
+    <string name="header_standard">StandardActivity </string>
+    <string name="header_single_top">SingleTopActivity </string>
+    <string name="header_single_task">SingleTaskActivity </string>
+    <string name="header_single_instance">SingleInstanceActivity </string>
+    <string name="header_single_instance_per_task">SingleInstancePerTaskActivity </string>
+
+    <string name="click">Click </string>
 </resources>

@@ -8,24 +8,38 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/txt_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView "
-        app:layout_constraintBottom_toTopOf="@+id/txtChoose"
+        android:layout_marginTop="16dp"
+        android:text="@string/header_main"
+        app:layout_constraintBottom_toBottomOf="@+id/edt_send"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.188" />
+
+    <EditText
+        android:id="@+id/edt_send"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:hint="@string/edit_send"
+        app:layout_constraintBottom_toTopOf="@+id/txt_choose"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.693" />
+
     <TextView
-        android:id="@+id/txtChoose"
+        android:id="@+id/txt_choose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose: "
+        android:text="@string/choose"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.139" />
+        app:layout_constraintVertical_bias="0.176" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -36,29 +50,104 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtChoose"
+        app:layout_constraintTop_toBottomOf="@+id/txt_choose"
         app:layout_constraintVertical_bias="0.054"
         tools:ignore="MissingConstraints">
 
         <Button
-            android:id="@+id/btnFinish"
-            android:layout_width="wrap_content"
+            android:id="@+id/btn_finish"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Finish"
+            android:layout_margin="10dp"
+            android:background="@drawable/start_border"
+            android:text="@string/finish"
+            android:textColor="@color/black"
             tools:ignore="MissingConstraints" />
 
         <Button
-            android:id="@+id/btnRotation"
-            android:layout_width="wrap_content"
+            android:id="@+id/btn_rotation"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="Rotation"
+            android:layout_margin="10dp"
+            android:background="@drawable/start_border"
+            android:text="@string/rotation"
+            android:textColor="@color/black"
             tools:ignore="MissingConstraints" />
 
         <Button
-            android:id="@+id/btnSecondActivity"
-            android:layout_width="wrap_content"
+            android:id="@+id/btn_share"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="SecondActivity"
+            android:layout_margin="10dp"
+            android:background="@drawable/start_border"
+            android:text="@string/share"
+            android:textColor="@color/black"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/btn_second_activity"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/start_border"
+            android:text="@string/second_activity"
+            android:textColor="@color/black"
+            tools:ignore="MissingConstraints" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#DDDDDD"
+            android:layout_marginVertical="8dp"/>
+
+        <Button
+            android:id="@+id/btn_standard"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/start_border"
+            android:text="@string/standard"
+            android:textColor="@color/black"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/btn_single_top"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/start_border"
+            android:text="@string/single_top"
+            android:textColor="@color/black"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/btn_single_task"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/start_border"
+            android:text="@string/single_task"
+            android:textColor="@color/black"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/btn_single_instance"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/start_border"
+            android:text="@string/single_instance"
+            android:textColor="@color/black"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/btn_single_instance_pre_task"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/start_border"
+            android:text="@string/single_instance_pre_task"
+            android:textColor="@color/black"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
