@@ -1,47 +1,41 @@
 package com.example.androidtutorial
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.androidtutorial.MainActivity.Companion.instanceCount
 import com.example.androidtutorial.databinding.ActivitySecondBinding
+import com.example.androidtutorial.permission.PermissionUtil
 
 class SecondActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySecondBinding
+    private lateinit var permissionUtil: PermissionUtil
     private val REQUEST_CODE_PICK_IMAGE = 100
-    private val REQUEST_CODE_PERMISSION_STORAGE = 200
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_second)
+        binding = ActivitySecondBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         findViewById<android.view.View>(R.id.main).apply {
             ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
                 insets.getInsets(WindowInsetsCompat.Type.systemBars()).let { systemBars ->
-                    v.setPadding(
-                        systemBars.left,
-                        systemBars.top,
-                        systemBars.right,
-                        systemBars.bottom
-                    )
+                    v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
                 }
                 insets
             }
         }
+        permissionUtil = PermissionUtil(this)
 
         logInstanceInfo()
 
@@ -54,27 +48,10 @@ class SecondActivity : AppCompatActivity() {
     }
 
     private fun checkAndRequestPermission() {
-        val permission = if (android.os.Build.VERSION.SDK_INT >= 33)
-            Manifest.permission.READ_MEDIA_IMAGES
-        else
-            Manifest.permission.READ_EXTERNAL_STORAGE
-
-        when {
-            ContextCompat.checkSelfPermission(
-                this,
-                permission
-            ) == PackageManager.PERMISSION_GRANTED -> {
-                openGallery()
-            }
-
-            else -> {
-                ActivityCompat.requestPermissions(
-                    this,
-                    arrayOf(permission),
-                    REQUEST_CODE_PERMISSION_STORAGE
-                )
-            }
-        }
+        permissionUtil.checkPermission(
+            onGranted = { openGallery() },
+            onDenied = { permissionUtil.requestPermission(this) }
+        )
     }
 
     override fun onRequestPermissionsResult(
@@ -83,15 +60,12 @@ class SecondActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        if (requestCode == REQUEST_CODE_PERMISSION_STORAGE) {
-            grantResults.firstOrNull()?.let { result ->
-                when (result) {
-                    PackageManager.PERMISSION_GRANTED -> openGallery()
-                    else -> showToast("Permission required to select photos!")
-                }
-            }
-        }
+        permissionUtil.handlePermissionResult(
+            requestCode = requestCode,
+            grantResults = grantResults,
+            onGranted = { openGallery() },
+            onDenied = { showToast("Permission required to select photos!") }
+        )
     }
 
     private fun openGallery() {

@@ -8,16 +8,36 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.androidtutorial.databinding.ActivityMainBinding
+import com.example.androidtutorial.launchmode.IntentFlagActivity
 import com.example.androidtutorial.launchmode.SingleInstanceActivity
-import com.example.androidtutorial.launchmode.SingleInstancePerTaskActivity
 import com.example.androidtutorial.launchmode.SingleTaskActivity
 import com.example.androidtutorial.launchmode.SingleTopActivity
 import com.example.androidtutorial.launchmode.StandardActivity
-
+/*Demo tổng hợp về:
+* Vòng đời của Activity (Lifecycle):
+*     - Quan sát các callback như onCreate, onStart, onResume, onPause, onStop, onDestroy.
+*     - Nút "Finish", "Rotation", "Share" minh họa quá trình kết thúc, xoay màn hình,
+*       và Activity bị tạm dừng khi có Intent khác mở chồng lên.
+*
+* Giao tiếp giữa các Activity:
+*     - Gửi dữ liệu qua Intent, Bundle (chuyen du lieu qua StandardActivity).
+*     - Nhận dữ liệu trả về từ SecondActivity bằng ActivityResultContracts.
+*
+* Các chế độ Launch Mode trong Android:
+*     - Nút "Standard" → mở StandardActivity.
+*     - Nút "SingleTop" → mở SingleTopActivity.
+*     - Nút "SingleTask" → mở SingleTaskActivity.
+*     - Nút "SingleInstance" → mở SingleInstanceActivity.
+*     - Nút "Flag" → mở bat ki mot loai launch mode.
+*
+* Lưu và khôi phục trạng thái:
+*     - Dữ liệu trong EditText được lưu lại khi xoay màn hình (onSaveInstanceState / onRestoreInstanceState).
+*/
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -107,8 +127,20 @@ class MainActivity : AppCompatActivity() {
     private fun setupLaunchModeButtons() {
         binding.btnStandard.setOnClickListener {
             Log.d("LaunchMode", "Opening StandardActivity")
-            launchActivity<StandardActivity>()
+
+            val bundle = Bundle().apply {
+                putInt("task_id", taskId)
+                putString("instance_label", "MainActivity Instance #${instanceCount + 1}")
+                putLong("start_time", System.currentTimeMillis())
+                putBoolean("is_foreground", true)
+            }
+            val intent = Intent(this, StandardActivity::class.java).apply {
+                putExtras(bundle)
+            }
+
+            startActivity(intent)
         }
+
 
         binding.btnSingleTop.setOnClickListener {
             Log.d("LaunchMode", "Opening SingleTopActivity")
@@ -125,9 +157,34 @@ class MainActivity : AppCompatActivity() {
             launchActivity<SingleInstanceActivity>()
         }
 
-        binding.btnSingleInstancePreTask.setOnClickListener {
-            Log.d("LaunchMode", "Opening SingleInstancePreTaskActivity")
-            launchActivity<SingleInstancePerTaskActivity>()
+        binding.btnIntentFlag.setOnClickListener {
+            val launchModes = arrayOf("Standard", "SingleTop", "SingleTask", "SingleInstance")
+
+            AlertDialog.Builder(this)
+                .setTitle("Select Launch Mode to demo: ")
+                .setItems(launchModes) { _, which ->
+                    val intent = Intent(this, IntentFlagActivity::class.java)
+
+                    when (which) {
+                        0 -> {
+                            //standard khong can gan co
+                        }
+                        1 -> {
+                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                        }
+                        2 -> {
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        }
+                        3 -> {
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+                        }
+                    }
+
+                    Log.d("LaunchMode", "Opening ${launchModes[which]} | flags=${intent.flags}")
+                    intent.putExtra("launch_mode",launchModes[which])
+                    startActivity(intent)
+                }
+                .show()
         }
     }
 

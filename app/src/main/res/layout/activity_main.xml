@@ -141,12 +141,12 @@
             tools:ignore="MissingConstraints" />
 
         <Button
-            android:id="@+id/btn_single_instance_pre_task"
+            android:id="@+id/btn_intent_flag"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:background="@drawable/start_border"
-            android:text="@string/single_instance_pre_task"
+            android:text="@string/header_intent_flag"
             android:textColor="@color/black"
             tools:ignore="MissingConstraints" />
     </LinearLayout>

@@ -17,16 +17,17 @@
     <string name="header_second">SecondActivity</string>
     <string name="back">Back</string>
     <string name="update_image">Update Image</string>
-    <string name="name_image">Name: </string>
-    <string name="note_image">Note: </string>
-    <string name="old_image">Old: </string>
-    <string name="higher_image">Higher: </string>
 
     <string name="header_standard">StandardActivity </string>
     <string name="header_single_top">SingleTopActivity </string>
     <string name="header_single_task">SingleTaskActivity </string>
     <string name="header_single_instance">SingleInstanceActivity </string>
-    <string name="header_single_instance_per_task">SingleInstancePerTaskActivity </string>
+    <string name="header_intent_flag">Intent Flag</string>
 
     <string name="click">Click </string>
+
+    <string name="label_task_id">Task ID:</string>
+    <string name="label_instance_label">Instance Label:</string>
+    <string name="label_start_time">Start Time:</string>
+    <string name="label_is_foreground">Is Foreground:</string>
 </resources>

@@ -5,20 +5,21 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".launchmode.SingleInstancePerTaskActivity">
+    tools:context=".launchmode.IntentFlagActivity">
     <TextView
         android:id="@+id/txt_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/header_single_instance_per_task"
-        app:layout_constraintBottom_toTopOf="@+id/btn_click_instance_pre"
+        android:text="@string/header_single_top"
+        app:layout_constraintBottom_toTopOf="@+id/btn_click"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.4" />
+
     <Button
-        android:id="@+id/btn_click_instance_pre"
+        android:id="@+id/btn_click"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
