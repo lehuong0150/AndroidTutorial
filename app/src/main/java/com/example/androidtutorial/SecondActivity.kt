@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.androidtutorial.MainActivity.Companion.instanceCount
 import com.example.androidtutorial.databinding.ActivitySecondBinding
+import com.example.androidtutorial.launchmode.SingleInstanceActivity
 import com.example.androidtutorial.permission.PermissionUtil
 
 class SecondActivity : AppCompatActivity() {
@@ -30,7 +31,12 @@ class SecondActivity : AppCompatActivity() {
         findViewById<android.view.View>(R.id.main).apply {
             ViewCompat.setOnApplyWindowInsetsListener(this) { v, insets ->
                 insets.getInsets(WindowInsetsCompat.Type.systemBars()).let { systemBars ->
-                    v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+                    v.setPadding(
+                        systemBars.left,
+                        systemBars.top,
+                        systemBars.right,
+                        systemBars.bottom
+                    )
                 }
                 insets
             }
@@ -43,7 +49,11 @@ class SecondActivity : AppCompatActivity() {
             binding.edtReceive.setText(it)
         }
 
-        binding.btnBack.setOnClickListener { finish() }
+        binding.btnBack.setOnClickListener {
+            Log.d("LaunchMode", "Opening SingleInstanceActivity")
+            val intent = Intent(this, SingleInstanceActivity::class.java)
+            startActivity(intent)
+        }
         binding.btnUpdateImage.setOnClickListener { checkAndRequestPermission() }
     }
 

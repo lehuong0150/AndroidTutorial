@@ -18,12 +18,11 @@
         android:theme="@style/Theme.AndroidTutorial"
         tools:targetApi="31">
         <activity
-            android:name=".launchmode.IntentFlagActivity"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".launchmode.SingleInstancePerTaskActivity"
-            android:exported="false"
-            android:launchMode="singleInstancePerTask" />
+            android:name=".launchmode.IntentFlagActivity"
+            android:exported="false" />
         <activity
             android:name=".launchmode.SingleInstanceActivity"
             android:exported="false"
@@ -44,7 +43,7 @@
             android:name=".SecondActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".layout.LayoutActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

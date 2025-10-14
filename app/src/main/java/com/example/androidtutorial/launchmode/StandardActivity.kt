@@ -28,6 +28,7 @@ class StandardActivity : AppCompatActivity() {
             insets
         }
         displayIntentData()
+        //button quay lai MainActivity ma khong destroy() StandardActivity
         binding.btnFinish.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)

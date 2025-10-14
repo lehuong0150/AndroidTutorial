@@ -25,9 +25,47 @@
     <string name="header_intent_flag">Intent Flag</string>
 
     <string name="click">Click </string>
+    <string name="open_browser">Open Browser </string>
 
     <string name="label_task_id">Task ID:</string>
     <string name="label_instance_label">Instance Label:</string>
     <string name="label_start_time">Start Time:</string>
     <string name="label_is_foreground">Is Foreground:</string>
+
+
+<!--    LayoutActivity-->
+    <string name="user_name">Trương Trạch Vũ</string>
+    <string name="search">Tìm kiếm...</string>
+    <string name="description_ic_new">Lọc sản phẩm mới</string>
+    <string name="description_ic_cart">Giỏ hàng</string>
+    <string name="description_ic_search">Giỏ hàng</string>
+    <string name="description_ic_filter">Lọc</string>
+    <string name="filter_new">Mới cập nhật</string>
+    <string name="description_ic_price">Lọc sản phẩm theo giá</string>
+    <string name="filter_price">Lọc theo giá</string>
+    <string name="category">Danh Mục</string>
+    <string name="category_burger">Burger</string>
+    <string name="category_pizza">Pizza</string>
+    <string name="category_drink">Đồ uống</string>
+    <string name="product">Danh sách món ăn:</string>
+    <string name="all_in"><u>Xem tất cả</u></string>
+    <string name="item_name_product1">Burger cá</string>
+    <string name="item_name_product2">Pizza gà nướng BBQ</string>
+    <string name="item_name_product3">Burger phô mai đôi</string>
+    <string name="item_name_product4">Nước chanh</string>
+    <string name="item_price_product1">65.000</string>
+    <string name="item_price_product2">120.000</string>
+    <string name="item_price_product3">95.000</string>
+    <string name="item_price_product4">25.000</string>
+    <string-array name="newest_filter_options">
+        <item>Mới cập nhật</item>
+        <item>Sản phẩm cũ</item>
+    </string-array>
+
+    <string-array name="price_filter_options">
+        <item>Lọc theo giá</item>
+        <item>Giá thấp đến cao</item>
+        <item>Giá cao đến thấp</item>
+    </string-array>
+
 </resources>

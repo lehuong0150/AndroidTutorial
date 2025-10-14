@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         val instanceId = System.identityHashCode(this)
 
         Log.d("LaunchMode", "-----------------------------")
-        Log.d("LaunchMode", "SingleTop Activity created")
+        Log.d("LaunchMode", "MainActivity created")
         Log.d("LaunchMode", "Task ID: $taskId")
         Log.d("LaunchMode", "Instance ID: $instanceId")
         Log.d("LaunchMode", "Total instances: $instanceCount")

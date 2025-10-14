@@ -2,6 +2,7 @@ package com.example.androidtutorial.launchmode
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
@@ -25,11 +26,18 @@ class SingleInstanceActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        logInstanceInfo()
         binding.btnClickInstance.setOnClickListener {
             val intent = Intent(this, SingleTaskActivity::class.java)
             startActivity(intent)
         }
-        logInstanceInfo()
+
+        binding.btnOpenBrowser.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = Uri.parse("https://www.google.com")
+            }
+            startActivity(intent)
+        }
     }
 
     override fun onNewIntent(intent: Intent?) {
