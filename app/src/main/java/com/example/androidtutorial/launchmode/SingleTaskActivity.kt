@@ -14,6 +14,7 @@ import com.example.androidtutorial.databinding.ActivitySingleTaskBinding
 
 class SingleTaskActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySingleTaskBinding
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +36,8 @@ class SingleTaskActivity : AppCompatActivity() {
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         Log.d(
-            "LaunchMode", "onNewIntent triggered for instance: " +
-                    "${System.identityHashCode(this)}"
+            "LaunchMode",
+            "onNewIntent triggered for instance: " + "${System.identityHashCode(this)}"
         )
     }
 

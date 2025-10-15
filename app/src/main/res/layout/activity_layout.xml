@@ -11,7 +11,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="16dp"
+        android:padding="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -111,13 +111,12 @@
                 android:layout_marginBottom="8dp"
                 android:background="@color/gray" />
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="45dp"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
                 android:layout_height="45dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/ic_filter_list"
-                android:contentDescription="@string/description_ic_filter" />
-
+                android:contentDescription="@string/description_ic_filter"
+                android:src="@drawable/ic_filter_list" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -153,7 +152,6 @@
                     android:layout_marginStart="4dp"
                     android:background="@null"
                     android:entries="@array/newest_filter_options" />
-
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <View
@@ -174,7 +172,7 @@
                     android:background="@drawable/ic_filter_price"
                     android:contentDescription="@string/description_ic_new" />
 
-                <androidx.appcompat.widget.AppCompatSpinner
+                <Spinner
                     android:id="@+id/spPrice"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -182,7 +180,6 @@
                     android:background="@null"
                     android:entries="@array/price_filter_options" />
             </androidx.appcompat.widget.LinearLayoutCompat>
-
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -290,7 +287,6 @@
                         android:textAlignment="center"
                         android:textSize="18sp" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
-
             </GridLayout>
         </ScrollView>
 
@@ -310,8 +306,10 @@
             android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layoutCategory">
+            app:layout_constraintTop_toBottomOf="@id/layoutCategory"
+            app:layout_constraintVertical_bias="1.0">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/layoutHeaderProduct"
@@ -401,10 +399,10 @@
                             <androidx.appcompat.widget.AppCompatButton
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
-                                android:layout_row="2"
+                                android:layout_row="1"
                                 android:layout_rowSpan="2"
                                 android:layout_column="1"
-                                android:layout_gravity="end|center_vertical"
+                                android:layout_gravity="right|center_vertical"
                                 android:background="@drawable/ic_add_product" />
 
                             <androidx.appcompat.widget.AppCompatTextView
@@ -418,7 +416,6 @@
                                 android:text="@string/item_price_product1"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
-
                         </GridLayout>
 
                         <GridLayout
@@ -445,7 +442,7 @@
                                 android:contentDescription="@string/item_name_product2"
                                 android:src="@drawable/img_item_product2" />
 
-                            <androidx.appcompat.widget.AppCompatImageView
+                            <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/txtNameProduct2"
                                 android:layout_width="80dp"
                                 android:layout_height="wrap_content"
@@ -465,7 +462,7 @@
                                 android:layout_row="1"
                                 android:layout_rowSpan="2"
                                 android:layout_column="1"
-                                android:layout_gravity="end|center_vertical"
+                                android:layout_gravity="right|center_vertical"
                                 android:background="@drawable/ic_add_product" />
 
                             <androidx.appcompat.widget.AppCompatTextView
@@ -479,7 +476,6 @@
                                 android:text="@string/item_price_product2"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
-
                         </GridLayout>
                     </TableRow>
 
@@ -533,7 +529,7 @@
                                 android:layout_row="1"
                                 android:layout_rowSpan="2"
                                 android:layout_column="1"
-                                android:layout_gravity="end|center_vertical"
+                                android:layout_gravity="right|center_vertical"
                                 android:background="@drawable/ic_add_product" />
 
                             <androidx.appcompat.widget.AppCompatTextView
@@ -547,7 +543,6 @@
                                 android:text="@string/item_price_product3"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
-
                         </GridLayout>
 
                         <GridLayout
@@ -608,14 +603,10 @@
                                 android:text="@string/item_price_product4"
                                 android:textSize="16sp"
                                 android:textStyle="bold" />
-
                         </GridLayout>
                     </TableRow>
                 </TableLayout>
             </ScrollView>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

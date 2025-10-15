@@ -18,8 +18,14 @@
         android:theme="@style/Theme.AndroidTutorial"
         tools:targetApi="31">
         <activity
+            android:name=".layout.CalculatorActivity"
+            android:exported="false" />
+        <activity
             android:name=".layout.LayoutActivity"
-            android:exported="false">
+            android:exported="false" />
+        <activity
+            android:name=".layout.EmployeeActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

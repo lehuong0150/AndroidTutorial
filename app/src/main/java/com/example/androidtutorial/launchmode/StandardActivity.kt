@@ -15,6 +15,14 @@ import com.example.androidtutorial.R
 import com.example.androidtutorial.databinding.ActivityStandardBinding
 import java.util.Date
 
+/*
+    Demo launchMode: standard
+    - Mỗi lần startActivity() → tạo 1 instance mới của Activity.
+    - Có thể có nhiều instance cùng tồn tại trong cùng 1 task.
+    - Khi bấm back → quay lại instance trước (theo ngăn xếp stack).
+    - Ví dụ: Mỗi lần mở StandardActivity từ MainActivity → tạo thêm 1 bản mới.
+*/
+
 class StandardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStandardBinding
     override fun onCreate(savedInstanceState: Bundle?) {

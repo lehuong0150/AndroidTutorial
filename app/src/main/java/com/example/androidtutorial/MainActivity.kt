@@ -18,6 +18,7 @@ import com.example.androidtutorial.launchmode.SingleInstanceActivity
 import com.example.androidtutorial.launchmode.SingleTaskActivity
 import com.example.androidtutorial.launchmode.SingleTopActivity
 import com.example.androidtutorial.launchmode.StandardActivity
+
 /*Demo tổng hợp về:
 * Vòng đời của Activity (Lifecycle):
 *     - Quan sát các callback như onCreate, onStart, onResume, onPause, onStop, onDestroy.
@@ -169,19 +170,22 @@ class MainActivity : AppCompatActivity() {
                         0 -> {
                             //standard khong can gan co
                         }
+
                         1 -> {
                             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
                         }
+
                         2 -> {
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         }
+
                         3 -> {
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
                         }
                     }
 
                     Log.d("LaunchMode", "Opening ${launchModes[which]} | flags=${intent.flags}")
-                    intent.putExtra("launch_mode",launchModes[which])
+                    intent.putExtra("launch_mode", launchModes[which])
                     startActivity(intent)
                 }
                 .show()

@@ -13,8 +13,15 @@ import com.example.androidtutorial.MainActivity.Companion.instanceCount
 import com.example.androidtutorial.R
 import com.example.androidtutorial.databinding.ActivitySingleInstanceBinding
 
+/* Demo launchMode: singleInstance
+    - Mỗi Activity chạy trong 1 task riêng, chỉ có 1 instance duy nhất.
+    - Intent mới gọi sẽ kích hoạt onNewIntent(), không tạo Activity mới.
+    - Khi mở lại app từ icon → quay về màn hình chính (vì task riêng biệt).
+*/
+
 class SingleInstanceActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySingleInstanceBinding
+
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
