@@ -18,13 +18,14 @@
         android:theme="@style/Theme.AndroidTutorial"
         tools:targetApi="31">
         <activity
-            android:name=".layout.CalculatorActivity"
+            android:name=".layout.EmployeeActivity"
             android:exported="false" />
+
         <activity
             android:name=".layout.LayoutActivity"
             android:exported="false" />
         <activity
-            android:name=".layout.EmployeeActivity"
+            android:name=".layout.DemoAdvertisementActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -57,6 +58,10 @@
         <activity
             android:name=".SecondActivity"
             android:exported="false" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

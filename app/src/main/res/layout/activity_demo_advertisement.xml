@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_adv"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:padding="20dp">
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/animationView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            app:lottie_fileName="shake_animation.json"
+            app:lottie_loop="true"
+            app:lottie_autoPlay="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnClose"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/btn_close_description"
+            android:src="@drawable/ic_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/avatarContainer"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="32dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnClose">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/avatar1"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="start|center_vertical"
+                android:layout_marginStart="20dp"
+                android:contentDescription="@string/item_name_product1"
+                android:elevation="1dp"
+                android:rotation="-15"
+                android:src="@drawable/img_item_product1"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="3dp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/avatar2"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="5dp"
+                android:contentDescription="@string/item_name_product3"
+                android:elevation="1dp"
+                android:rotation="20"
+                android:src="@drawable/img_item_product3"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="3dp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/avatar3"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30dp"
+                android:contentDescription="@string/item_name_product4"
+                android:elevation="3dp"
+                android:rotation="-5"
+                android:src="@drawable/img_item_product4"
+                app:civ_border_color="@color/white"
+                app:civ_border_width="4dp" />
+
+        </FrameLayout>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_laurel_left"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/avatarContainer" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvMainNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/roboto_mono_bold"
+            android:text="@string/main_number"
+            android:textColor="@color/orange_primary"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/avatarContainer" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/roboto_flex"
+            android:lineSpacingExtra="4dp"
+            android:text="@string/description_text"
+            android:textAlignment="center"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvMainNumber" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/img_laurel_right"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/avatarContainer" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/featuresContainer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="50dp"
+            android:orientation="vertical"
+            android:paddingTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvDescription">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="@string/btn_check"
+                    android:src="@drawable/ic_check_orange" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_flex"
+                    android:text="@string/feature_no_ads"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="@string/btn_check"
+                    android:src="@drawable/ic_check_orange" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_flex"
+                    android:text="@string/feature_unlimited_notes"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="32dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginEnd="16dp"
+                    android:contentDescription="@string/btn_check"
+                    android:src="@drawable/ic_check_orange" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/roboto_flex"
+                    android:text="@string/feature_backup_support"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            app:cardBackgroundColor="@color/white_smoke"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="1dp"
+            app:cardUseCompatPadding="true"
+            app:layout_constraintBottom_toTopOf="@+id/tvBottomNote"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/featuresContainer">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:visibility="gone">
+
+                <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:background="@color/line_menu"
+                    android:indeterminate="true"
+                    app:spb_color="@color/gray"
+                    app:spb_mirror_mode="false"
+                    app:spb_progressiveStart_activated="true"
+                    app:spb_progressiveStart_speed="1.2"
+                    app:spb_progressiveStop_speed="3.5"
+                    app:spb_reversed="false"
+                    app:spb_sections_count="1"
+                    app:spb_speed="1.5"
+                    app:spb_stroke_separator_length="30dp"
+                    app:spb_stroke_width="4dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp" />
+
+                <fr.castorflex.android.smoothprogressbar.SmoothProgressBar
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:background="@color/line_menu"
+                    android:indeterminate="true"
+                    app:spb_color="@color/gray"
+                    app:spb_mirror_mode="false"
+                    app:spb_progressiveStart_activated="true"
+                    app:spb_progressiveStart_speed="1.5"
+                    app:spb_progressiveStop_speed="3.4"
+                    app:spb_reversed="false"
+                    app:spb_sections_count="2"
+                    app:spb_speed="1.2"
+                    app:spb_stroke_separator_length="10dp"
+                    app:spb_stroke_width="4dp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.cardview.widget.CardView>
+
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/file_gif"
+            app:layout_constraintBottom_toTopOf="@+id/tvBottomNote"
+            tools:layout_editor_absoluteX="20dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvBottomNote"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:fontFamily="@font/roboto_flex"
+            android:text="@string/bottom_note"
+            android:textAlignment="center"
+            android:textColor="@color/text_tertiary"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/btnStartTrial"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnStartTrial"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/bg_button_primary"
+            android:elevation="2dp"
+            android:fontFamily="@font/roboto_flex"
+            android:text="@string/btn_start_trial"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

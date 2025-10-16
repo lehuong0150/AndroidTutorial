@@ -14,19 +14,19 @@
 
     <!-- Number Buttons -->
     <style name="CalculatorButton.Number">
-        <item name="android:background">@drawable/button_number</item>
+        <item name="android:background">@drawable/bg_button_number</item>
         <item name="android:textColor">#000000</item>
     </style>
 
     <!-- Function Buttons (AC, +/-, %) -->
     <style name="CalculatorButton.Function">
-        <item name="android:background">@drawable/button_function</item>
+        <item name="android:background">@drawable/bg_button_function</item>
         <item name="android:textColor">#000000</item>
     </style>
 
     <!-- Operator Buttons (+, -, ×, ÷) -->
     <style name="CalculatorButton.Operator">
-        <item name="android:background">@drawable/button_operator</item>
+        <item name="android:background">@drawable/bg_button_operator</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>
 
@@ -37,7 +37,7 @@
         <item name="android:layout_columnWeight">2</item>
         <item name="android:layout_rowWeight">1</item>
         <item name="android:layout_margin">4dp</item>
-        <item name="android:background">@drawable/button_number</item>
+        <item name="android:background">@drawable/bg_button_number</item>
         <item name="android:textColor">#000000</item>
         <item name="android:textSize">20sp</item>
         <item name="android:elevation">2dp</item>
@@ -45,7 +45,7 @@
 
     <!-- Equals Button -->
     <style name="CalculatorButton.Equals">
-        <item name="android:background">@drawable/button_equals</item>
+        <item name="android:background">@drawable/bg_button_equals</item>
         <item name="android:textColor">#FFFFFF</item>
     </style>
 </resources>

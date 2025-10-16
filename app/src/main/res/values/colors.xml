@@ -4,6 +4,19 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#808080</color>
     <color name="white_smoke">#F5F5F5</color>
-    <color name="item_product">#FFC0C0</color>
-    <color name="line_menu">#D9D9D9</color>
+    <color name="item_product">#80FFC0C0</color>
+    <color name="line_menu">#B3D9D9D9</color>
+
+    <color name="orange_primary">#FF6B35</color>
+    <color name="orange_light">#FFE5DC</color>
+    <color name="background_light">#FAFAFA</color>
+    <color name="text_primary">#1A1A1A</color>
+    <color name="text_secondary">#666666</color>
+    <color name="text_tertiary">#999999</color>
+    <color name="button_primary">#000000</color>
+
+    <color name="adv_img1">#1A34C759</color>
+    <color name="adv_img2">#1A007AFF</color>
+    <color name="adv_img3">#1AFFCC00</color>
+
 </resources>

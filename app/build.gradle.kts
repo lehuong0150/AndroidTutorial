@@ -36,8 +36,8 @@ android {
     buildFeatures {
         viewBinding = true
     }
-}
 
+}
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -49,4 +49,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     implementation ("de.hdodenhof:circleimageview:3.1.0")
+    implementation ("com.github.castorflex.smoothprogressbar:library:1.1.0")
+    implementation ("com.airbnb.android:lottie:6.6.0")
+    implementation ("com.android.support.constraint:constraint-layout:1.1.0-beta1")
+    implementation ("pl.droidsonroids.gif:android-gif-drawable:1.2.17")
+
 }
