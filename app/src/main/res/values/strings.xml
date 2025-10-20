@@ -82,4 +82,98 @@
 
     <string name="bottom_note">Gia hạn tự động, có thể hủy bất cứ lúc nào</string>
 
+    <!--    Paywall sale-->
+    <string name="paywall_sale_title">Optimize Storage, Get Space</string>
+    <string name="paywall_sale_price_old"><strike><b>$8.99</b>/week</strike></string>
+    <string name="paywall_sale_price">$3.99</string>
+    <string name="paywall_sale_week">/week</string>
+    <string name="paywall_sale_off">OFF 50%</string>
+    <string name="paywall_sale_btn_offer">CLAIM OFFER</string>
+    <string name="paywall_sale_content">$3.99 for first week then $8.99 next week.\n Billed weekly, cancel anytime.</string>
+    <string name="paywall_sale_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy</b></u> policies
+        \n\u2022 Subscription gives you access to V9Compress\'s premium features, all ads will be removed.
+        \n\u2022 Subscription plans are automatically renewed and can be canceled anytime in Subscriptions on Google Play.
+        \n\u2022 You will not be charged if subscription is canceled before trial period ends.
+        \n\u2022 Subscription is not required to use V9Compress</string>
+    <string name="paywall_message">We couldn’t load the infomation</string>
+    <string name="paywall_try_again"><u>Try again</u></string>
+
+    <!--    Paywall Onboarding-->
+    <string name="paywall_onboarding_title">Shrink size keep quality</string>
+    <string name="paywall_onboarding_yearly">Yearly</string>
+    <string name="paywall_onboarding_weekly">Weekly</string>
+    <string name="paywall_onboarding_content_yearly">$14.99/year after free trial ends.
+        \nAuto renew, Cancel anytime</string>
+    <string name="paywall_onboarding_content_weekly">$4.99/week after free trial ends.
+        \nAuto renew, Cancel anytime</string>
+    <string name="paywall_onboarding_btn_free">Try for free</string>
+    <string name="paywall_onboarding_sw_free">Free trial enabled</string>
+    <string name="paywall_onboarding_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy</b></u> policies
+        \nSubscription gives you access to V9Compress\'s premium features, all ads will be removed.
+        \nSubscription plans are automatically renewed and can be canceled anytime in Subscriptions on Google Play.
+        \nYou will not be charged if subscription is canceled before trial period ends.
+        \nSubscription is not required to use V9Compress</string>
+
+    <!--    Dialog Sale-Weekly-->
+    <string name="dialog_weekly_title">Faster compress made simple</string>
+    <string name="dialog_weekly_content">Try 3 days for FREE, then 8.99$ per week. Auto renew, cancel anytime</string>
+    <string name="dialog_weekly_30">30%</string>
+    <string name="dialog_weekly_off">OFF</string>
+    <string name="dialog_weekly_btn_offer">CLAIM OFFER</string>
+    <string name="dialog_weekly_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy</b></u> policies
+        \n\u2022 Subscription gives you access to V9Compress\'s premium features, all ads will be removed.
+        \n\u2022 Subscription plans are automatically renewed and can be canceled anytime in Subscriptions on Google Play.
+        \n\u2022 You will not be charged if subscription is canceled before trial period ends.
+        \n\u2022 Subscription is not required to use V9Compress</string>
+    <string name="dialog_weekly_message">We couldn’t load the infomation</string>
+    <string name="dialog_weekly_again"><u>Try again</u></string>
+
+    <!--    Diglog Sale-Yearly-->
+    <string name="dialog_yearly_title">Faster Compress Made Simple</string>
+    <string name="dialog_yearly_content">Try 3 for FREE then $[price] per year.
+        \nAuto renew, cancel anytime.</string>
+    <string name="dialog_yearly_30">30%</string>
+    <string name="dialog_yearly_off">OFF</string>
+    <string name="dialog_yearly_btn_offer">CLAIM OFFER</string>
+    <string name="dialog_yearly_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy</b></u> policies
+        \n\u2022 Subscription gives you access to V9Compress\'s premium features, all ads will be removed.
+        \n\u2022 Subscription plans are automatically renewed and can be canceled anytime in Subscriptions on Google Play.
+        \n\u2022 You will not be charged if subscription is canceled before trial period ends.
+        \n\u2022 Subscription is not required to use V9Compress</string>
+    <string name="dialog_yearly_message">We couldn’t load the infomation</string>
+    <string name="dialog_yearly_again"><u>Try again</u></string>
+
+    <!--    Diglog Sale-Yearly-->
+    <string name="unlock_title">high-quality compression</string>
+    <string name="unlock_content">$14.99/year after free trial ends.
+        \nAuto renew, cancel anytime</string>
+    <string name="unlock_btn_free">Try for free</string>
+    <string name="unlock_btn_continue">Continue</string>
+    <string name="unlock_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy</b></u> policies
+        \nSubscription gives you access to V9Compress\'s premium features, all ads will be removed.
+        \nSubscription plans are automatically renewed and can be canceled anytime in Subscriptions on Google Play.
+        \nYou will not be charged if subscription is canceled before trial period ends.
+        \nSubscription is not required to use V9Compress</string>
+    <string name="unlock_message">We couldn’t load the infomation</string>
+    <string name="unlock_again"><u>Try again</u></string>
+
+    <!--    Paywall bottom sheet-->
+    <string name="paywall_bottom_sheet_title">SMARTER STORAGE MADE AFFORDABLE</string>
+    <string name="paywall_bottom_sheet_saved">Saved 92%</string>
+    <string name="paywall_bottom_sheet_yearly_plan">Yearly Plan</string>
+    <string name="paywall_bottom_sheet_yearly_plan_content">Only $0.412 per week</string>
+    <string name="paywall_bottom_sheet_yearly_plan_price">$19.99</string>
+    <string name="paywall_bottom_sheet_yearly_plan_year">year</string>
+    <string name="paywall_bottom_sheet_weekly_plan">Weekly Plan</string>
+    <string name="paywall_bottom_sheet_weekly_plan_price">$4.99</string>
+    <string name="paywall_bottom_sheet_weekly_plan_week">week</string>
+    <string name="paywall_bottom_sheet_content">$19.99/year after free trial ends.
+            \nAuto renew, cancel anytime</string>
+    <string name="paywall_bottom_sheet_btn_free">Try for free</string>
+    <string name="paywall_bottom_sheet_free_trial">3-day free trial enabled</string>
+    <string name="paywall_bottom_sheet_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy</b></u> policies
+        \nSubscription gives you access to V9Compress\'s premium features, all ads will be removed.
+        \nSubscription plans are automatically renewed and can be canceled anytime in Subscriptions on Google Play.
+        \nYou will not be charged if subscription is canceled before trial period ends.
+        \nSubscription is not required to use V9Compress</string>
 </resources>

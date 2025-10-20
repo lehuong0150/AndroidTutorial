@@ -12,16 +12,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:padding="20dp">
+
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/animationView"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerInParent="true"
-            app:lottie_fileName="shake_animation.json"
-            app:lottie_loop="true"
-            app:lottie_autoPlay="true"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_url="https://assets1.lottiefiles.com/packages/lf20_V9t630.json" />
+
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btnClose"
             android:layout_width="24dp"

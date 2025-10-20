@@ -18,14 +18,31 @@
         android:theme="@style/Theme.AndroidTutorial"
         tools:targetApi="31">
         <activity
+            android:name=".layout.PaywallBottomSheetActivity"
+            android:exported="false" />
+        <activity
+            android:name=".layout.DialogYearlyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".layout.DialogWeeklyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".layout.UnlockActivity"
+            android:exported="false" />
+        <activity
+            android:name=".layout.PaywallOnboardingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".layout.DemoAdvertisementActivity"
+            android:exported="false" />
+        <activity
             android:name=".layout.EmployeeActivity"
             android:exported="false" />
-
         <activity
             android:name=".layout.LayoutActivity"
             android:exported="false" />
         <activity
-            android:name=".layout.DemoAdvertisementActivity"
+            android:name=".layout.PaywallSaleActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

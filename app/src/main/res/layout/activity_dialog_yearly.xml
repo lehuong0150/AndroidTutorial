@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/darker_gray"
+    android:paddingHorizontal="@dimen/_15sdp"
+    tools:context=".layout.DialogWeeklyActivity">
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_42sdp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/btn_dialog"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgDialogYearly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_42sdp"
+        android:background="@drawable/bg_dlg_sale_yearly_30"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnClose" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgLogoPro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_42sdp"
+        android:src="@drawable/img_dlg_yearly"
+        app:layout_constraintEnd_toEndOf="@+id/imgDialogYearly"
+        app:layout_constraintStart_toStartOf="@+id/imgDialogYearly"
+        app:layout_constraintTop_toTopOf="@id/imgDialogYearly" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_9sdp"
+        android:background="@color/color_15132F99"
+        android:fontFamily="@font/funnel_sans_bold"
+        android:gravity="center"
+        android:paddingVertical="@dimen/_4sdp"
+        android:text="@string/dialog_yearly_title"
+        android:textColor="@color/super_light"
+        android:textSize="@dimen/_16sdp"
+        app:layout_constraintEnd_toEndOf="@+id/imgDialogYearly"
+        app:layout_constraintStart_toStartOf="@+id/imgDialogYearly"
+        app:layout_constraintTop_toBottomOf="@id/imgLogoPro" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgDiscountWeekly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_136sdp"
+        android:src="@drawable/img_dlg_yearly_discount"
+        app:layout_constraintEnd_toEndOf="@id/imgDialogYearly"
+        app:layout_constraintStart_toStartOf="@id/imgDialogYearly"
+        app:layout_constraintTop_toTopOf="@id/imgDialogYearly" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtContent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:background="@drawable/bg_dlg_yearly_txt_content"
+        android:fontFamily="@font/funnel_sans_semibold"
+        android:gravity="center"
+        android:paddingVertical="@dimen/_6sdp"
+        android:text="@string/dialog_yearly_content"
+        android:textColor="@color/super_light"
+        android:textSize="@dimen/_11sdp"
+        app:layout_constraintEnd_toEndOf="@id/imgDialogYearly"
+        app:layout_constraintStart_toStartOf="@id/imgDialogYearly"
+        app:layout_constraintTop_toBottomOf="@id/imgDialogYearly" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnClaimOffer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_14sdp"
+        android:background="@drawable/bg_dlg_yearly_btn_offer"
+        android:fontFamily="@font/funnel_sans_extra_bold"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/_12sdp"
+        android:paddingVertical="@dimen/_9sdp"
+        android:text="@string/dialog_weekly_btn_offer"
+        android:textColor="@color/super_light"
+        android:textSize="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtContent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtPolicy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_9sdp"
+        android:fontFamily="@font/funnel_sans_regular"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/_16sdp"
+        android:paddingVertical="@dimen/_6sdp"
+        android:text="@string/dialog_yearly_policy"
+        android:textColor="@color/super_light"
+        android:textSize="@dimen/_8sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnClaimOffer" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layoutLoadFail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/txtPolicy"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgDialogYearly">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/funnel_sans_semibold"
+            android:gravity="center"
+            android:text="@string/dialog_yearly_message"
+            android:textColor="@color/super_light"
+            android:textSize="@dimen/_12sdp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtTryAgain"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:fontFamily="@font/funnel_sans_regular"
+            android:gravity="center"
+            android:text="@string/dialog_yearly_again"
+            android:textColor="@color/super_light"
+            android:textSize="@dimen/_10sdp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

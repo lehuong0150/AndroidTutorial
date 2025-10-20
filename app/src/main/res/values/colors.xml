@@ -19,4 +19,13 @@
     <color name="adv_img2">#1A007AFF</color>
     <color name="adv_img3">#1AFFCC00</color>
 
+    <color name="super_light">#EAF5F8</color>
+    <color name="bg_pw_onboarding">#F0F7FF</color>
+    <color name="color_0E111B">#0E111B</color>
+    <color name="color_4D5A68">#4D5A68</color>
+    <color name="color_DBEAFE">#DBEAFE</color>
+    <color name="color_15132F99">#15132F99</color>
+    <color name="color_F0F7FF">#F0F7FF</color>
+    <color name="color_0F1E47">#0F1E47</color>
+    <color name="color_25104A">#25104A</color>
 </resources>
