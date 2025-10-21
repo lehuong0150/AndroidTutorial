@@ -2,74 +2,86 @@ package com.example.androidtutorial.layout
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.androidtutorial.R
 import com.example.androidtutorial.databinding.ActivityPaywallSaleBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class PaywallSaleActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityPaywallSaleBinding
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPaywallSaleBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         setupBottomSheet()
         setupClickListeners()
+        showLoading()
+
+        binding.root.postDelayed({
+            val isSuccess = false
+            if (isSuccess) showSuccess() else showFailed()
+        }, 5000)
     }
 
     private fun setupBottomSheet() {
-        bottomSheetBehavior = BottomSheetBehavior.from(binding.layoutContent).apply {
-            isHideable = false
-            state = BottomSheetBehavior.STATE_COLLAPSED
-        }
-    }
-
-    private fun setupClickListeners() {
-        binding.layoutContent.setOnClickListener {
-            if (binding.txtPrice.visibility != View.VISIBLE) {
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        binding.layoutContent.let {
+            bottomSheetBehavior = BottomSheetBehavior.from(it).apply {
+                isHideable = false
+                state = BottomSheetBehavior.STATE_COLLAPSED
             }
         }
+    }
 
-        binding.txtTryAgain.setOnClickListener {
-            // loadBillingData()
+    private fun setupClickListeners() = with(binding) {
+        layoutContent.setOnClickListener {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
 
-        // Button Claim Offer
-        binding.btnClaimOffer.setOnClickListener {
-            //handleClaimOffer()
+        txtTryAgain.setOnClickListener {
+            showLoading()
+            root.postDelayed({
+                showSuccess() // hoặc showFailed()
+            }, 2000)
+        }
+
+        btnClaimOffer.setOnClickListener {
+            // handleClaimOffer()
+        }
+        btnClose.setOnClickListener {
+            finish()
         }
     }
 
-    private fun showSuccess() {
+    private fun showLoading() = with(binding) {
+        groupContent.visibility = View.INVISIBLE
+        layoutLoadFail.visibility = View.INVISIBLE
+        groupLoading.visibility = View.VISIBLE
+    }
 
-        binding.btnClaimOffer.visibility = View.VISIBLE
-        binding.txtContent.visibility = View.VISIBLE
-        binding.txtPolicy.visibility = View.VISIBLE
-        binding.layoutLoadFail.visibility = View.INVISIBLE
-
+    private fun showSuccess() = with(binding) {
+        groupLoading.visibility = View.INVISIBLE
+        layoutLoadFail.visibility = View.INVISIBLE
+        groupContent.visibility = View.VISIBLE
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
-    private fun showFailed() {
-
-        binding.btnClaimOffer.visibility = View.INVISIBLE
-        binding.txtContent.visibility = View.INVISIBLE
-
-        binding.layoutLoadFail.visibility = View.VISIBLE
-
+    private fun showFailed() = with(binding) {
+        groupLoading.visibility = View.INVISIBLE
+        groupContent.visibility = View.INVISIBLE
+        layoutLoadFail.visibility = View.VISIBLE
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
     override fun onBackPressed() {
-        if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_EXPANDED) {
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
-        } else {
-            super.onBackPressed()
+        bottomSheetBehavior.run {
+            if (state == BottomSheetBehavior.STATE_EXPANDED) {
+                state = BottomSheetBehavior.STATE_COLLAPSED
+            } else {
+                super.onBackPressed()
+            }
         }
     }
 }

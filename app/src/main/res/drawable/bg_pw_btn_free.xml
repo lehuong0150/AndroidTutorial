@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle">
-    <solid android:color="#0F1E47" />
-    <corners android:radius="12px" />
-</shape>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="320dp"
+    android:height="54dp"
+    android:viewportWidth="320"
+    android:viewportHeight="54">
+    <path
+        android:fillColor="#FF0F1E47"
+        android:pathData="M0 12c0-6.63 5.37-12 12-12h296c6.63 0 12 5.37 12 12v30c0 6.63-5.37 12-12 12h-296c-6.63 0-12-5.37-12-12z"/>
+</vector>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
+    tools:context=".layout.PaywallActivity">
+
+    <TextView
+        android:id="@+id/txtChoose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/choose"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/btnPayWall1"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/start_border"
+        android:text="Paywall_1"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/btnPayWall2"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/start_border"
+        android:text="Paywall_2"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/btnPayWall3"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/start_border"
+        android:text="Paywall_3"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/btnPayWall4"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/start_border"
+        android:text="Paywall_4"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/btnPayWall5"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/start_border"
+        android:text="Paywall_5"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/btnPayWall6"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/start_border"
+        android:text="Paywall_6"
+        android:textColor="@color/black" />
+
+    <Button
+        android:id="@+id/btnPayWall7"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@drawable/start_border"
+        android:text="Paywall_7"
+        android:textColor="@color/black" />
+</androidx.appcompat.widget.LinearLayoutCompat>

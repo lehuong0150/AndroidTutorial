@@ -278,12 +278,7 @@
 
         </androidx.cardview.widget.CardView>
 
-        <pl.droidsonroids.gif.GifImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/file_gif"
-            app:layout_constraintBottom_toTopOf="@+id/tvBottomNote"
-            tools:layout_editor_absoluteX="20dp" />
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvBottomNote"

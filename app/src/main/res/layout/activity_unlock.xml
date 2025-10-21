@@ -6,89 +6,94 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_DBEAFE"
+    android:padding="@dimen/_12sdp"
     tools:context=".layout.UnlockActivity">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtTitle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:fontFamily="@font/bebasneue_regular"
+        android:text="@string/unlock_title"
+        android:textColor="@color/color_0E111B"
+        android:textSize="@dimen/_43sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgGB"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_235sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:src="@drawable/img_unlock"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtTitle" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_9sdp"
+        android:fontFamily="@font/read_ex_pro_regular"
+        android:gravity="center"
+        android:text="@string/unlock_content"
+        android:textColor="@color/color_0E111B"
+        android:textSize="@dimen/_11sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imgGB" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnTryTree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_9sdp"
+        android:background="@drawable/bg_unlock_btn_free"
+        android:fontFamily="@font/read_ex_pro_bold"
+        android:textAllCaps="false"
+        android:gravity="center"
         android:padding="@dimen/_12sdp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:text="@string/unlock_btn_free"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_14sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtContent" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtTitle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:fontFamily="@font/bebasneue_regular"
-            android:text="@string/unlock_title"
-            android:textColor="@color/color_0E111B"
-            android:textSize="@dimen/_43sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <ProgressBar
+        android:id="@+id/pgbLoadInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_pw_loading"
+        android:indeterminate="true"
+        android:indeterminateTint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/btnTryTree"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnTryTree" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgGB"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_235sdp"
-            android:layout_marginTop="@dimen/_8sdp"
-            android:src="@drawable/img_unlock"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtTitle" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtPolicy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_11sdp"
+        android:fontFamily="@font/read_ex_pro_regular"
+        android:gravity="center"
+        android:text="@string/unlock_policy"
+        android:textColor="@color/color_4D5A68"
+        android:textSize="@dimen/_8sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnTryTree" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtContent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_9sdp"
-            android:fontFamily="@font/read_ex_pro_regular"
-            android:gravity="center"
-            android:text="@string/unlock_content"
-            android:textColor="@color/color_0E111B"
-            android:textSize="@dimen/_11sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imgGB" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnTree"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:background="@drawable/bg_unlock_btn_free"
-            android:fontFamily="@font/read_ex_pro_bold"
-            android:gravity="center"
-            android:padding="@dimen/_12sdp"
-            android:text="@string/unlock_btn_free"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_14sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txtContent" />
-
-        <ProgressBar
-            android:layout_width="@dimen/_24sdp"
-            android:layout_height="@dimen/_24sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/btnTree"
-            app:layout_constraintTop_toTopOf="@id/btnTree" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtPolicy"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_11sdp"
-            android:fontFamily="@font/read_ex_pro_regular"
-            android:gravity="center"
-            android:text="@string/unlock_policy"
-            android:textColor="@color/color_4D5A68"
-            android:textSize="@dimen/_8sdp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btnTree" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/groupContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="txtContent,btnTryTree" />
 </androidx.constraintlayout.widget.ConstraintLayout>
+

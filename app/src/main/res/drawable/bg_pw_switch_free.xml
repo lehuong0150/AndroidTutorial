@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@android:color/transparent" />
-    <corners android:radius="12dp" />
-    <stroke
-        android:width="1px"
-        android:color="#991E4766" />
-</shape>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="320dp"
+    android:height="48dp"
+    android:viewportWidth="320"
+    android:viewportHeight="48">
+    <path
+        android:strokeColor="#660F1E47"
+        android:strokeWidth="1"
+        android:pathData="M0.5 12c0-6.35 5.15-11.5 11.5-11.5h296c6.35 0 11.5 5.15 11.5 11.5v24c0 6.35-5.15 11.5-11.5 11.5h-296c-6.35 0-11.5-5.15-11.5-11.5z"/>
+</vector>

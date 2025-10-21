@@ -11,12 +11,18 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidTutorial"
         tools:targetApi="31">
+        <activity
+            android:name=".layout.UnlockActivity"
+            android:exported="false" />
+        <activity
+            android:name=".layout.PaywallFullActivity"
+            android:exported="false" />
         <activity
             android:name=".layout.PaywallBottomSheetActivity"
             android:exported="false" />
@@ -24,10 +30,10 @@
             android:name=".layout.DialogYearlyActivity"
             android:exported="false" />
         <activity
-            android:name=".layout.DialogWeeklyActivity"
+            android:name=".layout.PaywallSaleActivity"
             android:exported="false" />
         <activity
-            android:name=".layout.UnlockActivity"
+            android:name=".layout.DialogWeeklyActivity"
             android:exported="false" />
         <activity
             android:name=".layout.PaywallOnboardingActivity"
@@ -42,7 +48,7 @@
             android:name=".layout.LayoutActivity"
             android:exported="false" />
         <activity
-            android:name=".layout.PaywallSaleActivity"
+            android:name=".layout.PaywallActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

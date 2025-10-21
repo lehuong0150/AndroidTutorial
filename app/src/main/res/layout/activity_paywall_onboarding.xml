@@ -1,175 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_F0F7FF"
+    android:fillViewport="true"
     tools:context=".layout.PaywallOnboardingActivity">
 
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/toggleGroup"
-        android:layout_width="@dimen/_149sdp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_47sdp"
-        android:layout_marginTop="@dimen/_41sdp"
-        android:background="@drawable/bg_pw_toggle_container"
-        android:paddingVertical="@dimen/_2sdp"
-        android:paddingHorizontal="@dimen/_4sdp"
-        app:checkedButton="@id/btnYearly"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:singleSelection="true"
-        app:strokeWidth="0dp"
-        app:selectionRequired="true">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnYearly"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="@dimen/_2sdp"
-            android:backgroundTint="@drawable/toggle_background"
-            android:fontFamily="@font/read_ex_pro_regular"
-            android:text="@string/paywall_onboarding_yearly"
-            android:textAllCaps="false"
-            android:textColor="@drawable/toggle_text_color"
-            android:textSize="@dimen/_11sdp"
-            app:cornerRadius="@dimen/_11sdp"
-            app:strokeWidth="0dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnWeekly"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:layout_marginStart="@dimen/_2sdp"
-            android:backgroundTint="@drawable/toggle_background"
-            android:fontFamily="@font/read_ex_pro_regular"
-            android:text="@string/paywall_onboarding_weekly"
-            android:textAllCaps="false"
-            android:textColor="@drawable/toggle_text_color"
-            android:textSize="@dimen/_11sdp"
-            app:cornerRadius="@dimen/_11sdp"
-            app:strokeWidth="0dp" />
-
-    </com.google.android.material.button.MaterialButtonToggleGroup>
-
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="388dp"
-        android:layout_marginTop="76dp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/btn_pw_close"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txtTitle"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:fontFamily="@font/read_ex_pro_bold"
-        android:gravity="center"
-        android:text="@string/paywall_onboarding_title"
-        android:textAllCaps="true"
-        android:textColor="@color/color_0F1E47"
-        android:textSize="@dimen/_22sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toggleGroup" />
+        android:background="@color/color_F0F7FF">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imgPwOnboarding"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:src="@drawable/img_pw_onboarding"
-        app:layout_constraintTop_toBottomOf="@id/txtTitle" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txtContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:fontFamily="@font/read_ex_pro_regular"
-        android:gravity="center"
-        android:text="@string/paywall_onboarding_content_weekly"
-        android:textColor="@color/color_0F1E47"
-        android:textSize="@dimen/_10sdp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imgPwOnboarding" />
-
-    <LinearLayout
-        android:id="@+id/layoutFreeTrial"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_15sdp"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:background="@drawable/bg_pw_switch_free"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="@dimen/_12sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtContent">
-
-        <TextView
-            android:id="@+id/txtFreeTrial"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="@font/read_ex_pro_regular"
-            android:text="@string/paywall_onboarding_sw_free"
-            android:textColor="@color/color_0F1E47"
-            android:textSize="@dimen/_11sdp" />
-
-        <Switch
-            android:id="@+id/swFree"
+        <RadioGroup
+            android:id="@+id/radioGroupPlan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"
-            android:clickable="true"
-            android:switchMinWidth="@dimen/_24sdp"
-            android:thumb="@drawable/switch_thumb_custom"
-            android:track="@drawable/switch_track_custom" />
+            android:layout_marginHorizontal="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_41sdp"
+            android:background="@drawable/bg_pw_toggle_container"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/_3sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-    </LinearLayout>
+            <RadioButton
+                android:id="@+id/rbYearly"
+                android:layout_width="@dimen/_77sdp"
+                android:layout_height="@dimen/_22sdp"
+                android:layout_marginEnd="@dimen/_6sdp"
+                android:background="@drawable/bg_radio_selector"
+                android:button="@null"
+                android:checked="true"
+                android:fontFamily="@font/read_ex_pro_regular"
+                android:gravity="center"
+                android:text="@string/paywall_onboarding_yearly"
+                android:textColor="@drawable/toggle_text_color"
+                android:textSize="@dimen/_11sdp" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnTryTree"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_16sdp"
-        android:layout_marginVertical="@dimen/_9sdp"
-        android:background="@drawable/bg_pw_btn_free"
-        android:fontFamily="@font/read_ex_pro_bold"
-        android:text="@string/paywall_onboarding_btn_free"
-        android:textColor="@color/super_light"
-        android:textSize="@dimen/_12sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layoutFreeTrial" />
+            <RadioButton
+                android:id="@+id/rbWeekly"
+                android:layout_width="@dimen/_77sdp"
+                android:layout_height="@dimen/_27sdp"
+                android:background="@drawable/bg_radio_selector"
+                android:button="@null"
+                android:fontFamily="@font/read_ex_pro_regular"
+                android:gravity="center"
+                android:text="@string/paywall_onboarding_weekly"
+                android:textColor="@drawable/toggle_text_color"
+                android:textSize="@dimen/_11sdp" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txtPolicy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_12sdp"
-        android:fontFamily="@font/read_ex_pro_regular"
-        android:gravity="center"
-        android:paddingHorizontal="@dimen/_16sdp"
-        android:paddingVertical="@dimen/_6sdp"
-        android:text="@string/paywall_onboarding_policy"
-        android:textColor="@color/color_4D5A68"
-        android:textSize="@dimen/_8sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnTryTree" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </RadioGroup>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnClose"
+            android:layout_width="@dimen/_12sdp"
+            android:layout_height="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_55sdp"
+            android:layout_marginEnd="@dimen/_14sdp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:fontFamily="@font/read_ex_pro_bold"
+            android:gravity="center"
+            android:text="@string/paywall_onboarding_title"
+            android:textAllCaps="true"
+            android:textColor="@color/color_0F1E47"
+            android:textSize="@dimen/_22sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radioGroupPlan" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgPwOnboarding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:src="@drawable/img_pw_onboarding"
+            app:layout_constraintTop_toBottomOf="@id/txtTitle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:fontFamily="@font/read_ex_pro_regular"
+            android:gravity="center"
+            android:text="@string/paywall_onboarding_content_weekly"
+            android:textColor="@color/color_0F1E47"
+            android:textSize="@dimen/_10sdp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imgPwOnboarding" />
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layoutFreeTrial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:background="@drawable/bg_pw_switch_free"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/_12sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/txtContent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtFreeTrial"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/read_ex_pro_regular"
+                android:text="@string/paywall_free_trial_disabled"
+                android:textColor="@color/color_0F1E47"
+                android:textSize="@dimen/_11sdp" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/swFree"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_12sdp"
+                android:layout_gravity="center"
+                android:checked="true"
+                android:clickable="true"
+                android:switchMinWidth="@dimen/_24sdp"
+                android:thumb="@drawable/switch_thumb_custom"
+                android:track="@drawable/switch_track_custom" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnTryTree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginVertical="@dimen/_9sdp"
+            android:background="@drawable/bg_pw_btn_free"
+            android:fontFamily="@font/read_ex_pro_bold"
+            android:text="@string/paywall_onboarding_btn_free"
+            android:textColor="@color/super_light"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutFreeTrial" />
+
+        <ProgressBar
+            android:id="@+id/pgbLoadInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginVertical="@dimen/_9sdp"
+            android:background="@drawable/bg_pw_loading"
+            android:indeterminate="true"
+            android:indeterminateTint="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutFreeTrial" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtPolicy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:fontFamily="@font/read_ex_pro_regular"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/_16sdp"
+            android:paddingVertical="@dimen/_6sdp"
+            android:text="@string/paywall_onboarding_policy"
+            android:textColor="@color/color_4D5A68"
+            android:textSize="@dimen/_8sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnTryTree" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="txtContent,btnTryTree" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

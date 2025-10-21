@@ -8,37 +8,33 @@
     tools:context=".layout.PaywallSaleActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutGif"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_pwl_sale_50"
+        app:layout_constraintDimensionRatio="0.65"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutGif"
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnClose"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_pwl_sale_50"
-            app:layout_constraintDimensionRatio="0.65"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_marginStart="@dimen/_14sdp"
+            android:layout_marginTop="@dimen/_38sdp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_pw_sale_close"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_14sdp"
-                android:layout_marginTop="@dimen/_38sdp"
-                android:background="@android:color/transparent"
-                android:src="@drawable/btn_pw_close"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/lottieAnim"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:lottie_autoPlay="true"
-                app:lottie_loop="true"
-                app:lottie_rawRes="@raw/compress_pw_50" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieAnim"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/compress_pw_50" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -100,6 +96,7 @@
             android:id="@+id/txtPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_3sdp"
             android:fontFamily="@font/funnel_sans_bold"
             android:text="@string/paywall_sale_price"
             android:textColor="@color/super_light"
@@ -139,12 +136,26 @@
             app:layout_constraintTop_toBottomOf="@+id/txtPrice" />
 
         <ProgressBar
-            android:layout_width="@dimen/_24sdp"
-            android:layout_height="@dimen/_24sdp"
+            android:id="@+id/pgbLoadInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_pw_btn_offer"
+            android:indeterminate="true"
             app:layout_constraintBottom_toBottomOf="@+id/btnClaimOffer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/btnClaimOffer" />
+
+        <View
+            android:id="@+id/viewDataLoading"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_85sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:background="@drawable/bg_pw_view_data_loading"
+            app:layout_constraintBottom_toTopOf="@+id/pgbLoadInfo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtContent"
@@ -201,6 +212,7 @@
                 android:id="@+id/txtTryAgain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="@dimen/_4sdp"
                 android:layout_marginTop="@dimen/_7sdp"
                 android:fontFamily="@font/funnel_sans_regular"
                 android:gravity="center"
@@ -208,5 +220,17 @@
                 android:textColor="@color/super_light"
                 android:textSize="@dimen/_10sdp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="txtPriceOld,txtOff,txtPrice,txtWeek,btnClaimOffer,txtContent" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupLoading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="pgbLoadInfo,viewDataLoading" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

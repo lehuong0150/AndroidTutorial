@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_39sdp"
         android:background="@android:color/transparent"
-        android:src="@drawable/btn_dialog"
+        android:src="@drawable/ic_dlg_close"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,7 +43,7 @@
         android:id="@+id/txtTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_14sdp"
+        android:layout_marginEnd="@dimen/_19sdp"
         android:fontFamily="@font/funnel_sans_bold"
         android:gravity="right"
         android:text="@string/dialog_weekly_title"
@@ -51,28 +51,29 @@
         android:textSize="@dimen/_12sdp"
         app:layout_constraintRight_toRightOf="@+id/imgDialogWeekly"
         app:layout_constraintTop_toBottomOf="@id/imgLogoPro" />
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgDiscountWeekly"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/_14sdp"
         android:paddingTop="@dimen/_9sdp"
-        android:layout_marginEnd="@dimen/_19sdp"
         android:src="@drawable/img_dlg_weekly_discount"
         app:layout_constraintRight_toRightOf="@+id/imgDialogWeekly"
-        app:layout_constraintTop_toBottomOf="@id/txtTitle"/>
+        app:layout_constraintTop_toBottomOf="@id/txtTitle" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txtContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_45sdp"
+        android:layout_marginStart="@dimen/_52sdp"
         android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginEnd="@dimen/_14sdp"
+        android:layout_marginEnd="@dimen/_19sdp"
         android:background="@drawable/bg_dlg_txt_content"
         android:fontFamily="@font/funnel_sans_semibold"
         android:gravity="right"
-        android:paddingHorizontal="@dimen/_12sdp"
-        android:paddingVertical="@dimen/_9sdp"
+        android:paddingHorizontal="@dimen/_9sdp"
+        android:paddingVertical="@dimen/_4sdp"
         android:text="@string/dialog_weekly_content"
         android:textColor="@color/super_light"
         android:textSize="@dimen/_11sdp"
@@ -95,6 +96,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgDialogWeekly" />
+
+    <ProgressBar
+        android:id="@+id/pgbLoadInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_dlg_btn_offer"
+        android:indeterminate="true"
+        android:indeterminateTint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/btnClaimOffer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnClaimOffer" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txtPolicy"
@@ -140,10 +153,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_6sdp"
+            android:padding="@dimen/_4sdp"
             android:fontFamily="@font/funnel_sans_regular"
             android:gravity="center"
             android:text="@string/dialog_weekly_again"
             android:textColor="@color/super_light"
             android:textSize="@dimen/_10sdp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/groupContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="txtContent,btnClaimOffer" />
 </androidx.constraintlayout.widget.ConstraintLayout>

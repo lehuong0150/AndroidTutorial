@@ -6,35 +6,47 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".layout.PaywallBottomSheetActivity">
+    tools:context=".layout.PaywallFullActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutPwBottomSheet"
+        android:id="@+id/layoutGif"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F5F5"
+        app:layout_constraintDimensionRatio="0.356"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_12sdp"
+            android:background="@drawable/img_pw_full"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginEnd="@dimen/_27sdp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_pw_onboarding_cancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutPwFull"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_minus38sdp"
         android:background="@drawable/bg_pw_bottom_sheet"
         android:paddingHorizontal="@dimen/_16sdp"
         android:paddingTop="@dimen/_12sdp"
         android:paddingBottom="@dimen/_12sdp"
         app:behavior_peekHeight="@dimen/_390sdp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/imgCrown"
-            android:layout_width="@dimen/_21sdp"
-            android:layout_height="@dimen/_21sdp"
-            android:src="@drawable/ic_pw_bottom_sheet_crown"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/btnClose"
-            android:layout_width="@dimen/_12sdp"
-            android:layout_height="@dimen/_12sdp"
-            android:src="@drawable/ic_pw_onboarding_cancel"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtTitle"
@@ -43,21 +55,19 @@
             android:layout_marginTop="@dimen/_6sdp"
             android:fontFamily="@font/read_ex_pro_bold"
             android:gravity="center"
-            android:text="@string/paywall_bottom_sheet_title"
+            android:text="@string/paywall_full_title"
             android:textColor="@color/color_25104A"
             android:textSize="@dimen/_12sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/imgCrown" />
+            app:layout_constraintTop_toTopOf="@id/layoutPwFull" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutPwYearly"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_9sdp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="@drawable/bg_pw_selected"
+            android:background="@drawable/bg_pw_full_yearly_plan"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtTitle">
@@ -70,7 +80,7 @@
                 android:fontFamily="@font/read_ex_pro_bold"
                 android:gravity="center"
                 android:padding="@dimen/_4sdp"
-                android:text="@string/paywall_bottom_sheet_saved"
+                android:text="@string/paywall_full_saved"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12sdp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -83,7 +93,7 @@
                 android:fontFamily="@font/read_ex_pro_bold"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingTop="@dimen/_10sdp"
-                android:text="@string/paywall_bottom_sheet_yearly_plan"
+                android:text="@string/paywall_full_yearly_plan"
                 android:textColor="@color/color_25104A"
                 android:textSize="@dimen/_16sdp"
                 app:layout_constraintStart_toStartOf="@id/layoutPwYearly"
@@ -97,7 +107,7 @@
                 android:fontFamily="@font/read_ex_pro_regular"
                 android:paddingHorizontal="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
-                android:text="@string/paywall_bottom_sheet_yearly_plan_content"
+                android:text="@string/paywall_full_yearly_plan_content"
                 android:textColor="@color/color_25104A"
                 android:textSize="@dimen/_10sdp"
                 app:layout_constraintStart_toStartOf="@id/layoutPwYearly"
@@ -122,8 +132,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_6sdp"
-            android:clickable="true"
-            android:focusable="true"
             android:background="@drawable/bg_pw_unselected"
             android:paddingHorizontal="@dimen/_9sdp"
             android:paddingVertical="@dimen/_12sdp"
@@ -136,7 +144,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/read_ex_pro_bold"
-                android:text="@string/paywall_bottom_sheet_weekly_plan"
+                android:text="@string/paywall_full_weekly_plan"
                 android:textColor="@color/color_25104A"
                 android:textSize="@dimen/_16sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/layoutPwWeekly"
@@ -148,7 +156,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/read_ex_pro_regular"
-                android:text="@string/paywall_bottom_sheet_weekly_plan_price"
+                android:text="@string/paywall_full_weekly_plan_price"
                 android:textColor="@color/color_25104A"
                 android:textSize="@dimen/_16sdp"
                 app:layout_constraintBottom_toBottomOf="@+id/layoutPwWeekly"
@@ -163,7 +171,7 @@
             android:layout_marginTop="@dimen/_8sdp"
             android:fontFamily="@font/read_ex_pro_regular"
             android:gravity="center"
-            android:text="@string/paywall_bottom_sheet_content_yearly"
+            android:text="@string/paywall_full_content_yearly"
             android:textColor="@color/color_25104A"
             android:textSize="@dimen/_11sdp"
             app:layout_constraintTop_toBottomOf="@id/layoutPwWeekly" />
@@ -177,7 +185,7 @@
             android:fontFamily="@font/read_ex_pro_bold"
             android:paddingHorizontal="@dimen/_79sdp"
             android:paddingVertical="@dimen/_11sdp"
-            android:text="@string/paywall_bottom_sheet_btn_free"
+            android:text="@string/paywall_full_btn_free"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_14sdp"
@@ -189,15 +197,13 @@
             android:id="@+id/pgbLoadInfo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_16sdp"
-            android:layout_marginVertical="@dimen/_9sdp"
             android:background="@drawable/bg_pw_loading"
             android:indeterminate="true"
             android:indeterminateTint="@android:color/white"
-            app:layout_constraintTop_toBottomOf="@+id/layoutPwWeekly"
+            app:layout_constraintBottom_toBottomOf="@+id/btnTryTree"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/txtPolicy" />
+            app:layout_constraintTop_toTopOf="@+id/btnTryTree" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtPwFreeTrial"
@@ -207,32 +213,33 @@
             android:drawableStart="@drawable/ic_pw_bottom_sheet_free_trial"
             android:drawablePadding="6dp"
             android:fontFamily="@font/read_ex_pro_regular"
-            android:text="@string/paywall_bottom_sheet_free_trial"
+            android:text="@string/paywall_full_free_trial"
             android:textColor="@color/color_006C43"
             android:textSize="@dimen/_11sdp"
-            app:layout_constraintEnd_toEndOf="@id/layoutPwBottomSheet"
-            app:layout_constraintStart_toStartOf="@id/layoutPwBottomSheet"
+            app:layout_constraintEnd_toEndOf="@id/layoutPwFull"
+            app:layout_constraintStart_toStartOf="@id/layoutPwFull"
             app:layout_constraintTop_toBottomOf="@id/btnTryTree" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtPolicy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_40sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:fontFamily="@font/read_ex_pro_regular"
             android:gravity="center"
             android:padding="@dimen/_2sdp"
-            android:text="@string/paywall_bottom_sheet_policy"
+            android:text="@string/paywall_full_policy"
             android:textColor="@color/color_4A2610"
             android:textSize="@dimen/_8sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtPwFreeTrial" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/groupContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="txtPwYearlyPlanContent,txtPwYearlyPlanPrice,txtPwWeeklyPlanPrice,txtPwContent,btnTryTree,txtPwFreeTrial" />
+        app:constraint_referenced_ids="txtPwYearlyPlanPrice,txtPwWeeklyPlanPrice,txtPwYearlyPlanContent,txtPwContent,btnTryTree,txtPwFreeTrial" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

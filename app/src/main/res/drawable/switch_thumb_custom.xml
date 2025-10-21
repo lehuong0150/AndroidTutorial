@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Khi switch = true -->
+    <item android:drawable="@drawable/switch_thumb_on" android:state_checked="true" />
 
-<vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="16dp"
-    android:height="16dp"
-    android:viewportWidth="16"
-    android:viewportHeight="16">
-    <path
-        android:fillColor="#FF6477FF"
-        android:pathData="M8 0A8 8 0 1 0 8 16 8 8 0 1 0 8 0z"/>
-</vector>
+    <!-- Khi switch = false -->
+    <item android:drawable="@drawable/switch_thumb_off" />
+</selector>
