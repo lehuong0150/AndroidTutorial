@@ -34,7 +34,7 @@ class PaywallSaleActivity : AppCompatActivity() {
         binding.root.postDelayed({
             val isSuccess = false
             if (isSuccess) showSuccess() else showFailed()
-        }, 5000)
+        }, 2000)
     }
 
     private fun setupBottomSheet() {
@@ -42,6 +42,11 @@ class PaywallSaleActivity : AppCompatActivity() {
             bottomSheetBehavior = BottomSheetBehavior.from(it).apply {
                 isHideable = false
                 state = BottomSheetBehavior.STATE_COLLAPSED
+                it.post {
+                    val screenHeight = resources.displayMetrics.heightPixels
+                    val percentage = 0.32f
+                    peekHeight = (screenHeight * percentage).toInt()
+                }
             }
         }
     }

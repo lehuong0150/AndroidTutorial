@@ -37,7 +37,7 @@ class PaywallOnboardingActivity : AppCompatActivity() {
 
         binding.root.postDelayed({
             showSuccess()
-        }, 5000)
+        }, 2000)
     }
 
     private fun setupListeners() = with(binding) {

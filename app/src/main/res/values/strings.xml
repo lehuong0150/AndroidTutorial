@@ -106,8 +106,8 @@
         \nAuto renew, Cancel anytime</string>
     <string name="paywall_onboarding_content_weekly">$4.99/week after free trial ends.
         \nAuto renew, Cancel anytime</string>
-    <string name="paywall_onboarding_content_yearly_direct">$14.99/year\nOne-time payment</string>
-    <string name="paywall_onboarding_content_weekly_direct">$4.99/week\nOne-time payment</string>
+    <string name="paywall_onboarding_content_yearly_direct">$14.99/year\nAuto renew, Cancel anytime</string>
+    <string name="paywall_onboarding_content_weekly_direct">$4.99/week\nAuto renew, Cancel anytime</string>
     <string name="paywall_free_trial_enabled">Enable free trial?</string>
     <string name="paywall_free_trial_disabled">Free trial enabled</string>
     <string name="paywall_btn_free_trial_continue">CONTINUE</string>

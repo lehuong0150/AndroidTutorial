@@ -31,7 +31,7 @@ class UnlockActivity : AppCompatActivity() {
         binding.root.postDelayed({
             val isSuccess = true
             if (isSuccess) showSuccess()
-        }, 5000)
+        }, 2000)
 
         setupClickListeners()
     }

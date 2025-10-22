@@ -50,7 +50,7 @@ class PaywallBottomSheetActivity : AppCompatActivity() {
 
             bottomSheetView.post {
                 val screenHeight = resources.displayMetrics.heightPixels
-                val percentage = 0.65f //
+                val percentage = 0.68f //
                 peekHeight = (screenHeight * percentage).toInt()
             }
         }
@@ -95,7 +95,7 @@ class PaywallBottomSheetActivity : AppCompatActivity() {
         // Simulate loading data
         binding.root.postDelayed({
             showSuccess()
-        }, 4000)
+        }, 2000)
     }
 
 

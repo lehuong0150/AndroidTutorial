@@ -23,7 +23,7 @@
         android:id="@+id/imgDialogWeekly"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_64sdp"
+        android:layout_marginTop="@dimen/_48sdp"
         android:background="@drawable/bg_dlg_sale_weekly_30"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

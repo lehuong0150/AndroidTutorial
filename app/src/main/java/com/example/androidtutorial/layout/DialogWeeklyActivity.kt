@@ -30,7 +30,7 @@ class DialogWeeklyActivity : AppCompatActivity() {
         binding.root.postDelayed({
             val isSuccess = false
             if (isSuccess) showSuccess() else showFailed()
-        }, 5000)
+        }, 2000)
 
         setupClickListeners()
     }
@@ -40,7 +40,7 @@ class DialogWeeklyActivity : AppCompatActivity() {
             showLoading()
             root.postDelayed({
                 showSuccess() // hoặc showFailed()
-            }, 5000)
+            }, 2000)
         }
 
         btnClaimOffer.setOnClickListener {

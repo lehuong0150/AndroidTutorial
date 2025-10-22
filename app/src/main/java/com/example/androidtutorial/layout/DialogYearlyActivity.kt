@@ -30,7 +30,7 @@ class DialogYearlyActivity : AppCompatActivity() {
         binding.root.postDelayed({
             val isSuccess = false
             if (isSuccess) showSuccess() else showFailed()
-        }, 8000)
+        }, 2000)
 
         setupClickListeners()
     }

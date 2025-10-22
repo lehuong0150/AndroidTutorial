@@ -53,7 +53,7 @@ class PaywallFullActivity : AppCompatActivity() {
 
             bottomSheetView.post {
                 val screenHeight = resources.displayMetrics.heightPixels
-                val percentage = 0.65f
+                val percentage = 0.68f
                 peekHeight = (screenHeight * percentage).toInt()
             }
         }
@@ -96,7 +96,7 @@ class PaywallFullActivity : AppCompatActivity() {
         showLoading()
         binding.root.postDelayed({
             showSuccess()
-        }, 4000)
+        }, 2000)
     }
 
     // Hiển thị loading state
