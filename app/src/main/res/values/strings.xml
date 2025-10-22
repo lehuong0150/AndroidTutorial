@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AndroidTutorialPaywall</string>
+    <string name="app_name">HuongApp</string>
     <string name="header_main">MainActivity </string>
     <string name="edit_send">Input information to send ...</string>
     <string name="choose">Choose: </string>

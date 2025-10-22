@@ -1,169 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray"
-    android:paddingHorizontal="@dimen/_15sdp"
-    tools:context=".layout.DialogWeeklyActivity">
+    android:fillViewport="true"
+    android:background="@android:color/darker_gray">
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/btnClose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_39sdp"
-        android:background="@android:color/transparent"
-        android:src="@drawable/ic_dlg_close"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imgDialogWeekly"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_48sdp"
-        android:background="@drawable/bg_dlg_sale_weekly_30"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btnClose" />
+        android:paddingHorizontal="@dimen/_15sdp"
+        tools:context=".layout.DialogWeeklyActivity">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imgLogoPro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_36sdp"
-        android:layout_marginEnd="@dimen/_14sdp"
-        android:src="@drawable/ic_logo_pro"
-        app:layout_constraintRight_toRightOf="@+id/imgDialogWeekly"
-        app:layout_constraintTop_toTopOf="@id/imgDialogWeekly" />
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_39sdp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_dlg_close"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txtTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_19sdp"
-        android:fontFamily="@font/funnel_sans_bold"
-        android:gravity="right"
-        android:text="@string/dialog_weekly_title"
-        android:textColor="@color/super_light"
-        android:textSize="@dimen/_12sdp"
-        app:layout_constraintRight_toRightOf="@+id/imgDialogWeekly"
-        app:layout_constraintTop_toBottomOf="@id/imgLogoPro" />
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/imgDiscountWeekly"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/_14sdp"
-        android:paddingTop="@dimen/_9sdp"
-        android:src="@drawable/img_dlg_weekly_discount"
-        app:layout_constraintRight_toRightOf="@+id/imgDialogWeekly"
-        app:layout_constraintTop_toBottomOf="@id/txtTitle" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txtContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_52sdp"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:layout_marginEnd="@dimen/_19sdp"
-        android:background="@drawable/bg_dlg_txt_content"
-        android:fontFamily="@font/funnel_sans_semibold"
-        android:gravity="right"
-        android:paddingHorizontal="@dimen/_9sdp"
-        android:paddingVertical="@dimen/_4sdp"
-        android:text="@string/dialog_weekly_content"
-        android:textColor="@color/super_light"
-        android:textSize="@dimen/_11sdp"
-        app:layout_constraintRight_toRightOf="@+id/imgDialogWeekly"
-        app:layout_constraintTop_toBottomOf="@id/imgDiscountWeekly" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnClaimOffer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_14sdp"
-        android:background="@drawable/bg_dlg_btn_offer"
-        android:fontFamily="@font/funnel_sans_extra_bold"
-        android:gravity="center"
-        android:paddingHorizontal="@dimen/_12sdp"
-        android:paddingVertical="@dimen/_9sdp"
-        android:text="@string/dialog_weekly_btn_offer"
-        android:textColor="@color/super_light"
-        android:textSize="@dimen/_12sdp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgDialogWeekly" />
-
-    <ProgressBar
-        android:id="@+id/pgbLoadInfo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_dlg_btn_offer"
-        android:indeterminate="true"
-        android:indeterminateTint="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/btnClaimOffer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnClaimOffer" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txtPolicy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_9sdp"
-        android:layout_marginBottom="@dimen/_16sdp"
-        android:fontFamily="@font/funnel_sans_regular"
-        android:gravity="center"
-        android:paddingHorizontal="@dimen/_16sdp"
-        android:paddingVertical="@dimen/_6sdp"
-        android:text="@string/dialog_weekly_policy"
-        android:textColor="@color/super_light"
-        android:textSize="@dimen/_8sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnClaimOffer" />
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/layoutLoadFail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/txtPolicy"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgDialogWeekly">
-
-        <androidx.appcompat.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgDialogWeekly"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/funnel_sans_semibold"
-            android:gravity="center"
-            android:text="@string/dialog_weekly_message"
+            android:layout_marginTop="@dimen/_48sdp"
+            android:background="@drawable/bg_dlg_sale_weekly_30"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btnClose" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgLogoPro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_36sdp"
+            android:layout_marginEnd="@dimen/_15sdp"
+            android:src="@drawable/ic_logo_pro"
+            app:layout_constraintRight_toRightOf="@+id/imgDialogWeekly"
+            app:layout_constraintTop_toTopOf="@id/imgDialogWeekly" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_19sdp"
+            android:fontFamily="@font/funnel_sans_bold"
+            android:gravity="right"
+            android:text="@string/dialog_weekly_title"
             android:textColor="@color/super_light"
-            android:textSize="@dimen/_12sdp" />
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintRight_toRightOf="@+id/imgDialogWeekly"
+            app:layout_constraintTop_toBottomOf="@id/imgLogoPro" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtTryAgain"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgDiscountWeekly"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_6sdp"
-            android:padding="@dimen/_4sdp"
+            android:layout_marginEnd="@dimen/_11sdp"
+            android:paddingTop="@dimen/_9sdp"
+            android:src="@drawable/img_dlg_weekly_discount"
+            app:layout_constraintRight_toRightOf="@+id/imgDialogWeekly"
+            app:layout_constraintTop_toBottomOf="@id/txtTitle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_52sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_19sdp"
+            android:background="@drawable/bg_dlg_txt_content"
+            android:fontFamily="@font/funnel_sans_semibold"
+            android:gravity="right"
+            android:paddingHorizontal="@dimen/_9sdp"
+            android:paddingVertical="@dimen/_4sdp"
+            android:text="@string/dialog_weekly_content"
+            android:textColor="@color/super_light"
+            android:textSize="@dimen/_11sdp"
+            app:layout_constraintRight_toRightOf="@+id/imgDialogWeekly"
+            app:layout_constraintTop_toBottomOf="@id/imgDiscountWeekly" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnClaimOffer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_14sdp"
+            android:background="@drawable/bg_dlg_btn_offer"
+            android:fontFamily="@font/funnel_sans_extra_bold"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/_12sdp"
+            android:paddingVertical="@dimen/_9sdp"
+            android:text="@string/dialog_weekly_btn_offer"
+            android:textColor="@color/super_light"
+            android:textSize="@dimen/_12sdp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgDialogWeekly" />
+
+        <ProgressBar
+            android:id="@+id/pgbLoadInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_dlg_btn_offer"
+            android:indeterminate="true"
+            android:indeterminateTint="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/btnClaimOffer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/btnClaimOffer" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtPolicy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_9sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
             android:fontFamily="@font/funnel_sans_regular"
             android:gravity="center"
-            android:text="@string/dialog_weekly_again"
+            android:paddingHorizontal="@dimen/_16sdp"
+            android:paddingVertical="@dimen/_6sdp"
+            android:text="@string/dialog_weekly_policy"
             android:textColor="@color/super_light"
-            android:textSize="@dimen/_10sdp" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            android:textSize="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnClaimOffer" />
 
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/groupContent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="txtContent,btnClaimOffer" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layoutLoadFail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/txtPolicy"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imgDialogWeekly">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/funnel_sans_semibold"
+                android:gravity="center"
+                android:text="@string/dialog_weekly_message"
+                android:textColor="@color/super_light"
+                android:textSize="@dimen/_12sdp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtTryAgain"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:padding="@dimen/_4sdp"
+                android:fontFamily="@font/funnel_sans_regular"
+                android:gravity="center"
+                android:text="@string/dialog_weekly_again"
+                android:textColor="@color/super_light"
+                android:textSize="@dimen/_10sdp" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="txtContent,btnClaimOffer" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

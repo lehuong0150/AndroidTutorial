@@ -15,7 +15,6 @@ class PaywallBottomSheetActivity : AppCompatActivity() {
     private lateinit var binding: ActivityPaywallBottomSheetBinding
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
 
-    // State variables
     private var isYearlySelected = true
     private var isFreeTrialEnabled = true
 
@@ -50,7 +49,7 @@ class PaywallBottomSheetActivity : AppCompatActivity() {
 
             bottomSheetView.post {
                 val screenHeight = resources.displayMetrics.heightPixels
-                val percentage = 0.68f //
+                val percentage = 0.68f
                 peekHeight = (screenHeight * percentage).toInt()
             }
         }
@@ -92,12 +91,10 @@ class PaywallBottomSheetActivity : AppCompatActivity() {
     private fun setupInitialState() {
         showLoading()
 
-        // Simulate loading data
         binding.root.postDelayed({
             showSuccess()
         }, 2000)
     }
-
 
     private fun showLoading() {
         with(binding) {
@@ -126,14 +123,12 @@ class PaywallBottomSheetActivity : AppCompatActivity() {
     }
 
     // Cập nhật toàn bộ UI dựa trên state hiện tại
-
     private fun updateUI() {
         updatePlanBackground()
         updateButtonText()
         updateFreeTrialText()
         updateContentText()
     }
-
 
     //Cập nhật background của yearly/weekly plans
     private fun updatePlanBackground() {
@@ -153,7 +148,6 @@ class PaywallBottomSheetActivity : AppCompatActivity() {
     }
 
     // Cập nhật text của button chính
-
     private fun updateButtonText() {
         binding.btnTryTree.text = if (isFreeTrialEnabled) {
             getString(R.string.paywall_bottom_sheet_btn_free)
@@ -163,7 +157,6 @@ class PaywallBottomSheetActivity : AppCompatActivity() {
     }
 
     //Cập nhật text free trial (dưới button)
-
     private fun updateFreeTrialText() {
         binding.txtPwFreeTrial.text = if (isFreeTrialEnabled) {
             getString(R.string.paywall_bottom_sheet_free_trial)
@@ -172,9 +165,7 @@ class PaywallBottomSheetActivity : AppCompatActivity() {
         }
     }
 
-
     //Cập nhật content text (auto renew text)
-
     private fun updateContentText() {
         binding.txtPwContent.text = when {
             isFreeTrialEnabled && isYearlySelected ->

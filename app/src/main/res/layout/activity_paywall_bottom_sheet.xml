@@ -32,6 +32,7 @@
             android:id="@+id/btnClose"
             android:layout_width="@dimen/_12sdp"
             android:layout_height="@dimen/_12sdp"
+            android:padding="@dimen/_2sdp"
             android:src="@drawable/ic_pw_onboarding_cancel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

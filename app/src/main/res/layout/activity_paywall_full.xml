@@ -25,8 +25,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_20sdp"
-            android:layout_marginEnd="@dimen/_27sdp"
+            android:layout_marginEnd="@dimen/_18sdp"
             android:background="@android:color/transparent"
+            android:padding="@dimen/_2sdp"
             android:src="@drawable/ic_pw_onboarding_cancel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
