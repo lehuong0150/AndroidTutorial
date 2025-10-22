@@ -5,21 +5,18 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
     tools:context=".layout.PaywallFullActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutGif"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="#F5F5F5"
-        app:layout_constraintDimensionRatio="0.356"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_12sdp"
             android:background="@drawable/img_pw_full"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,7 +43,8 @@
         android:paddingTop="@dimen/_12sdp"
         android:paddingBottom="@dimen/_12sdp"
         app:behavior_peekHeight="@dimen/_390sdp"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        app:layout_constraintDimensionRatio="0.635">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtTitle"
@@ -67,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_9sdp"
-            android:background="@drawable/bg_pw_full_yearly_plan"
+            android:background="@drawable/bg_pw_full_selected"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/txtTitle">
@@ -84,7 +82,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/_12sdp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/layoutPwYearly" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtPwYearlyPlan"
@@ -96,7 +94,7 @@
                 android:text="@string/paywall_full_yearly_plan"
                 android:textColor="@color/color_25104A"
                 android:textSize="@dimen/_16sdp"
-                app:layout_constraintStart_toStartOf="@id/layoutPwYearly"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txtPwYearlySaved" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -110,22 +108,52 @@
                 android:text="@string/paywall_full_yearly_plan_content"
                 android:textColor="@color/color_25104A"
                 android:textSize="@dimen/_10sdp"
-                app:layout_constraintStart_toStartOf="@id/layoutPwYearly"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txtPwYearlyPlan" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtPwYearly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:fontFamily="@font/read_ex_pro_regular"
+                android:text="/year"
+                android:textColor="@color/color_25104A"
+                android:textSize="@dimen/_9sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txtPwYearlySaved" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtPwYearlyPlanPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/read_ex_pro_regular"
-                android:paddingHorizontal="@dimen/_10sdp"
+                android:layout_marginEnd="2dp"
+                android:fontFamily="@font/read_ex_pro_bold"
                 android:text="@string/paywall_bottom_sheet_yearly_plan_price"
                 android:textColor="@color/color_25104A"
                 android:textSize="@dimen/_16sdp"
+                app:layout_constraintBaseline_toBaselineOf="@id/txtPwYearly"
+                app:layout_constraintEnd_toStartOf="@id/txtPwYearly" />
+
+            <ProgressBar
+                android:id="@+id/pgbLoadYearly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:indeterminate="true"
                 app:layout_constraintBottom_toBottomOf="@+id/layoutPwYearly"
-                app:layout_constraintEnd_toEndOf="@id/layoutPwYearly"
-                app:layout_constraintTop_toBottomOf="@id/txtPwYearlySaved" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtPwYearlySaved"
+                app:layout_constraintVertical_bias="0.302" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/groupYearly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="txtPwYearlyPlanPrice,txtPwYearly" />
         </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutPwWeekly"
@@ -146,10 +174,21 @@
                 android:fontFamily="@font/read_ex_pro_bold"
                 android:text="@string/paywall_full_weekly_plan"
                 android:textColor="@color/color_25104A"
-                android:textSize="@dimen/_16sdp"
-                app:layout_constraintBottom_toBottomOf="@+id/layoutPwWeekly"
-                app:layout_constraintStart_toStartOf="@id/layoutPwWeekly"
-                app:layout_constraintTop_toTopOf="@id/layoutPwWeekly" />
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/txtPwWeekly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/read_ex_pro_regular"
+                android:text="@string/paywall_full_weekly"
+                android:textColor="@color/color_25104A"
+                android:textSize="@dimen/_9sdp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/txtPwWeeklyPlan"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/txtPwWeeklyPlanPrice"
@@ -158,10 +197,24 @@
                 android:fontFamily="@font/read_ex_pro_regular"
                 android:text="@string/paywall_full_weekly_plan_price"
                 android:textColor="@color/color_25104A"
-                android:textSize="@dimen/_16sdp"
+                android:textSize="@dimen/_12sdp"
+                app:layout_constraintBaseline_toBaselineOf="@+id/txtPwWeeklyPlan"
+                app:layout_constraintEnd_toStartOf="@+id/txtPwWeekly" />
+            <ProgressBar
+                android:id="@+id/pgbLoadWeekly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:indeterminate="true"
                 app:layout_constraintBottom_toBottomOf="@+id/layoutPwWeekly"
-                app:layout_constraintEnd_toEndOf="@id/layoutPwWeekly"
-                app:layout_constraintTop_toTopOf="@id/layoutPwWeekly" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/layoutPwWeekly"
+                app:layout_constraintVertical_bias="0.302" />
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/groupWeekly"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:constraint_referenced_ids="txtPwWeeklyPlanPrice,txtPwWeekly" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -224,22 +277,22 @@
             android:id="@+id/txtPolicy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_10sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
             android:fontFamily="@font/read_ex_pro_regular"
             android:gravity="center"
-            android:padding="@dimen/_2sdp"
+            android:padding="@dimen/_10sdp"
             android:text="@string/paywall_full_policy"
             android:textColor="@color/color_4A2610"
             android:textSize="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtPwFreeTrial" />
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/groupContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="txtPwContent,btnTryTree,txtPwFreeTrial" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.Group
-        android:id="@+id/groupContent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:constraint_referenced_ids="txtPwYearlyPlanPrice,txtPwWeeklyPlanPrice,txtPwYearlyPlanContent,txtPwContent,btnTryTree,txtPwFreeTrial" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

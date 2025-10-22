@@ -3,6 +3,8 @@ package com.example.androidtutorial.layout
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.androidtutorial.databinding.ActivityPaywallSaleBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
@@ -15,7 +17,16 @@ class PaywallSaleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPaywallSaleBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(
+                systemBars.left,
+                systemBars.top,
+                systemBars.right,
+                systemBars.bottom
+            )
+            insets
+        }
         setupBottomSheet()
         setupClickListeners()
         showLoading()

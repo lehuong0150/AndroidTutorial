@@ -3,6 +3,8 @@ package com.example.androidtutorial.layout
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.androidtutorial.databinding.ActivityDialogYearlyBinding
 
 class DialogYearlyActivity : AppCompatActivity() {
@@ -13,7 +15,16 @@ class DialogYearlyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDialogYearlyBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(
+                systemBars.left,
+                systemBars.top,
+                systemBars.right,
+                systemBars.bottom
+            )
+            insets
+        }
         showLoading()
 
         binding.root.postDelayed({

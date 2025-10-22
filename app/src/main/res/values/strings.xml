@@ -166,9 +166,11 @@
     <string name="paywall_bottom_sheet_saved">Saved 92%</string>
     <string name="paywall_bottom_sheet_yearly_plan">Yearly Plan</string>
     <string name="paywall_bottom_sheet_yearly_plan_content">Only $0.412 per week</string>
-    <string name="paywall_bottom_sheet_yearly_plan_price">$19.99/year</string>
+    <string name="paywall_bottom_sheet_yearly_plan_price">$19.99</string>
+    <string name="paywall_bottom_sheet_yearly">/year</string>
     <string name="paywall_bottom_sheet_weekly_plan">Weekly Plan</string>
-    <string name="paywall_bottom_sheet_weekly_plan_price">$4.99/week</string>
+    <string name="paywall_bottom_sheet_weekly_plan_price">$4.99</string>
+    <string name="paywall_bottom_sheet_weekly">/week</string>
     <string name="paywall_bottom_sheet_content_yearly">$19.99/year after free trial ends.
             \nAuto renew, cancel anytime</string>
     <string name="paywall_bottom_sheet_content_weekly">$4.99/year after free trial ends.
@@ -197,7 +199,8 @@
     <!--    ]]>-->
     <!--</string>-->
     <string name="paywall_full_weekly_plan">Weekly Plan</string>
-    <string name="paywall_full_weekly_plan_price">$4.99/week</string>
+    <string name="paywall_full_weekly_plan_price">$4.99</string>
+    <string name="paywall_full_weekly">/week</string>
     <string name="paywall_full_content_yearly">$19.99/year after free trial ends.
             \nAuto renew, cancel anytime</string>
     <string name="paywall_full_content_weekly">$4.99/year after free trial ends.

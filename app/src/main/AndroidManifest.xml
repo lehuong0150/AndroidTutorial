@@ -18,6 +18,9 @@
         android:theme="@style/Theme.AndroidTutorial"
         tools:targetApi="31">
         <activity
+            android:name=".layout.kkk"
+            android:exported="false" />
+        <activity
             android:name=".layout.UnlockActivity"
             android:exported="false" />
         <activity

@@ -3,6 +3,8 @@ package com.example.androidtutorial.layout
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.androidtutorial.R
 import com.example.androidtutorial.databinding.ActivityPaywallOnboardingBinding
 
@@ -16,7 +18,16 @@ class PaywallOnboardingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityPaywallOnboardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            view.setPadding(
+                systemBars.left,
+                systemBars.top,
+                systemBars.right,
+                systemBars.bottom
+            )
+            insets
+        }
         setupInitialState()
         setupListeners()
     }
@@ -25,7 +36,7 @@ class PaywallOnboardingActivity : AppCompatActivity() {
         showLoading()
 
         binding.root.postDelayed({
-            showContent()
+            showSuccess()
         }, 5000)
     }
 
@@ -41,13 +52,16 @@ class PaywallOnboardingActivity : AppCompatActivity() {
         }
 
         btnTryTree.setOnClickListener {
-            processPurchase()
+            updateButtonText()
+        }
+
+        btnClose.setOnClickListener {
+            finish()
         }
     }
 
     private fun updateUI() {
         updateContentText()
-        updateButtonText()
         updateFreeTrialText()
     }
 
@@ -89,10 +103,10 @@ class PaywallOnboardingActivity : AppCompatActivity() {
 
     private fun showLoading() = with(binding) {
         pgbLoadInfo.visibility = View.VISIBLE
-        groupContent.visibility = View.INVISIBLE
+        groupContent.visibility = View.VISIBLE
     }
 
-    private fun showContent() = with(binding) {
+    private fun showSuccess() = with(binding) {
         pgbLoadInfo.visibility = View.INVISIBLE
         groupContent.visibility = View.VISIBLE
         updateUI()

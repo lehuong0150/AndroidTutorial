@@ -60,11 +60,13 @@
             android:id="@+id/btnClose"
             android:layout_width="@dimen/_12sdp"
             android:layout_height="@dimen/_12sdp"
-            android:layout_marginTop="@dimen/_55sdp"
+            android:layout_marginTop="@dimen/_52sdp"
             android:layout_marginEnd="@dimen/_14sdp"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_close"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.944"
+            app:layout_constraintStart_toEndOf="@+id/radioGroupPlan"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
