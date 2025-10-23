@@ -105,6 +105,10 @@ class PaywallBottomSheetActivity : AppCompatActivity() {
             groupWeekly.visibility = View.INVISIBLE
             groupYearly.visibility = View.INVISIBLE
             groupContent.visibility = View.INVISIBLE
+
+            btnTryTree.isEnabled = false
+            btnTryTree.text = ""
+            btnTryTree.setBackgroundResource(R.drawable.bg_pw_loading)
         }
     }
 
@@ -118,6 +122,9 @@ class PaywallBottomSheetActivity : AppCompatActivity() {
             groupYearly.visibility = View.VISIBLE
             groupContent.visibility = View.VISIBLE
 
+            btnTryTree.isEnabled = true
+            btnTryTree.text = getString(R.string.paywall_bottom_sheet_btn_free)
+            btnTryTree.setBackgroundResource(R.drawable.btn_pw_bottom_sheet_free)
             updateUI()
         }
     }
@@ -141,7 +148,7 @@ class PaywallBottomSheetActivity : AppCompatActivity() {
             } else {
                 // Weekly selected
                 txtPwYearlySaved.setBackgroundResource(R.drawable.bg_pw_yearly_title_unselected)
-                layoutPwYearly.setBackgroundResource(R.drawable.bg_pw_unselected)
+                layoutPwYearly.setBackgroundResource(R.drawable.bg_pw_yearly_unselected)
                 layoutPwWeekly.setBackgroundResource(R.drawable.bg_pw_selected)
             }
         }

@@ -58,10 +58,10 @@
             android:layout_marginTop="@dimen/_9sdp"
             android:background="@drawable/bg_unlock_btn_free"
             android:fontFamily="@font/read_ex_pro_bold"
-            android:textAllCaps="false"
             android:gravity="center"
             android:padding="@dimen/_12sdp"
             android:text="@string/unlock_btn_free"
+            android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="@dimen/_14sdp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -70,9 +70,8 @@
 
         <ProgressBar
             android:id="@+id/pgbLoadInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_pw_loading"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
             android:indeterminate="true"
             android:indeterminateTint="@android:color/white"
             app:layout_constraintBottom_toBottomOf="@+id/btnTryTree"
@@ -94,10 +93,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btnTryTree" />
 
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/groupContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:constraint_referenced_ids="txtContent,btnTryTree" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

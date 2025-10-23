@@ -4,19 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".layout.PaywallFullActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutGif"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F5F5F5"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
             android:background="@drawable/img_pw_full"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,10 +39,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_minus38sdp"
-        android:background="@drawable/bg_pw_bottom_sheet"
+        android:background="@drawable/bg_pw_full_bottom_sheet"
         android:paddingHorizontal="@dimen/_16sdp"
-        android:paddingTop="@dimen/_12sdp"
-        android:paddingBottom="@dimen/_12sdp"
+        android:paddingVertical="@dimen/_12sdp"
         app:behavior_peekHeight="@dimen/_390sdp"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
         app:layout_constraintDimensionRatio="0.635">
@@ -139,14 +138,13 @@
 
             <ProgressBar
                 android:id="@+id/pgbLoadYearly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
                 android:layout_marginEnd="32dp"
                 android:indeterminate="true"
                 app:layout_constraintBottom_toBottomOf="@+id/layoutPwYearly"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtPwYearlySaved"
-                app:layout_constraintVertical_bias="0.302" />
+                app:layout_constraintTop_toBottomOf="@+id/txtPwYearlySaved" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/groupYearly"
@@ -159,7 +157,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutPwWeekly"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="@dimen/_6sdp"
             android:background="@drawable/bg_pw_unselected"
             android:paddingHorizontal="@dimen/_9sdp"
@@ -201,16 +199,17 @@
                 android:textSize="@dimen/_12sdp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txtPwWeeklyPlan"
                 app:layout_constraintEnd_toStartOf="@+id/txtPwWeekly" />
+
             <ProgressBar
                 android:id="@+id/pgbLoadWeekly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
                 android:layout_marginEnd="32dp"
                 android:indeterminate="true"
                 app:layout_constraintBottom_toBottomOf="@+id/layoutPwWeekly"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/layoutPwWeekly"
-                app:layout_constraintVertical_bias="0.302" />
+                app:layout_constraintTop_toTopOf="@+id/layoutPwWeekly" />
+
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/groupWeekly"
                 android:layout_width="wrap_content"
@@ -249,9 +248,8 @@
 
         <ProgressBar
             android:id="@+id/pgbLoadInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_pw_loading"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
             android:indeterminate="true"
             android:indeterminateTint="@android:color/white"
             app:layout_constraintBottom_toBottomOf="@+id/btnTryTree"
@@ -278,14 +276,13 @@
             android:id="@+id/txtPolicy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:fontFamily="@font/read_ex_pro_regular"
             android:gravity="center"
-            android:padding="@dimen/_10sdp"
             android:text="@string/paywall_full_policy"
             android:textColor="@color/color_4A2610"
             android:textSize="@dimen/_8sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtPwFreeTrial" />

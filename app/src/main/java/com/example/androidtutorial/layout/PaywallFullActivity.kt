@@ -43,21 +43,30 @@ class PaywallFullActivity : AppCompatActivity() {
     }
 
     // Cấu hình Bottom Sheet behavior
-
     private fun setupBottomSheet() {
         val bottomSheetView = binding.layoutPwFull
+        val topLayout = binding.layoutGif
+
+        val screenHeight = resources.displayMetrics.heightPixels
+        val topRatio = 0.38f
+        val bottomRatio = 0.69f
+
+        topLayout?.let {
+            val params = it.layoutParams
+            params.height = (screenHeight * topRatio).toInt()
+            it.layoutParams = params
+        }
 
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetView).apply {
             isHideable = false
             state = BottomSheetBehavior.STATE_COLLAPSED
 
             bottomSheetView.post {
-                val screenHeight = resources.displayMetrics.heightPixels
-                val percentage = 0.68f
-                peekHeight = (screenHeight * percentage).toInt()
+                peekHeight = (screenHeight * bottomRatio).toInt()
             }
         }
     }
+
 
     private fun setupClickListeners() {
         with(binding) {
@@ -109,6 +118,10 @@ class PaywallFullActivity : AppCompatActivity() {
             groupWeekly.visibility = View.INVISIBLE
             groupYearly.visibility = View.INVISIBLE
             groupContent.visibility = View.INVISIBLE
+
+            btnTryTree.isEnabled = false
+            btnTryTree.text = ""
+            btnTryTree.setBackgroundResource(R.drawable.bg_pw_loading)
         }
     }
 
@@ -122,6 +135,10 @@ class PaywallFullActivity : AppCompatActivity() {
             groupWeekly.visibility = View.VISIBLE
             groupYearly.visibility = View.VISIBLE
             groupContent.visibility = View.VISIBLE
+
+            btnTryTree.isEnabled = true
+            btnTryTree.text = getString(R.string.paywall_bottom_sheet_btn_free)
+            btnTryTree.setBackgroundResource(R.drawable.btn_pw_bottom_sheet_free)
 
             // Update UI với state hiện tại
             updateUI()
@@ -148,7 +165,7 @@ class PaywallFullActivity : AppCompatActivity() {
             } else {
                 // Weekly selected
                 txtPwYearlySaved.setBackgroundResource(R.drawable.bg_pw_yearly_title_unselected)
-                layoutPwYearly.setBackgroundResource(R.drawable.bg_pw_unselected)
+                layoutPwYearly.setBackgroundResource(R.drawable.bg_pw_yearly_unselected)
                 layoutPwWeekly.setBackgroundResource(R.drawable.bg_pw_full_selected)
             }
         }

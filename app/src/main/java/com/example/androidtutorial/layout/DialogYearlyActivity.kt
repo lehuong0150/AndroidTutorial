@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.androidtutorial.R
 import com.example.androidtutorial.databinding.ActivityDialogYearlyBinding
 
 class DialogYearlyActivity : AppCompatActivity() {
@@ -54,19 +55,21 @@ class DialogYearlyActivity : AppCompatActivity() {
 
     private fun showLoading() = with(binding) {
         layoutLoadFail.visibility = View.INVISIBLE
-        groupContent.visibility = View.INVISIBLE
+        btnClaimOffer.isEnabled = false
+        btnClaimOffer.text= ""
         pgbLoadInfo.visibility = View.VISIBLE
     }
 
     private fun showSuccess() = with(binding) {
         pgbLoadInfo.visibility = View.INVISIBLE
-        groupContent.visibility = View.VISIBLE
+        btnClaimOffer.visibility = View.VISIBLE
+        btnClaimOffer.text= getString(R.string.dialog_yearly_btn_offer)
         layoutLoadFail.visibility = View.INVISIBLE
     }
 
     private fun showFailed() = with(binding) {
         pgbLoadInfo.visibility = View.INVISIBLE
-        groupContent.visibility = View.INVISIBLE
+        btnClaimOffer.visibility = View.INVISIBLE
         layoutLoadFail.visibility = View.VISIBLE
     }
 }

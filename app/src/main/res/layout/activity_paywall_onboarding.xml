@@ -31,7 +31,7 @@
             <RadioButton
                 android:id="@+id/rbYearly"
                 android:layout_width="@dimen/_77sdp"
-                android:layout_height="@dimen/_22sdp"
+                android:layout_height="@dimen/_20sdp"
                 android:layout_marginEnd="@dimen/_6sdp"
                 android:background="@drawable/bg_radio_selector"
                 android:button="@null"
@@ -45,7 +45,7 @@
             <RadioButton
                 android:id="@+id/rbWeekly"
                 android:layout_width="@dimen/_77sdp"
-                android:layout_height="@dimen/_27sdp"
+                android:layout_height="@dimen/_20sdp"
                 android:background="@drawable/bg_radio_selector"
                 android:button="@null"
                 android:fontFamily="@font/read_ex_pro_regular"
@@ -88,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_16sdp"
-            android:src="@drawable/img_pw_onboarding"
+            android:background="@drawable/img_pw_onboarding"
             app:layout_constraintTop_toBottomOf="@id/txtTitle" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -158,16 +158,14 @@
 
         <ProgressBar
             android:id="@+id/pgbLoadInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_16sdp"
-            android:layout_marginVertical="@dimen/_9sdp"
-            android:background="@drawable/bg_pw_loading"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
             android:indeterminate="true"
             android:indeterminateTint="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/btnTryTree"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutFreeTrial" />
+            app:layout_constraintTop_toTopOf="@+id/btnTryTree" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtPolicy"
@@ -185,12 +183,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnTryTree" />
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/groupContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:constraint_referenced_ids="txtContent,btnTryTree" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

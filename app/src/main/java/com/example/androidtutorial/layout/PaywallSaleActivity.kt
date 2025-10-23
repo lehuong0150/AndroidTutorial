@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.androidtutorial.R
 import com.example.androidtutorial.databinding.ActivityPaywallSaleBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
@@ -38,15 +39,26 @@ class PaywallSaleActivity : AppCompatActivity() {
     }
 
     private fun setupBottomSheet() {
-        binding.layoutContent.let {
-            bottomSheetBehavior = BottomSheetBehavior.from(it).apply {
-                isHideable = false
-                state = BottomSheetBehavior.STATE_COLLAPSED
-                it.post {
-                    val screenHeight = resources.displayMetrics.heightPixels
-                    val percentage = 0.32f
-                    peekHeight = (screenHeight * percentage).toInt()
-                }
+        val bottomSheetView = binding.layoutContent
+        val topLayout = binding.layoutGif
+
+        val screenHeight = resources.displayMetrics.heightPixels
+
+        val topRatio = 0.68f
+        val bottomRatio = 0.36f
+
+        topLayout?.let {
+            val params = it.layoutParams
+            params.height = (screenHeight * topRatio).toInt()
+            it.layoutParams = params
+        }
+
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheetView).apply {
+            isHideable = false
+            state = BottomSheetBehavior.STATE_COLLAPSED
+
+            bottomSheetView.post {
+                peekHeight = (screenHeight * bottomRatio).toInt()
             }
         }
     }
@@ -74,19 +86,30 @@ class PaywallSaleActivity : AppCompatActivity() {
     private fun showLoading() = with(binding) {
         groupContent.visibility = View.INVISIBLE
         layoutLoadFail.visibility = View.INVISIBLE
-        groupLoading.visibility = View.VISIBLE
+        pgbLoadInfo.visibility = View.VISIBLE
+        btnClaimOffer.isEnabled = false
+        btnClaimOffer.text= ""
+        shimmerLayout.startShimmer()
+        shimmerLayout.visibility = View.VISIBLE
     }
 
     private fun showSuccess() = with(binding) {
-        groupLoading.visibility = View.INVISIBLE
+        shimmerLayout.stopShimmer()
+        shimmerLayout.visibility = View.GONE
+        pgbLoadInfo.visibility = View.INVISIBLE
         layoutLoadFail.visibility = View.INVISIBLE
         groupContent.visibility = View.VISIBLE
+        btnClaimOffer.visibility = View.VISIBLE
+        btnClaimOffer.text= getString(R.string.paywall_sale_btn_offer)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
     private fun showFailed() = with(binding) {
-        groupLoading.visibility = View.INVISIBLE
+        shimmerLayout.stopShimmer()
+        shimmerLayout.visibility = View.GONE
+        pgbLoadInfo.visibility = View.INVISIBLE
         groupContent.visibility = View.INVISIBLE
+        btnClaimOffer.visibility = View.INVISIBLE
         layoutLoadFail.visibility = View.VISIBLE
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }

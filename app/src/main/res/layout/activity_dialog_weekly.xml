@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="true"
-    android:background="@android:color/darker_gray">
+    android:background="@android:color/darker_gray"
+    android:fillViewport="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
@@ -88,8 +88,8 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnClaimOffer"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_14sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginTop="@dimen/_9sdp"
             android:background="@drawable/bg_dlg_btn_offer"
             android:fontFamily="@font/funnel_sans_extra_bold"
             android:gravity="center"
@@ -104,9 +104,8 @@
 
         <ProgressBar
             android:id="@+id/pgbLoadInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_dlg_btn_offer"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
             android:indeterminate="true"
             android:indeterminateTint="@android:color/white"
             app:layout_constraintBottom_toBottomOf="@+id/btnClaimOffer"
@@ -119,7 +118,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_9sdp"
-            android:layout_marginBottom="@dimen/_16sdp"
             android:fontFamily="@font/funnel_sans_regular"
             android:gravity="center"
             android:paddingHorizontal="@dimen/_16sdp"
@@ -127,7 +125,6 @@
             android:text="@string/dialog_weekly_policy"
             android:textColor="@color/super_light"
             android:textSize="@dimen/_8sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnClaimOffer" />
@@ -158,18 +155,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_6sdp"
-                android:padding="@dimen/_4sdp"
                 android:fontFamily="@font/funnel_sans_regular"
                 android:gravity="center"
+                android:padding="@dimen/_4sdp"
                 android:text="@string/dialog_weekly_again"
                 android:textColor="@color/super_light"
                 android:textSize="@dimen/_10sdp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/groupContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:constraint_referenced_ids="txtContent,btnClaimOffer" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

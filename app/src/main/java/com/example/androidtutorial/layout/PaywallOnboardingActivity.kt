@@ -52,7 +52,7 @@ class PaywallOnboardingActivity : AppCompatActivity() {
         }
 
         btnTryTree.setOnClickListener {
-            updateButtonText()
+            layoutFreeTrial.visibility = View.GONE
         }
 
         btnClose.setOnClickListener {
@@ -63,6 +63,7 @@ class PaywallOnboardingActivity : AppCompatActivity() {
     private fun updateUI() {
         updateContentText()
         updateFreeTrialText()
+        updateButtonText()
     }
 
     private fun updateContentText() = with(binding) {
@@ -83,17 +84,17 @@ class PaywallOnboardingActivity : AppCompatActivity() {
 
     private fun updateButtonText() = with(binding) {
         btnTryTree.text = if (isFreeTrialEnabled) {
-            getString(R.string.paywall_btn_free_trial_continue)
-        } else {
             getString(R.string.paywall_onboarding_btn_free)
+        } else {
+            getString(R.string.paywall_btn_free_trial_continue)
         }
     }
 
     private fun updateFreeTrialText() = with(binding) {
         txtFreeTrial.text = if (isFreeTrialEnabled) {
-            getString(R.string.paywall_free_trial_enabled)
-        } else {
             getString(R.string.paywall_free_trial_disabled)
+        } else {
+            getString(R.string.paywall_free_trial_enabled)
         }
     }
 
@@ -103,12 +104,18 @@ class PaywallOnboardingActivity : AppCompatActivity() {
 
     private fun showLoading() = with(binding) {
         pgbLoadInfo.visibility = View.VISIBLE
-        groupContent.visibility = View.VISIBLE
+        txtContent.visibility = View.VISIBLE
+        btnTryTree.isEnabled = false
+        btnTryTree.setBackgroundResource(R.drawable.bg_pw_loading)
+        btnTryTree.text = ""
     }
 
     private fun showSuccess() = with(binding) {
         pgbLoadInfo.visibility = View.INVISIBLE
-        groupContent.visibility = View.VISIBLE
+        txtContent.visibility = View.VISIBLE
+        btnTryTree.isEnabled = true
+        btnTryTree.text = getString(R.string.paywall_onboarding_btn_free)
+        btnTryTree.setBackgroundResource(R.drawable.bg_pw_btn_free)
         updateUI()
     }
 }

@@ -137,25 +137,29 @@
 
         <ProgressBar
             android:id="@+id/pgbLoadInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_pw_btn_offer"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
             android:indeterminate="true"
             app:layout_constraintBottom_toBottomOf="@+id/btnClaimOffer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/btnClaimOffer" />
 
-        <View
-            android:id="@+id/viewDataLoading"
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmerLayout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_85sdp"
             android:layout_marginTop="@dimen/_3sdp"
             android:background="@drawable/bg_pw_view_data_loading"
-            app:layout_constraintBottom_toTopOf="@+id/pgbLoadInfo"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtTitle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btnClaimOffer"
+            app:shimmer_auto_start="true"
+            app:shimmer_duration="1500"
+            app:shimmer_base_alpha="0.4"
+            app:shimmer_highlight_alpha="1.0"
+            app:shimmer_repeat_mode="reverse" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtContent"
@@ -225,12 +229,7 @@
             android:id="@+id/groupContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="txtPriceOld,txtOff,txtPrice,txtWeek,btnClaimOffer,txtContent" />
+            app:constraint_referenced_ids="txtPriceOld,txtOff,txtPrice,txtWeek,txtContent" />
 
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/groupLoading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:constraint_referenced_ids="pgbLoadInfo,viewDataLoading" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -33,7 +33,7 @@
             android:layout_width="@dimen/_12sdp"
             android:layout_height="@dimen/_12sdp"
             android:padding="@dimen/_2sdp"
-            android:src="@drawable/ic_pw_onboarding_cancel"
+            android:src="@drawable/ic_close"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -129,8 +129,8 @@
 
             <ProgressBar
                 android:id="@+id/pgbLoadYearly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
                 android:layout_marginEnd="32dp"
                 android:indeterminate="true"
                 app:layout_constraintBottom_toBottomOf="@+id/layoutPwYearly"
@@ -194,8 +194,8 @@
 
             <ProgressBar
                 android:id="@+id/pgbLoadWeekly"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_18sdp"
+                android:layout_height="@dimen/_18sdp"
                 android:layout_marginEnd="32dp"
                 android:indeterminate="true"
                 app:layout_constraintBottom_toBottomOf="@+id/layoutPwWeekly"
@@ -241,15 +241,14 @@
 
         <ProgressBar
             android:id="@+id/pgbLoadInfo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_pw_loading"
+            android:layout_width="@dimen/_18sdp"
+            android:layout_height="@dimen/_18sdp"
             android:indeterminate="true"
             android:indeterminateTint="@android:color/white"
-            app:layout_constraintBottom_toTopOf="@+id/txtPolicy"
+            app:layout_constraintBottom_toBottomOf="@+id/btnTryTree"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutPwWeekly" />
+            app:layout_constraintTop_toTopOf="@+id/btnTryTree" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtPwFreeTrial"
@@ -270,7 +269,7 @@
             android:id="@+id/txtPolicy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:fontFamily="@font/read_ex_pro_regular"
             android:gravity="center"
             android:padding="@dimen/_10sdp"
@@ -286,6 +285,6 @@
             android:id="@+id/groupContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="txtPwContent,btnTryTree,txtPwFreeTrial" />
+            app:constraint_referenced_ids="txtPwContent,txtPwFreeTrial" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

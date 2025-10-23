@@ -6,6 +6,7 @@ import android.view.animation.AlphaAnimation
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.androidtutorial.R
 import com.example.androidtutorial.databinding.ActivityUnlockBinding
 
 class UnlockActivity : AppCompatActivity() {
@@ -43,12 +44,16 @@ class UnlockActivity : AppCompatActivity() {
     }
 
     private fun showLoading() = with(binding) {
-        groupContent.visibility = View.INVISIBLE
         pgbLoadInfo.visibility = View.VISIBLE
+        btnTryTree.isEnabled = false
+        btnTryTree.setBackgroundResource(R.drawable.bg_pw_loading)
+        btnTryTree.text = ""
     }
 
     private fun showSuccess() = with(binding) {
         pgbLoadInfo.visibility = View.INVISIBLE
-        groupContent.visibility = View.VISIBLE
+        btnTryTree.isEnabled = true
+        btnTryTree.text = getString(R.string.paywall_onboarding_btn_free)
+        btnTryTree.setBackgroundResource(R.drawable.bg_pw_btn_free)
     }
 }
