@@ -46,7 +46,6 @@ class UnlockActivity : AppCompatActivity() {
     private fun showLoading() = with(binding) {
         pgbLoadInfo.visibility = View.VISIBLE
         btnTryTree.isEnabled = false
-        btnTryTree.setBackgroundResource(R.drawable.bg_pw_loading)
         btnTryTree.text = ""
     }
 
@@ -54,6 +53,5 @@ class UnlockActivity : AppCompatActivity() {
         pgbLoadInfo.visibility = View.INVISIBLE
         btnTryTree.isEnabled = true
         btnTryTree.text = getString(R.string.paywall_onboarding_btn_free)
-        btnTryTree.setBackgroundResource(R.drawable.bg_pw_btn_free)
     }
 }

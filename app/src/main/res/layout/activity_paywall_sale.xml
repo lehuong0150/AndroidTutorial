@@ -221,7 +221,7 @@
                 android:fontFamily="@font/funnel_sans_regular"
                 android:gravity="center"
                 android:text="@string/paywall_try_again"
-                android:textColor="@color/super_light"
+                android:textColor="#D1C9CF"
                 android:textSize="@dimen/_10sdp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 

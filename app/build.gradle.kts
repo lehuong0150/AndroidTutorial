@@ -54,6 +54,6 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.6.0")
     implementation("com.android.support.constraint:constraint-layout:1.1.0-beta1")
     implementation("com.intuit.sdp:sdp-android:1.1.1")
-    implementation("com.android.billingclient:billing-ktx:6.2.1")
+    implementation("com.android.billingclient:billing-ktx:7.0.0")
     implementation("com.facebook.shimmer:shimmer:0.5.0")
 }
