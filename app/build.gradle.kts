@@ -4,14 +4,14 @@ plugins {
 }
 
 android {
-    namespace = "com.example.androidtutorial"
+    namespace = "com.eco.musicplayer.audioplayer.music"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.androidtutorial"
+        applicationId = "com.eco.musicplayer.audioplayer.music"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
+        versionCode = 2
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -54,6 +54,6 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.6.0")
     implementation("com.android.support.constraint:constraint-layout:1.1.0-beta1")
     implementation("com.intuit.sdp:sdp-android:1.1.1")
-    implementation("com.android.billingclient:billing-ktx:7.0.0")
+    implementation("com.android.billingclient:billing-ktx:7.1.1")
     implementation("com.facebook.shimmer:shimmer:0.5.0")
 }
