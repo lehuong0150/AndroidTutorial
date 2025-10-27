@@ -251,11 +251,9 @@ class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
             ?: billingManager.getOfferByTrialDays(3)
         Log.d("DEBUG", "Offer: id='${offer3Days?.offerId}', trial=${offer3Days?.freeTrialDays}, price=${offer3Days?.formattedPrice}")
 
-        this.weeklyOffer = offer3Days ?: weeklyOffer
-        this.weeklyPrice = this.weeklyOffer?.formattedPrice ?: weeklyPrice
-        weeklyOffer?.let { Log.d("BillingManager ", it.offerId) }
+        this.weeklyOffer = offer3Days
+        this.weeklyPrice = offer3Days?.formattedPrice ?: ""
         this.lifetimePrice = lifetimePrice
-        this.weeklyOffer = weeklyOffer
 
         if (weeklyPrice.isEmpty() && lifetimePrice.isEmpty()) {
             Toast.makeText(this, "Không tải được thông tin giá từ Google Play", Toast.LENGTH_SHORT)
