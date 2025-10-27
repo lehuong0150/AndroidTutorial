@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".layout.PaywallBottomSheetActivity">
+    tools:context=".paywall.PaywallBottomSheetActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutPwBottomSheet"
@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:fontFamily="@font/read_ex_pro_regular"
-                android:text="/year"
+                android:text="@string/paywall_full_year"
                 android:textColor="@color/color_25104A"
                 android:textSize="@dimen/_9sdp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -174,7 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/read_ex_pro_regular"
-                android:text="@string/paywall_bottom_sheet_weekly"
+                android:text="@string/paywall_weekly"
                 android:textColor="@color/color_25104A"
                 android:textSize="@dimen/_9sdp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/txtPwWeeklyPlan"

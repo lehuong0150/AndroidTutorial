@@ -1,4 +1,4 @@
-package com.eco.musicplayer.audioplayer.music.layout
+package com.eco.musicplayer.audioplayer.music.paywall
 
 import android.content.Intent
 import android.os.Bundle

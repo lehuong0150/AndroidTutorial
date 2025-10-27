@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@color/color_DBEAFE"
         android:padding="@dimen/_12sdp"
-        tools:context=".layout.UnlockActivity">
+        tools:context=".paywall.UnlockActivity">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtTitle"

@@ -1,4 +1,4 @@
-package com.eco.musicplayer.audioplayer.music.layout
+package com.eco.musicplayer.audioplayer.music.paywall
 
 import android.os.Bundle
 import android.view.View
@@ -6,15 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.eco.musicplayer.audioplayer.music.R
-import com.eco.musicplayer.audioplayer.music.databinding.ActivityDialogYearlyBinding
+import com.eco.musicplayer.audioplayer.music.databinding.ActivityDialogWeeklyBinding
 
-class DialogYearlyActivity : AppCompatActivity() {
+class DialogWeeklyActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityDialogYearlyBinding
+    private lateinit var binding: ActivityDialogWeeklyBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDialogYearlyBinding.inflate(layoutInflater)
+        binding = ActivityDialogWeeklyBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -47,7 +47,6 @@ class DialogYearlyActivity : AppCompatActivity() {
         btnClaimOffer.setOnClickListener {
             // handleClaimOffer()
         }
-
         btnClose.setOnClickListener {
             finish()
         }
@@ -63,7 +62,7 @@ class DialogYearlyActivity : AppCompatActivity() {
     private fun showSuccess() = with(binding) {
         pgbLoadInfo.visibility = View.INVISIBLE
         btnClaimOffer.visibility = View.VISIBLE
-        btnClaimOffer.text= getString(R.string.dialog_yearly_btn_offer)
+        btnClaimOffer.text= getString(R.string.dialog_weekly_btn_offer)
         layoutLoadFail.visibility = View.INVISIBLE
     }
 

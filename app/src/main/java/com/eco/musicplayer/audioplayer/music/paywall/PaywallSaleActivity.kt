@@ -1,4 +1,4 @@
-package com.eco.musicplayer.audioplayer.music.layout
+package com.eco.musicplayer.audioplayer.music.paywall
 
 import android.os.Bundle
 import android.view.View
@@ -65,13 +65,13 @@ class PaywallSaleActivity : AppCompatActivity() {
 
     private fun setupClickListeners() = with(binding) {
         layoutContent.setOnClickListener {
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
 
         txtTryAgain.setOnClickListener {
             showLoading()
             root.postDelayed({
-                showSuccess() // hoặc showFailed()
+                showSuccess()
             }, 2000)
         }
 
@@ -88,7 +88,7 @@ class PaywallSaleActivity : AppCompatActivity() {
         layoutLoadFail.visibility = View.INVISIBLE
         pgbLoadInfo.visibility = View.VISIBLE
         btnClaimOffer.isEnabled = false
-        btnClaimOffer.text= ""
+        btnClaimOffer.text = ""
         shimmerLayout.startShimmer()
         shimmerLayout.visibility = View.VISIBLE
     }
@@ -100,7 +100,7 @@ class PaywallSaleActivity : AppCompatActivity() {
         layoutLoadFail.visibility = View.INVISIBLE
         groupContent.visibility = View.VISIBLE
         btnClaimOffer.visibility = View.VISIBLE
-        btnClaimOffer.text= getString(R.string.paywall_sale_btn_offer)
+        btnClaimOffer.text = getString(R.string.paywall_sale_btn_offer)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
