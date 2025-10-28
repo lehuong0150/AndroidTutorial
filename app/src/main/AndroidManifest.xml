@@ -19,6 +19,9 @@
         android:theme="@style/Theme.AndroidTutorial"
         tools:targetApi="31">
         <activity
+            android:name=".layout.SettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".paywall.UnlockActivity"
             android:exported="false" />
         <activity

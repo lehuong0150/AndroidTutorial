@@ -1,5 +1,6 @@
 package com.eco.musicplayer.audioplayer.music.paywall
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -7,8 +8,12 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.eco.musicplayer.audioplayer.music.R
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityDialogWeeklyBinding
+import com.eco.musicplayer.audioplayer.music.extension.setDiscountWithGradient
 
 class DialogWeeklyActivity : AppCompatActivity() {
+    companion object {
+        private const val TAG = "DialogWeeklyActivity"
+    }
 
     private lateinit var binding: ActivityDialogWeeklyBinding
 
@@ -54,15 +59,16 @@ class DialogWeeklyActivity : AppCompatActivity() {
 
     private fun showLoading() = with(binding) {
         layoutLoadFail.visibility = View.INVISIBLE
+        btnClaimOffer.visibility = View.VISIBLE
         btnClaimOffer.isEnabled = false
-        btnClaimOffer.text= ""
+        btnClaimOffer.text = ""
         pgbLoadInfo.visibility = View.VISIBLE
     }
 
     private fun showSuccess() = with(binding) {
         pgbLoadInfo.visibility = View.INVISIBLE
         btnClaimOffer.visibility = View.VISIBLE
-        btnClaimOffer.text= getString(R.string.dialog_weekly_btn_offer)
+        btnClaimOffer.text = getString(R.string.dialog_weekly_btn_offer)
         layoutLoadFail.visibility = View.INVISIBLE
     }
 

@@ -8,19 +8,19 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:gravity="center"
+        android:orientation="vertical"
         android:padding="16dp">
 
         <TextView
             android:id="@+id/txtChoose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/choose"
-            android:textSize="18sp"
-            android:textStyle="bold"
             android:layout_marginBottom="16dp"
-            android:textColor="@color/black" />
+            android:text="@string/choose"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnPayWall1"
@@ -85,5 +85,15 @@
             android:text="Paywall_7"
             android:textColor="@color/black" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/txtDiscountWeeklyDiscount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_11sdp"
+            android:lineSpacingExtra="@dimen/_1sdp"
+            android:paddingTop="@dimen/_9sdp"
+            android:textSize="@dimen/_48sdp"
+            android:gravity="right"
+            android:text="@string/dialog_weekly_30"/>
     </androidx.appcompat.widget.LinearLayoutCompat>
 </ScrollView>

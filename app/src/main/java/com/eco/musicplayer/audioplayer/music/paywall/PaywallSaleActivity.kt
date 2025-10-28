@@ -1,18 +1,34 @@
 package com.eco.musicplayer.audioplayer.music.paywall
 
+import android.graphics.Paint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.eco.musicplayer.audioplayer.music.R
+import com.eco.musicplayer.audioplayer.music.billing.BillingListener
+import com.eco.musicplayer.audioplayer.music.billing.BillingManager
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityPaywallSaleBinding
+import com.eco.musicplayer.audioplayer.music.models.OfferInfo
+import com.eco.musicplayer.audioplayer.music.paywall.PaywallBottomSheetActivity.Companion
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import kotlinx.coroutines.delay
 
-class PaywallSaleActivity : AppCompatActivity() {
+class PaywallSaleActivity : AppCompatActivity(), BillingListener {
+    companion object {
+        private const val TAG = "PaywallSaleActivity"
+    }
 
     private lateinit var binding: ActivityPaywallSaleBinding
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
+    private lateinit var billingManager: BillingManager
+    private var weeklyPrice = ""
+    private var weeklyIntroPrice = ""
+    private var introPeriod = ""
+    private var weeklyOffer: OfferInfo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,14 +44,20 @@ class PaywallSaleActivity : AppCompatActivity() {
             )
             insets
         }
+
+        setupBillingManager()
         setupBottomSheet()
         setupClickListeners()
-        showLoading()
+        setupInitialState()
+    }
 
-        binding.root.postDelayed({
-            val isSuccess = false
-            if (isSuccess) showSuccess() else showFailed()
-        }, 2000)
+    private fun setupBillingManager() {
+        billingManager = BillingManager(this, this)
+        billingManager.initialize()
+    }
+
+    private fun setupInitialState() {
+        showLoading()
     }
 
     private fun setupBottomSheet() {
@@ -65,7 +87,7 @@ class PaywallSaleActivity : AppCompatActivity() {
 
     private fun setupClickListeners() = with(binding) {
         layoutContent.setOnClickListener {
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
 
         txtTryAgain.setOnClickListener {
@@ -89,8 +111,10 @@ class PaywallSaleActivity : AppCompatActivity() {
         pgbLoadInfo.visibility = View.VISIBLE
         btnClaimOffer.isEnabled = false
         btnClaimOffer.text = ""
+        btnClaimOffer.visibility = View.VISIBLE
         shimmerLayout.startShimmer()
         shimmerLayout.visibility = View.VISIBLE
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
     private fun showSuccess() = with(binding) {
@@ -102,6 +126,7 @@ class PaywallSaleActivity : AppCompatActivity() {
         btnClaimOffer.visibility = View.VISIBLE
         btnClaimOffer.text = getString(R.string.paywall_sale_btn_offer)
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        updatePriceDisplay()
     }
 
     private fun showFailed() = with(binding) {
@@ -114,6 +139,81 @@ class PaywallSaleActivity : AppCompatActivity() {
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
+    private fun updatePriceDisplay() {
+        val weeklyPriceNumber = weeklyPrice.filter { it.isDigit() }.toDoubleOrNull() ?: 0.0
+        val introPriceNumber = weeklyIntroPrice.filter { it.isDigit() }.toDoubleOrNull() ?: 0.0
+
+        val offPercent = if (weeklyPriceNumber > 0) {
+            ((weeklyPriceNumber - introPriceNumber) / weeklyPriceNumber * 100).toInt()
+        } else {
+            0
+        }
+        with(binding) {
+            if (weeklyPrice.isNotEmpty()) {
+                txtPrice.text = weeklyIntroPrice
+                txtPriceOld.apply {
+                    text = getString(R.string.paywall_sale_price_old, weeklyPrice)
+                    paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                }
+                txtContent.text = getString(
+                    R.string.paywall_sale_content,
+                    weeklyIntroPrice,
+                    introPeriod,
+                    weeklyPrice
+                )
+                txtOff.text = getString(R.string.paywall_sale_off, offPercent)
+            } else {
+                Log.d(TAG, "weeklyPrice null")
+            }
+        }
+    }
+
+    override fun onBillingSetupFinished(isSuccess: Boolean) {
+        if (!isSuccess) {
+            Toast.makeText(
+                this,
+                "Không thể kết nối Google Play. Vui lòng thử lại.",
+                Toast.LENGTH_LONG
+            ).show()
+            showSuccess()
+        } else {
+            Log.d(TAG, "Billing setup success, waiting for products...")
+        }
+
+    }
+
+    override fun onProductDetailsLoaded(
+        weeklyPrice: String,
+        lifetimePrice: String,
+        weeklyOffer: OfferInfo?
+    ) {
+        val offerIntroPrice = billingManager.getOfferByOfferId(BillingManager.OFFER_INTRO_PRICE)
+        this.weeklyOffer = offerIntroPrice
+        this.weeklyPrice = offerIntroPrice?.formattedPrice ?: ""
+        this.weeklyIntroPrice = offerIntroPrice?.introPrice ?: ""
+        offerIntroPrice?.let { offer ->
+            introPeriod = if (offer.introPriceCycle > 0)
+                offer.introPriceCycle.toString()
+            else
+                offer.introPriceDays.toString()
+        }
+
+        if (this.weeklyPrice.isEmpty() && lifetimePrice.isEmpty()) {
+            Toast.makeText(this, "Không tải được thông tin giá từ Google Play", Toast.LENGTH_SHORT)
+                .show()
+        } else {
+            Log.d(TAG, "Prices loaded successfully")
+        }
+
+        runOnUiThread {
+            showSuccess()
+        }
+    }
+
+    override fun onPurchaseSuccess() {}
+
+    override fun onPurchaseFailed(errorMessage: String) {}
+
     override fun onBackPressed() {
         bottomSheetBehavior.run {
             if (state == BottomSheetBehavior.STATE_EXPANDED) {
@@ -122,5 +222,10 @@ class PaywallSaleActivity : AppCompatActivity() {
                 super.onBackPressed()
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        billingManager.destroy()
     }
 }

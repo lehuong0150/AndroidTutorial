@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityPaywallBinding
+import com.eco.musicplayer.audioplayer.music.extension.setDiscountWithGradient
 
 class PaywallActivity : AppCompatActivity() {
 
@@ -46,5 +47,6 @@ class PaywallActivity : AppCompatActivity() {
         btnPayWall7.setOnClickListener {
             startActivity(Intent(this@PaywallActivity, PaywallFullActivity::class.java))
         }
+        txtDiscountWeeklyDiscount.setDiscountWithGradient(30)
     }
 }

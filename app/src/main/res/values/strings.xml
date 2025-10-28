@@ -83,12 +83,12 @@
 
     <!--    Paywall sale-->
     <string name="paywall_sale_title">Optimize Storage, Get Space</string>
-    <string name="paywall_sale_price_old"><strike><b>$8.99</b>/week</strike></string>
-    <string name="paywall_sale_price">$3.99</string>
+    <string name="paywall_sale_price_old"><strike><b>%s</b>/week</strike></string>
+    <string name="paywall_sale_price">%s</string>
     <string name="paywall_sale_week">/week</string>
-    <string name="paywall_sale_off">OFF 50%</string>
+    <string name="paywall_sale_off">OFF %d%%</string>
     <string name="paywall_sale_btn_offer">CLAIM OFFER</string>
-    <string name="paywall_sale_content">$3.99 for first week then $8.99 next week.\n Billed weekly, cancel anytime.</string>
+    <string name="paywall_sale_content">%s for %s first week then %s next week.\n Billed weekly, cancel anytime.</string>
     <string name="paywall_sale_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy</b></u> policies
         \n\u2022 Subscription gives you access to V9Compress\'s premium features, all ads will be removed.
         \n\u2022 Subscription plans are automatically renewed and can be canceled anytime in Subscriptions on Google Play.
@@ -121,8 +121,7 @@
     <!--    Dialog Sale-Weekly-->
     <string name="dialog_weekly_title">Faster compress made simple</string>
     <string name="dialog_weekly_content">Try 3 days for FREE, then 8.99$ per week. Auto renew, cancel anytime</string>
-    <string name="dialog_weekly_30">30%</string>
-    <string name="dialog_weekly_off">OFF</string>
+    <string name="dialog_weekly_30">%d%%\nOFF</string>
     <string name="dialog_weekly_btn_offer">CLAIM OFFER</string>
     <string name="dialog_weekly_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy</b></u> policies
         \n\u2022 Subscription gives you access to V9Compress\'s premium features, all ads will be removed.
@@ -136,8 +135,7 @@
     <string name="dialog_yearly_title">Faster Compress Made Simple</string>
     <string name="dialog_yearly_content">Try 3 for FREE then 8.99$ per year.
         \nAuto renew, cancel anytime.</string>
-    <string name="dialog_yearly_30">30%</string>
-    <string name="dialog_yearly_off">OFF</string>
+    <string name="dialog_yearly_30">%s%/OFF</string>
     <string name="dialog_yearly_btn_offer">CLAIM OFFER</string>
     <string name="dialog_yearly_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy</b></u> policies
         \n\u2022 Subscription gives you access to V9Compress\'s premium features, all ads will be removed.
@@ -217,4 +215,25 @@
 
     <string name="paywall_lifetime_label">One-time purchase</string>
     <string name="paywall_lifetime_title">Lifetime</string>
+    <string name="paywall_lifetime_content_yearly">%s One-time purchase</string>
+
+    <!--    Setting-->
+    <string name="setting_header">Setting</string>
+    <string name="setting_language">Language</string>
+    <string name="setting_feedback">Feedback</string>
+    <string name="setting_premium">Upgrade to Premium</string>
+    <string name="setting_check_to_update">Check for update</string>
+    <string name="setting_share_app">Share app</string>
+    <string name="setting_policy">Policy</string>
+    <string name="setting_youtube">Youtube</string>
+    <string name="setting_facebook">Facebook</string>
+    <string name="setting_about_us">About us</string>
+    <string name="setting_more_app">More app</string>
+    <string name="setting_choose_language">Choose a language</string>
+    <string name="setting_language_english">English</string>
+    <string name="setting_language_vietnamese">Tiếng Việt</string>
+    <string name="setting_language_deutsch">Deutsch</string>
+    <string name="setting_language_espanol">Español</string>
+    <string name="setting_language_français">Français</string>
+    <string name="setting_language_hindi">हिन्दी</string>
 </resources>

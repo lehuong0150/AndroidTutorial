@@ -193,6 +193,8 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
             btnTryTree.isEnabled = false
             btnTryTree.text = ""
             btnTryTree.setBackgroundResource(R.drawable.bg_pw_loading)
+
+            txtPwYearlyPlan.text = getString(R.string.paywall_lifetime_title)
         }
     }
 
@@ -209,6 +211,7 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
             btnTryTree.isEnabled = true
             btnTryTree.text = getString(R.string.paywall_bottom_sheet_btn_free)
             btnTryTree.setBackgroundResource(R.drawable.btn_pw_bottom_sheet_free)
+            txtPwYearly.visibility = View.INVISIBLE
 
             updateUI()
         }
@@ -272,7 +275,7 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
         val trialDays = weeklyOffer?.freeTrialDays ?: 0
         binding.txtPwContent.text = when {
             isLifetimeSelected ->
-                getString(R.string.paywall_bottom_sheet_content_yearly, lifetimePrice)
+                getString(R.string.paywall_lifetime_content_yearly, lifetimePrice)
 
             trialDays > 0 && !hasTriedFreeTrial ->
                 getString(R.string.paywall_bottom_sheet_content_weekly, weeklyPrice)
@@ -291,6 +294,7 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
             }
             if (lifetimePrice.isNotEmpty()) {
                 txtPwYearlyPlanPrice.text = lifetimePrice
+                txtPwYearlyPlanContent.text = getString(R.string.paywall_lifetime_label)
             } else {
                 Log.d(TAG, "lifetimePrice null")
             }
@@ -315,10 +319,12 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
         lifetimePrice: String,
         weeklyOffer: OfferInfo?
     ) {
-        this.weeklyPrice = weeklyPrice
-        this.lifetimePrice = lifetimePrice
-        this.weeklyOffer = weeklyOffer
+        val offer7Days = billingManager.getOfferByOfferId(BillingManager.OFFER_7_DAYS)
+            ?: billingManager.getOfferByTrialDays(3)
 
+        this.weeklyOffer = offer7Days
+        this.weeklyPrice = offer7Days?.formattedPrice ?: ""
+        this.lifetimePrice = lifetimePrice
         if (weeklyPrice.isEmpty() && lifetimePrice.isEmpty()) {
             Toast.makeText(this, "Không tải được thông tin giá từ Google Play", Toast.LENGTH_SHORT)
                 .show()

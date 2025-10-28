@@ -17,6 +17,10 @@ import com.eco.musicplayer.audioplayer.music.models.OfferInfo
 
 class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
 
+    companion object {
+        private const val TAG = "PaywallOnboardingActivity"
+    }
+
     private lateinit var binding: ActivityPaywallOnboardingBinding
     private lateinit var billingManager: BillingManager
 
@@ -243,13 +247,8 @@ class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
         lifetimePrice: String,
         weeklyOffer: OfferInfo?
     ) {
-        billingManager.getAllWeeklyOffers().forEach {
-            Log.d("DEBUG", "Offer: id='${it.offerId}', trial=${it.freeTrialDays}, price=${it.formattedPrice}")
-        }
-
         val offer3Days = billingManager.getOfferByOfferId(BillingManager.OFFER_3_DAYS)
             ?: billingManager.getOfferByTrialDays(3)
-        Log.d("DEBUG", "Offer: id='${offer3Days?.offerId}', trial=${offer3Days?.freeTrialDays}, price=${offer3Days?.formattedPrice}")
 
         this.weeklyOffer = offer3Days
         this.weeklyPrice = offer3Days?.formattedPrice ?: ""
@@ -269,7 +268,7 @@ class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
 
     override fun onPurchaseSuccess() {
         Log.d(TAG, "onPurchaseSuccess")
-        hidePurchaseLoading()
+//        hidePurchaseLoading()
         Toast.makeText(this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show()
 
         setResult(RESULT_OK)
@@ -278,7 +277,7 @@ class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
 
     override fun onPurchaseFailed(errorMessage: String) {
         Log.e(TAG, "onPurchaseFailed: $errorMessage")
-        hidePurchaseLoading()
+//        hidePurchaseLoading()
         Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
     }
 

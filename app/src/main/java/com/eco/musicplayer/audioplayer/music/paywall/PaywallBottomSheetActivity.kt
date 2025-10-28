@@ -139,11 +139,6 @@ class PaywallBottomSheetActivity : AppCompatActivity(), BillingListener {
         } else {
             weeklyOffer?.offerId ?: ""
         }
-
-        Log.d(
-            TAG,
-            "Launch Purchase: isLifetime=$isLifetimeSelected, offerId=$selectedOfferId, useTrial=$useFreeTrial"
-        )
         showPurchaseLoading()
         billingManager.launchPurchaseFlow(this, isLifetimeSelected, selectedOfferId)
     }
@@ -197,7 +192,8 @@ class PaywallBottomSheetActivity : AppCompatActivity(), BillingListener {
             groupContent.visibility = View.VISIBLE
 
             btnTryTree.isEnabled = true
-            txtPwYearly.visibility = View.INVISIBLE
+            btnTryTree.setBackgroundResource(R.drawable.btn_pw_bottom_sheet_free)
+            txtPwYearly.visibility = View.GONE
             updateUI()
         }
     }
@@ -254,7 +250,7 @@ class PaywallBottomSheetActivity : AppCompatActivity(), BillingListener {
         val trialDays = weeklyOffer?.freeTrialDays ?: 0
         binding.txtPwContent.text = when {
             isLifetimeSelected ->
-                getString(R.string.paywall_bottom_sheet_content_yearly, lifetimePrice)
+                getString(R.string.paywall_lifetime_content_yearly, lifetimePrice)
 
             trialDays > 0 && !hasTriedFreeTrial ->
                 getString(R.string.paywall_bottom_sheet_content_weekly, weeklyPrice)
@@ -268,12 +264,12 @@ class PaywallBottomSheetActivity : AppCompatActivity(), BillingListener {
         with(binding) {
             if (weeklyPrice.isNotEmpty()) {
                 txtPwWeeklyPlanPrice.text = weeklyPrice
-                txtPwYearlyPlanContent.text = getString(R.string.paywall_lifetime_label)
             } else {
                 Log.d(TAG, "weeklyPrice null")
             }
             if (lifetimePrice.isNotEmpty()) {
                 txtPwYearlyPlanPrice.text = lifetimePrice
+                txtPwYearlyPlanContent.text = getString(R.string.paywall_lifetime_label)
             } else {
                 Log.d(TAG, "lifetimePrice null")
             }

@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Log
 import com.android.billingclient.api.*
 import com.eco.musicplayer.audioplayer.music.models.OfferInfo
+import com.eco.musicplayer.audioplayer.music.utils.OfferType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -176,7 +177,6 @@ class BillingManager(
 
             when (product.productType) {
                 BillingClient.ProductType.INAPP -> {
-                    // Lifetime (one-time purchase)
                     product.oneTimePurchaseOfferDetails?.let { offer ->
                         lifetimePrice = offer.formattedPrice
                         Log.d(TAG, "LIFETIME: $lifetimePrice")
@@ -184,40 +184,61 @@ class BillingManager(
                 }
 
                 BillingClient.ProductType.SUBS -> {
-
                     product.subscriptionOfferDetails?.forEach { offer ->
                         Log.d(TAG, "Analyzing Offer ID: ${offer.offerId ?: "null"}")
 
                         val pricingPhases = offer.pricingPhases.pricingPhaseList
                         var freeTrialDays = 0
+                        var introPriceDays = 0
+                        var introPrice = ""
                         var finalPrice = ""
+                        var offerType = OfferType.NORMAL
 
                         pricingPhases.forEachIndexed { phaseIndex, phase ->
                             val price = phase.formattedPrice
                             val period = phase.billingPeriod
                             val priceAmount = phase.priceAmountMicros
+                            val cycleCount = phase.billingCycleCount
 
-                            Log.d(
-                                TAG,
-                                "Phase $phaseIndex: $price, Period: $period, Amount: $priceAmount"
-                            )
+                            when {
+                                // Free trial (giá = 0)
+                                priceAmount == 0L -> {
+                                    freeTrialDays = parseDaysFromPeriod(period)
+                                    offerType = OfferType.FREE_TRIAL
+                                    Log.d(TAG, "Free trial: $freeTrialDays days")
+                                }
 
-                            // Kiểm tra nếu là free trial (giá = 0)
-                            if (priceAmount == 0L) {
-                                freeTrialDays = parseDaysFromPeriod(period)
-                                Log.d(TAG, "free trial: $freeTrialDays days")
-                            }
-
-                            // Lấy giá cuối cùng
-                            if (phaseIndex == pricingPhases.size - 1 && period.contains("P1W")) {
-                                finalPrice = price
+                                phaseIndex < pricingPhases.size - 1 && priceAmount > 0L -> {
+                                    val baseDays = parseDaysFromPeriod(period)
+                                    // Tính tổng số ngày = số ngày * số chu kỳ
+                                    introPriceDays = if (cycleCount > 1) {
+                                        baseDays * cycleCount
+                                    } else {
+                                        baseDays
+                                    }
+                                    introPrice = price
+                                    offerType = OfferType.INTRO_PRICE
+                                    Log.d(
+                                        TAG,
+                                        "Intro price: $introPrice for $introPriceDays days ($cycleCount cycles of $baseDays days)"
+                                    )
+                                }
+                                // Giá chính thức cuối cùng
+                                phaseIndex == pricingPhases.size - 1 -> {
+                                    finalPrice = price
+                                    Log.d(TAG, "Final price: $price (period: $period)")
+                                }
                             }
                         }
 
                         if (finalPrice.isNotEmpty()) {
                             val offerInfo = OfferInfo(
                                 offerId = offer.offerId ?: "",
+                                offerType = offerType,
                                 freeTrialDays = freeTrialDays,
+                                introPriceCycle = if (introPriceDays > 0 && introPriceDays % 7 == 0) introPriceDays / 7 else 0,
+                                introPriceDays = introPriceDays,
+                                introPrice = introPrice,
                                 formattedPrice = finalPrice,
                                 offerToken = offer.offerToken
                             )
@@ -225,18 +246,19 @@ class BillingManager(
                         }
                     }
 
-                    val defaultOffer = weeklyOffers.maxByOrNull { it.freeTrialDays } ?: weeklyOffers.firstOrNull()
+                    val defaultOffer =
+                        weeklyOffers.maxByOrNull { it.freeTrialDays } ?: weeklyOffers.firstOrNull()
                     weeklyPrice = defaultOffer?.formattedPrice ?: ""
+                    bestWeeklyOffer = defaultOffer
                 }
             }
         }
 
         Log.d(TAG, "--- Final Prices ---")
-        Log.d(TAG, "Weekly: $weeklyPrice, offer: $bestWeeklyOffer")
+        Log.d(TAG, "Weekly: $weeklyPrice, Best offer: ${bestWeeklyOffer?.offerId}")
         Log.d(TAG, "Lifetime: $lifetimePrice")
 
-        withContext(Dispatchers.Main)
-        {
+        withContext(Dispatchers.Main) {
             val defaultOffer = weeklyOffers.maxByOrNull { it.freeTrialDays }
             listener.onProductDetailsLoaded(weeklyPrice, lifetimePrice, defaultOffer)
         }
@@ -244,10 +266,6 @@ class BillingManager(
 
     fun getOfferByOfferId(offerId: String): OfferInfo? {
         return weeklyOffers.find { it.offerId == offerId }
-    }
-
-    fun getAllWeeklyOffers(): List<OfferInfo> {
-        return weeklyOffers.toList()
     }
 
     fun getOfferByTrialDays(days: Int): OfferInfo? {

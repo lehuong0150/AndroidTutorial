@@ -55,15 +55,16 @@ class DialogYearlyActivity : AppCompatActivity() {
 
     private fun showLoading() = with(binding) {
         layoutLoadFail.visibility = View.INVISIBLE
+        btnClaimOffer.visibility = View.VISIBLE
         btnClaimOffer.isEnabled = false
-        btnClaimOffer.text= ""
+        btnClaimOffer.text = ""
         pgbLoadInfo.visibility = View.VISIBLE
     }
 
     private fun showSuccess() = with(binding) {
         pgbLoadInfo.visibility = View.INVISIBLE
         btnClaimOffer.visibility = View.VISIBLE
-        btnClaimOffer.text= getString(R.string.dialog_yearly_btn_offer)
+        btnClaimOffer.text = getString(R.string.dialog_yearly_btn_offer)
         layoutLoadFail.visibility = View.INVISIBLE
     }
 
