@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -12,7 +13,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txtChoose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -22,7 +23,7 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnPayWall1"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
@@ -31,7 +32,7 @@
             android:text="Paywall_1"
             android:textColor="@color/black" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnPayWall2"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
@@ -40,7 +41,7 @@
             android:text="Paywall_2"
             android:textColor="@color/black" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnPayWall3"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
@@ -49,7 +50,7 @@
             android:text="Paywall_3"
             android:textColor="@color/black" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnPayWall4"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
@@ -58,7 +59,7 @@
             android:text="Paywall_4"
             android:textColor="@color/black" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnPayWall5"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
@@ -67,7 +68,7 @@
             android:text="Paywall_5"
             android:textColor="@color/black" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnPayWall6"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
@@ -76,7 +77,7 @@
             android:text="Paywall_6"
             android:textColor="@color/black" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnPayWall7"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
@@ -86,14 +87,52 @@
             android:textColor="@color/black" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/txtDiscountWeeklyDiscount"
+            android:id="@+id/textPercent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_11sdp"
-            android:lineSpacingExtra="@dimen/_1sdp"
-            android:paddingTop="@dimen/_9sdp"
-            android:textSize="@dimen/_48sdp"
             android:gravity="right"
-            android:text="@string/dialog_weekly_30"/>
+            android:includeFontPadding="false"
+            android:text="@string/dialog_weekly_30"
+            android:textSize="@dimen/_77sdp" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textOff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_11sdp"
+            android:gravity="right"
+            android:includeFontPadding="false"
+            android:text="@string/dialog_weekly_30_off"
+            android:textSize="@dimen/_77sdp" />
+        <!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content">-->
+
+        <!--            <View-->
+        <!--                android:id="@+id/view"-->
+        <!--                android:layout_width="match_parent"-->
+        <!--                android:layout_height="0dp"-->
+        <!--                android:layout_marginBottom="@dimen/_minus20sdp"-->
+        <!--                android:background="@drawable/bg_pw_btn_offer"-->
+        <!--                app:layout_constraintTop_toTopOf="parent"-->
+        <!--                app:layout_constraintStart_toStartOf="parent"-->
+        <!--                app:layout_constraintBottom_toBottomOf="@id/txtDiscountWeekly"/>-->
+
+        <!--            <androidx.appcompat.widget.AppCompatButton-->
+        <!--                android:id="@+id/txtDiscountWeekly"-->
+        <!--                android:layout_width="wrap_content"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:drawableStart="@drawable/ic_add_product"-->
+        <!--                android:background="@android:color/transparent"-->
+        <!--                android:gravity="center"-->
+        <!--                android:drawablePadding="@dimen/_6sdp"-->
+        <!--                android:text="@string/btn_check"-->
+        <!--                android:textSize="@dimen/_14sdp"-->
+        <!--                app:layout_constraintTop_toTopOf="@id/view"-->
+        <!--                app:layout_constraintStart_toStartOf="@id/view"-->
+        <!--                app:layout_constraintBottom_toBottomOf="@id/view"-->
+        <!--                app:layout_constraintEnd_toEndOf="@id/view"-->
+        <!--                />-->
+        <!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
     </androidx.appcompat.widget.LinearLayoutCompat>
 </ScrollView>

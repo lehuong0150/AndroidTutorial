@@ -8,7 +8,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.eco.musicplayer.audioplayer.music.R
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityDialogWeeklyBinding
-import com.eco.musicplayer.audioplayer.music.extension.setDiscountWithGradient
 
 class DialogWeeklyActivity : AppCompatActivity() {
     companion object {

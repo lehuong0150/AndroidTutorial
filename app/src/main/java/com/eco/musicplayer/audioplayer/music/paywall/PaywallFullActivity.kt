@@ -211,7 +211,7 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
             btnTryTree.isEnabled = true
             btnTryTree.text = getString(R.string.paywall_bottom_sheet_btn_free)
             btnTryTree.setBackgroundResource(R.drawable.btn_pw_bottom_sheet_free)
-            txtPwYearly.visibility = View.INVISIBLE
+            txtPwYearly.text = ""
 
             updateUI()
         }

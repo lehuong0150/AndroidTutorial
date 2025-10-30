@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:fitsSystemWindows="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:context=".paywall.PaywallFullActivity">
@@ -38,7 +39,6 @@
         android:id="@+id/layoutPwFull"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_minus38sdp"
         android:background="@drawable/bg_pw_full_bottom_sheet"
         android:paddingHorizontal="@dimen/_16sdp"
         android:paddingVertical="@dimen/_12sdp"
@@ -55,7 +55,8 @@
             android:gravity="center"
             android:text="@string/paywall_full_title"
             android:textColor="@color/color_25104A"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/_14sdp"
+            android:ellipsize="none"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/layoutPwFull" />

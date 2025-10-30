@@ -3,8 +3,10 @@ package com.eco.musicplayer.audioplayer.music.paywall
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
+import com.eco.musicplayer.audioplayer.music.R
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityPaywallBinding
-import com.eco.musicplayer.audioplayer.music.extension.setDiscountWithGradient
+import com.eco.musicplayer.audioplayer.music.extension.applyFigmaTextStyle
 
 class PaywallActivity : AppCompatActivity() {
 
@@ -16,6 +18,26 @@ class PaywallActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupClickListeners()
+
+        // 1. Áp dụng cho "30%" (Kích thước 100%, Shadow Y=3)
+        binding.textPercent.applyFigmaTextStyle(
+            colorStartHex = "#F3F3FC",
+            colorEndHex = "#A2B1DA",
+            shadowOffsetY = 3.0f,
+            targetScale = 1.0f, // Kích thước cơ bản
+            context = this
+        )
+
+        // 2. Áp dụng cho "OFF" (Kích thước 72%, Shadow Y=2)
+        binding.textOff.applyFigmaTextStyle(
+            colorStartHex = "#EEEEF2",
+            colorEndHex = "#C8D0E7",
+            shadowOffsetY = 2.0f,
+            targetScale = 0.72f, // 72px / 100px
+            context = this
+        )
+
+        binding.textPercent.text = getString(R.string.dialog_weekly_30,30)
     }
 
     private fun setupClickListeners() = with(binding) {
@@ -47,6 +69,6 @@ class PaywallActivity : AppCompatActivity() {
         btnPayWall7.setOnClickListener {
             startActivity(Intent(this@PaywallActivity, PaywallFullActivity::class.java))
         }
-        txtDiscountWeeklyDiscount.setDiscountWithGradient(30)
     }
 }
+

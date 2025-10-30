@@ -32,6 +32,7 @@ class BillingManager(
         const val OFFER_3_DAYS = "3days"
         const val OFFER_7_DAYS = "7days"
         const val OFFER_INTRO_PRICE = "intro-price"
+        const val OFFER_MINUS = "test1"
     }
 
     fun initialize() {
@@ -164,86 +165,92 @@ class BillingManager(
     }
 
     private suspend fun parseAndNotifyPrices(products: List<ProductDetails>) {
-        Log.d(TAG, "--- Parsing ${products.size} products ---")
+        Log.d(TAG, "=========================")
+        Log.d(TAG, "Parsing ${products.size} products")
+        Log.d(TAG, "=========================")
 
         var weeklyPrice = ""
         var lifetimePrice = ""
-
         weeklyOffers.clear()
+
         products.forEach { product ->
-            Log.d(TAG, "--- Product: ${product.productId} ---")
+            Log.d(TAG, "\n>>> PRODUCT: ${product.productId}")
             Log.d(TAG, "Type: ${product.productType}")
-            Log.d(TAG, "Name: ${product.name}")
+            Log.d(TAG, "Title: ${product.name}")
+            Log.d(TAG, "Description: ${product.description}")
 
             when (product.productType) {
                 BillingClient.ProductType.INAPP -> {
                     product.oneTimePurchaseOfferDetails?.let { offer ->
                         lifetimePrice = offer.formattedPrice
-                        Log.d(TAG, "LIFETIME: $lifetimePrice")
+                        Log.d(
+                            TAG,
+                            "ONE-TIME OFFER => Price: ${offer.formattedPrice}, Currency: ${offer.priceCurrencyCode}"
+                        )
                     }
                 }
 
                 BillingClient.ProductType.SUBS -> {
-                    product.subscriptionOfferDetails?.forEach { offer ->
-                        Log.d(TAG, "Analyzing Offer ID: ${offer.offerId ?: "null"}")
+                    val offerList = product.subscriptionOfferDetails
+                    if (offerList.isNullOrEmpty()) {
+                        Log.w(TAG, "No subscription offers found for ${product.productId}")
+                        return@forEach
+                    }
+
+                    offerList.forEachIndexed { index, offer ->
+                        Log.d(TAG, "\n--- OFFER #${index + 1} ---")
+                        Log.d(TAG, "Offer ID: ${offer.offerId ?: "null"}")
+                        Log.d(TAG, "Offer Token: ${offer.offerToken}")
+                        Log.d(TAG, "Base Plan ID: ${offer.basePlanId}")
+                        Log.d(TAG, "Tags: ${offer.offerTags.joinToString()}")
 
                         val pricingPhases = offer.pricingPhases.pricingPhaseList
-                        var freeTrialDays = 0
-                        var introPriceDays = 0
-                        var introPrice = ""
-                        var finalPrice = ""
-                        var offerType = OfferType.NORMAL
-
                         pricingPhases.forEachIndexed { phaseIndex, phase ->
-                            val price = phase.formattedPrice
-                            val period = phase.billingPeriod
-                            val priceAmount = phase.priceAmountMicros
-                            val cycleCount = phase.billingCycleCount
-
-                            when {
-                                // Free trial (giá = 0)
-                                priceAmount == 0L -> {
-                                    freeTrialDays = parseDaysFromPeriod(period)
-                                    offerType = OfferType.FREE_TRIAL
-                                    Log.d(TAG, "Free trial: $freeTrialDays days")
-                                }
-
-                                phaseIndex < pricingPhases.size - 1 && priceAmount > 0L -> {
-                                    val baseDays = parseDaysFromPeriod(period)
-                                    // Tính tổng số ngày = số ngày * số chu kỳ
-                                    introPriceDays = if (cycleCount > 1) {
-                                        baseDays * cycleCount
-                                    } else {
-                                        baseDays
-                                    }
-                                    introPrice = price
-                                    offerType = OfferType.INTRO_PRICE
-                                    Log.d(
-                                        TAG,
-                                        "Intro price: $introPrice for $introPriceDays days ($cycleCount cycles of $baseDays days)"
-                                    )
-                                }
-                                // Giá chính thức cuối cùng
-                                phaseIndex == pricingPhases.size - 1 -> {
-                                    finalPrice = price
-                                    Log.d(TAG, "Final price: $price (period: $period)")
-                                }
-                            }
-                        }
-
-                        if (finalPrice.isNotEmpty()) {
-                            val offerInfo = OfferInfo(
-                                offerId = offer.offerId ?: "",
-                                offerType = offerType,
-                                freeTrialDays = freeTrialDays,
-                                introPriceCycle = if (introPriceDays > 0 && introPriceDays % 7 == 0) introPriceDays / 7 else 0,
-                                introPriceDays = introPriceDays,
-                                introPrice = introPrice,
-                                formattedPrice = finalPrice,
-                                offerToken = offer.offerToken
+                            val amount = phase.priceAmountMicros / 1_000_000.0
+                            Log.d(TAG, "   Phase ${phaseIndex + 1}:")
+                            Log.d(
+                                TAG,
+                                "     Price: ${phase.formattedPrice} ($amount ${phase.priceCurrencyCode})"
                             )
-                            weeklyOffers.add(offerInfo)
+                            Log.d(TAG, "     Billing period: ${phase.billingPeriod}")
+                            Log.d(TAG, "     Cycle count: ${phase.billingCycleCount}")
+                            Log.d(TAG, "     Recurrence mode: ${phase.recurrenceMode}")
                         }
+
+                        val firstPhase = pricingPhases.firstOrNull()
+                        val hasFreeTrial = pricingPhases.any { it.priceAmountMicros == 0L }
+                        val offerType = when {
+                            hasFreeTrial -> OfferType.FREE_TRIAL
+                            pricingPhases.size > 1 -> OfferType.INTRO_PRICE
+                            else -> OfferType.NORMAL
+                        }
+
+                        val finalPhase = pricingPhases.lastOrNull()
+                        val finalPrice = finalPhase?.formattedPrice ?: "N/A"
+
+                        val freeTrialDays = pricingPhases
+                            .filter { it.priceAmountMicros == 0L }
+                            .sumOf { parseDaysFromPeriod(it.billingPeriod) }
+
+                        val introDays = pricingPhases
+                            .filter { it.priceAmountMicros > 0L && it != finalPhase }
+                            .sumOf { parseDaysFromPeriod(it.billingPeriod) * it.billingCycleCount }
+
+                        val offerInfo = OfferInfo(
+                            offerId = offer.offerId ?: "",
+                            offerType = offerType,
+                            freeTrialDays = freeTrialDays,
+                            introPriceDays = introDays,
+                            introPrice = firstPhase?.formattedPrice ?: "",
+                            formattedPrice = finalPrice,
+                            offerToken = offer.offerToken
+                        )
+                        weeklyOffers.add(offerInfo)
+
+                        Log.d(
+                            TAG,
+                            "Summary -> Type: $offerType, Free trial: ${freeTrialDays}d, Intro: ${introDays}d, Final: $finalPrice"
+                        )
                     }
 
                     val defaultOffer =
@@ -254,9 +261,12 @@ class BillingManager(
             }
         }
 
-        Log.d(TAG, "--- Final Prices ---")
-        Log.d(TAG, "Weekly: $weeklyPrice, Best offer: ${bestWeeklyOffer?.offerId}")
-        Log.d(TAG, "Lifetime: $lifetimePrice")
+        Log.d(TAG, "\n=========================")
+        Log.d(TAG, "Final Prices Summary:")
+        Log.d(TAG, "Weekly Price: $weeklyPrice")
+        Log.d(TAG, "Lifetime Price: $lifetimePrice")
+        Log.d(TAG, "Best Weekly Offer: ${bestWeeklyOffer?.offerId}")
+        Log.d(TAG, "=========================\n")
 
         withContext(Dispatchers.Main) {
             val defaultOffer = weeklyOffers.maxByOrNull { it.freeTrialDays }

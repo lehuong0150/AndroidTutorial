@@ -46,7 +46,9 @@
             android:gravity="center"
             android:text="@string/paywall_bottom_sheet_title"
             android:textColor="@color/color_25104A"
-            android:textSize="@dimen/_12sdp"
+            android:textSize="@dimen/_14sdp"
+            android:maxLines="2"
+            android:ellipsize="none"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imgCrown" />
@@ -119,7 +121,7 @@
                 android:id="@+id/txtPwYearlyPlanPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="2dp"
+                android:layout_marginEnd="@dimen/_1sdp"
                 android:fontFamily="@font/read_ex_pro_bold"
                 android:text="@string/paywall_bottom_sheet_yearly_plan_price"
                 android:textColor="@color/color_25104A"
@@ -268,16 +270,15 @@
             android:id="@+id/txtPolicy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_10sdp"
             android:fontFamily="@font/read_ex_pro_regular"
             android:gravity="center"
             android:padding="@dimen/_10sdp"
             android:text="@string/paywall_bottom_sheet_policy"
             android:textColor="@color/color_4A2610"
             android:textSize="@dimen/_8sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtPwFreeTrial" />
 
         <androidx.constraintlayout.widget.Group

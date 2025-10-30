@@ -89,7 +89,7 @@
     <string name="paywall_sale_off">OFF %d%%</string>
     <string name="paywall_sale_btn_offer">CLAIM OFFER</string>
     <string name="paywall_sale_content">%s for %s first week then %s next week.\n Billed weekly, cancel anytime.</string>
-    <string name="paywall_sale_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy</b></u> policies
+    <string name="paywall_sale_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy policies</b></u>
         \n\u2022 Subscription gives you access to V9Compress\'s premium features, all ads will be removed.
         \n\u2022 Subscription plans are automatically renewed and can be canceled anytime in Subscriptions on Google Play.
         \n\u2022 You will not be charged if subscription is canceled before trial period ends.
@@ -112,7 +112,7 @@
     <string name="paywall_free_trial_enabled">Free trial enabled</string>
     <string name="paywall_btn_free_trial_continue">CONTINUE</string>
     <string name="paywall_onboarding_btn_free">Try for free</string>
-    <string name="paywall_onboarding_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy</b></u> policies
+    <string name="paywall_onboarding_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy policies</b></u>
         \nSubscription gives you access to V9Compress\'s premium features, all ads will be removed.
         \nSubscription plans are automatically renewed and can be canceled anytime in Subscriptions on Google Play.
         \nYou will not be charged if subscription is canceled before trial period ends.
@@ -121,9 +121,10 @@
     <!--    Dialog Sale-Weekly-->
     <string name="dialog_weekly_title">Faster compress made simple</string>
     <string name="dialog_weekly_content">Try 3 days for FREE, then 8.99$ per week. Auto renew, cancel anytime</string>
-    <string name="dialog_weekly_30">%d%%\nOFF</string>
+    <string name="dialog_weekly_30">%d%%</string>
+    <string name="dialog_weekly_30_off">OFF</string>
     <string name="dialog_weekly_btn_offer">CLAIM OFFER</string>
-    <string name="dialog_weekly_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy</b></u> policies
+    <string name="dialog_weekly_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy policies</b></u>
         \n\u2022 Subscription gives you access to V9Compress\'s premium features, all ads will be removed.
         \n\u2022 Subscription plans are automatically renewed and can be canceled anytime in Subscriptions on Google Play.
         \n\u2022 You will not be charged if subscription is canceled before trial period ends.
@@ -137,7 +138,7 @@
         \nAuto renew, cancel anytime.</string>
     <string name="dialog_yearly_30">%s%/OFF</string>
     <string name="dialog_yearly_btn_offer">CLAIM OFFER</string>
-    <string name="dialog_yearly_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy</b></u> policies
+    <string name="dialog_yearly_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy policies</b></u>
         \n\u2022 Subscription gives you access to V9Compress\'s premium features, all ads will be removed.
         \n\u2022 Subscription plans are automatically renewed and can be canceled anytime in Subscriptions on Google Play.
         \n\u2022 You will not be charged if subscription is canceled before trial period ends.
@@ -150,7 +151,7 @@
     <string name="unlock_content">%s/year after free trial ends.\nAuto renew, cancel anytime</string>
     <string name="unlock_btn_free">Try for free</string>
     <string name="unlock_btn_continue">Continue</string>
-    <string name="unlock_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy</b></u> policies
+    <string name="unlock_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy policies</b></u>
         \nSubscription gives you access to V9Compress\'s premium features, all ads will be removed.
         \nSubscription plans are automatically renewed and can be canceled anytime in Subscriptions on Google Play.
         \nYou will not be charged if subscription is canceled before trial period ends.
@@ -159,7 +160,7 @@
     <string name="unlock_again"><u>Try again</u></string>
 
     <!--    Paywall bottom sheet-->
-    <string name="paywall_bottom_sheet_title">SMARTER STORAGE MADE AFFORDABLE</string>
+    <string name="paywall_bottom_sheet_title">SMARTER STORAGE MADE  AFFORDABLE</string>
     <string name="paywall_bottom_sheet_saved">Saved 92%</string>
     <string name="paywall_bottom_sheet_yearly_plan">Yearly Plan</string>
     <string name="paywall_bottom_sheet_yearly_plan_content">Only $0.412 per week</string>
@@ -181,14 +182,14 @@
     <!-- Static -->
     <string name="paywall_bottom_sheet_cancel">Cancel anytime</string>
     <string name="paywall_bottom_sheet_btn_free">Try for free</string>
-    <string name="paywall_bottom_sheet_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy</b></u> policies
+    <string name="paywall_bottom_sheet_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy policies</b></u>
         \nSubscription gives you access to V9Compress\'s premium features, all ads will be removed.
         \nSubscription plans are automatically renewed and can be canceled anytime in Subscriptions on Google Play.
         \nYou will not be charged if subscription is canceled before trial period ends.
         \nSubscription is not required to use V9Compress</string>
 
     <!--    Paywall full-->
-    <string name="paywall_full_title">SMARTER STORAGE MADE AFFORDABLE</string>
+    <string name="paywall_full_title">SMARTER STORAGE MADE  AFFORDABLE</string>
     <string name="paywall_full_saved">Saved 92%</string>
     <string name="paywall_full_yearly_plan">Yearly Plan</string>
     <string name="paywall_full_yearly_plan_content">Only $0.412 per week</string>
@@ -207,7 +208,7 @@
     <string name="paywall_full_btn_continue">Continue</string>
     <string name="paywall_full_btn_free">Try for free</string>
     <string name="paywall_full_free_trial">%d-day free trial enabled</string>
-    <string name="paywall_full_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy</b></u> policies
+    <string name="paywall_full_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy policies</b></u>
         \nSubscription gives you access to V9Compress\'s premium features, all ads will be removed.
         \nSubscription plans are automatically renewed and can be canceled anytime in Subscriptions on Google Play.
         \nYou will not be charged if subscription is canceled before trial period ends.

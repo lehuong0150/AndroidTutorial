@@ -3,11 +3,13 @@ package com.eco.musicplayer.audioplayer.music.paywall
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import com.eco.musicplayer.audioplayer.music.R
 import com.eco.musicplayer.audioplayer.music.billing.BillingManager
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityPaywallBottomSheetBinding
@@ -41,14 +43,9 @@ class PaywallBottomSheetActivity : AppCompatActivity(), BillingListener {
         binding = ActivityPaywallBottomSheetBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.txtPolicy) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            view.setPadding(
-                systemBars.left,
-                systemBars.top,
-                systemBars.right,
-                systemBars.bottom
-            )
+            view.updatePadding(bottom = systemBars.bottom)
             insets
         }
 
@@ -160,7 +157,6 @@ class PaywallBottomSheetActivity : AppCompatActivity(), BillingListener {
             btnTryTree.isEnabled = false
             btnTryTree.text = ""
             btnTryTree.setBackgroundResource(R.drawable.bg_pw_loading)
-
             txtPwYearlyPlan.text = getString(R.string.paywall_lifetime_title)
         }
     }
@@ -193,7 +189,7 @@ class PaywallBottomSheetActivity : AppCompatActivity(), BillingListener {
 
             btnTryTree.isEnabled = true
             btnTryTree.setBackgroundResource(R.drawable.btn_pw_bottom_sheet_free)
-            txtPwYearly.visibility = View.GONE
+            txtPwYearly.text = ""
             updateUI()
         }
     }
