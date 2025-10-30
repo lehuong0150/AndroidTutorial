@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<defaultsMap>
+    <entry>
+        <key>pricing_config</key>
+        <value>{
+            {
+                "uiType": "6",
+                "products": [
+                    {
+                        "productId": "free_123",
+                        "offerId": "7days",
+                        "productType": "subs"
+                    },
+                    {
+                        "productId": "test3",
+                        "offerId": "",
+                        "productType": "inapp"
+                    }
+                ],
+                "selectionPosition": 1
+            }
+        </value>
+    </entry>
+
+</defaultsMap>

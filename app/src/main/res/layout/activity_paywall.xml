@@ -87,20 +87,22 @@
             android:textColor="@color/black" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textPercent"
+            android:id="@+id/txtPercent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_11sdp"
             android:gravity="right"
+            android:visibility="invisible"
             android:includeFontPadding="false"
             android:text="@string/dialog_weekly_30"
             android:textSize="@dimen/_77sdp" />
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textOff"
+            android:id="@+id/txtOff"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_11sdp"
             android:gravity="right"
+            android:visibility="invisible"
             android:includeFontPadding="false"
             android:text="@string/dialog_weekly_30_off"
             android:textSize="@dimen/_77sdp" />

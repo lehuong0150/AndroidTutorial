@@ -13,30 +13,26 @@ import kotlinx.coroutines.withContext
 
 class BillingManager(
     private val context: Context,
-    private val listener: BillingListener
+    private val listener: BillingListener,
+    private val subscriptionIds: List<String> = listOf("free_123"),
+    private val lifetimeId: String = "test3"
 ) : PurchasesUpdatedListener {
 
     private var billingClient: BillingClient? = null
     private val productDetailsList = mutableListOf<ProductDetails>()
-    private var bestWeeklyOffer: OfferInfo? = null
+    private var defaultWeeklyOffer: OfferInfo? = null
     private val weeklyOffers = mutableListOf<OfferInfo>()
 
     companion object {
         private const val TAG = "BillingManager"
 
-        // Product IDs
-        const val SUB_PRODUCT_ID = "free_123"
-        const val LIFETIME_PRODUCT_ID = "test3"
-
         // Offer IDs (chỉ cho subscription)
         const val OFFER_3_DAYS = "3days"
         const val OFFER_7_DAYS = "7days"
         const val OFFER_INTRO_PRICE = "intro-price"
-        const val OFFER_MINUS = "test1"
     }
 
     fun initialize() {
-
         billingClient = BillingClient.newBuilder(context)
             .setListener(this)
             .enablePendingPurchases()
@@ -49,7 +45,6 @@ class BillingManager(
         Log.d(TAG, "--- Connecting to Billing ---")
         billingClient?.startConnection(object : BillingClientStateListener {
             override fun onBillingSetupFinished(billingResult: BillingResult) {
-
                 if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
                     Log.d(TAG, "Billing setup successful")
                     listener.onBillingSetupFinished(true)
@@ -70,18 +65,18 @@ class BillingManager(
 
     private fun queryProducts() {
         Log.d(TAG, "--- queryProducts ---")
-        Log.d(TAG, "Subscription ID: $SUB_PRODUCT_ID")
-        Log.d(TAG, "Lifetime ID: $LIFETIME_PRODUCT_ID")
+        Log.d(TAG, "Subscription IDs: $subscriptionIds")
+        Log.d(TAG, "Lifetime ID: $lifetimeId")
 
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 productDetailsList.clear()
 
-                // Query Subscription (Weekly)
+                // Query Subscriptions
                 val subscriptionResult = querySubscriptionProducts()
                 subscriptionResult?.let { productDetailsList.addAll(it) }
 
-                // Query Lifetime (One-time purchase)
+                // Query Lifetime
                 val lifetimeResult = queryLifetimeProducts()
                 lifetimeResult?.let { productDetailsList.addAll(it) }
 
@@ -106,12 +101,13 @@ class BillingManager(
 
     private suspend fun querySubscriptionProducts(): List<ProductDetails>? {
         return try {
-            val productList = listOf(
+            // Tạo danh sách products từ subscription IDs
+            val productList = subscriptionIds.map { subId ->
                 QueryProductDetailsParams.Product.newBuilder()
-                    .setProductId(SUB_PRODUCT_ID)
+                    .setProductId(subId)
                     .setProductType(BillingClient.ProductType.SUBS)
                     .build()
-            )
+            }
 
             val params = QueryProductDetailsParams.newBuilder()
                 .setProductList(productList)
@@ -138,7 +134,7 @@ class BillingManager(
         return try {
             val productList = listOf(
                 QueryProductDetailsParams.Product.newBuilder()
-                    .setProductId(LIFETIME_PRODUCT_ID)
+                    .setProductId(lifetimeId)
                     .setProductType(BillingClient.ProductType.INAPP)
                     .build()
             )
@@ -252,24 +248,23 @@ class BillingManager(
                             "Summary -> Type: $offerType, Free trial: ${freeTrialDays}d, Intro: ${introDays}d, Final: $finalPrice"
                         )
                     }
-
-                    val defaultOffer =
-                        weeklyOffers.maxByOrNull { it.freeTrialDays } ?: weeklyOffers.firstOrNull()
-                    weeklyPrice = defaultOffer?.formattedPrice ?: ""
-                    bestWeeklyOffer = defaultOffer
                 }
             }
         }
+
+        // Chọn offer đầu tiên làm mặc định
+        val defaultOffer = weeklyOffers.firstOrNull()
+        weeklyPrice = defaultOffer?.formattedPrice ?: ""
+        defaultWeeklyOffer = defaultOffer
 
         Log.d(TAG, "\n=========================")
         Log.d(TAG, "Final Prices Summary:")
         Log.d(TAG, "Weekly Price: $weeklyPrice")
         Log.d(TAG, "Lifetime Price: $lifetimePrice")
-        Log.d(TAG, "Best Weekly Offer: ${bestWeeklyOffer?.offerId}")
+        Log.d(TAG, "Default Weekly Offer: ${defaultWeeklyOffer?.offerId}")
         Log.d(TAG, "=========================\n")
 
         withContext(Dispatchers.Main) {
-            val defaultOffer = weeklyOffers.maxByOrNull { it.freeTrialDays }
             listener.onProductDetailsLoaded(weeklyPrice, lifetimePrice, defaultOffer)
         }
     }
@@ -294,29 +289,32 @@ class BillingManager(
         }
     }
 
-    fun launchPurchaseFlow(activity: Activity, isLifetime: Boolean, offerId: String = "") {
+    fun launchPurchaseFlow(
+        activity: Activity,
+        productId: String,
+        offerId: String = "",
+        lifetimeId: String = ""
+    ) {
         Log.d(TAG, "--- Launch Purchase ---")
-        Log.d(TAG, "Is Lifetime: $isLifetime")
+        Log.d(TAG, "Product ID: $productId")
         Log.d(TAG, "Offer ID: $offerId")
 
-        val productDetails = if (isLifetime) {
-            productDetailsList.find { it.productId == LIFETIME_PRODUCT_ID }
-        } else {
-            productDetailsList.find { it.productId == SUB_PRODUCT_ID }
-        }
+        val productDetails = productDetailsList.find { it.productId == productId }
 
         if (productDetails == null) {
-            Log.e(TAG, "Product not found!")
+            Log.e(TAG, "Product not found: $productId")
             listener.onPurchaseFailed("Sản phẩm chưa sẵn sàng")
             return
         }
 
-        if (isLifetime) {
-            // One-time purchase
-            launchOneTimePurchase(activity, productDetails)
-        } else {
-            // Subscription
-            launchSubscriptionPurchase(activity, productDetails, offerId)
+        when (productDetails.productType) {
+            BillingClient.ProductType.INAPP -> {
+                launchOneTimePurchase(activity, productDetails)
+            }
+
+            BillingClient.ProductType.SUBS -> {
+                launchSubscriptionPurchase(activity, productDetails, offerId)
+            }
         }
     }
 

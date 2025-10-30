@@ -53,7 +53,7 @@
             android:name=".layout.LayoutActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".paywall.PaywallActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -62,7 +62,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".paywall.PaywallActivity"
+            android:name=".MainActivity"
             android:exported="false" />
         <activity
             android:name=".launchmode.IntentFlagActivity"

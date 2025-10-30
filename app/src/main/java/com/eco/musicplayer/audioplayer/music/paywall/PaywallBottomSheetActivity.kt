@@ -3,7 +3,6 @@ package com.eco.musicplayer.audioplayer.music.paywall
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -11,29 +10,37 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updatePadding
 import com.eco.musicplayer.audioplayer.music.R
+import com.eco.musicplayer.audioplayer.music.billing.BillingListener
 import com.eco.musicplayer.audioplayer.music.billing.BillingManager
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityPaywallBottomSheetBinding
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.eco.musicplayer.audioplayer.music.billing.BillingListener
 import com.eco.musicplayer.audioplayer.music.models.OfferInfo
-import com.eco.musicplayer.audioplayer.music.paywall.PaywallFullActivity.Companion
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 
 class PaywallBottomSheetActivity : AppCompatActivity(), BillingListener {
 
     companion object {
-        private const val TAG = "PaywallBottomSheetActivity"
+        private const val TAG = "PaywallBottomSheet"
+
+        // Default values
+        private const val DEFAULT_SUBSCRIPTION_ID = "free_123"
+        private const val DEFAULT_LIFETIME_ID = "test3"
     }
 
     private lateinit var binding: ActivityPaywallBottomSheetBinding
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
     private lateinit var billingManager: BillingManager
 
+    // Nhận dữ liệu từ Intent - Hỗ trợ nhiều subscriptions
+    private var subscriptionIds = listOf<String>()
+    private var subscriptionOfferIds = listOf<String>()
+    private var lifetimeId = DEFAULT_LIFETIME_ID
+    private var selectionPosition = 1
+
     private var isLifetimeSelected = true
     private var hasTriedFreeTrial = false
 
     private var weeklyPrice = ""
     private var lifetimePrice = ""
-
     private var weeklyOffer: OfferInfo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,14 +56,45 @@ class PaywallBottomSheetActivity : AppCompatActivity(), BillingListener {
             insets
         }
 
+        getDataFromIntent()
         setupBillingManager()
         setupBottomSheet()
         setupClickListeners()
         setupInitialState()
     }
 
+    private fun getDataFromIntent() {
+        intent?.let {
+            subscriptionIds = it.getStringArrayListExtra(PaywallActivity.EXTRA_SUBSCRIPTION_ID)
+                ?: listOf(DEFAULT_SUBSCRIPTION_ID)
+
+            subscriptionOfferIds =
+                it.getStringArrayListExtra(PaywallActivity.EXTRA_SUBSCRIPTION_OFFER_ID)
+                    ?: listOf()
+
+            lifetimeId = it.getStringExtra(PaywallActivity.EXTRA_LIFETIME_ID)
+                ?: DEFAULT_LIFETIME_ID
+
+            selectionPosition = it.getIntExtra(PaywallActivity.EXTRA_SELECTION_POSITION, 1)
+
+            Log.d(TAG, "===== Received Data =====")
+            Log.d(TAG, "Subscription IDs: $subscriptionIds")
+            Log.d(TAG, "Offer IDs: $subscriptionOfferIds")
+            Log.d(TAG, "Lifetime ID: $lifetimeId")
+            Log.d(TAG, "Selection Position: $selectionPosition")
+            Log.d(TAG, "========================")
+
+            isLifetimeSelected = (selectionPosition == 1)
+        }
+    }
+
     private fun setupBillingManager() {
-        billingManager = BillingManager(this, this)
+        billingManager = BillingManager(
+            context = this,
+            listener = this,
+            subscriptionIds = subscriptionIds,
+            lifetimeId = lifetimeId
+        )
         billingManager.initialize()
     }
 
@@ -114,7 +152,7 @@ class PaywallBottomSheetActivity : AppCompatActivity(), BillingListener {
         when {
             isLifetimeSelected -> {
                 Log.d(TAG, "Purchase Lifetime (no trial)")
-                launchPurchase(useFreeTrial = false)
+                launchPurchase()
             }
 
             hasTrial && !hasTriedFreeTrial -> {
@@ -125,19 +163,35 @@ class PaywallBottomSheetActivity : AppCompatActivity(), BillingListener {
 
             else -> {
                 Log.d(TAG, "Purchase Weekly (continue)")
-                launchPurchase(useFreeTrial = hasTriedFreeTrial)
+                launchPurchase()
             }
         }
     }
 
-    private fun launchPurchase(useFreeTrial: Boolean) {
-        val selectedOfferId = if (isLifetimeSelected) {
-            ""
+    private fun launchPurchase() {
+        val productId: String
+        val offerId: String
+
+        if (isLifetimeSelected) {
+            productId = lifetimeId
+            offerId = ""
         } else {
-            weeklyOffer?.offerId ?: ""
+            productId = subscriptionIds.firstOrNull() ?: DEFAULT_SUBSCRIPTION_ID
+
+            offerId = weeklyOffer?.offerId?.takeIf { it.isNotEmpty() }
+                ?: subscriptionOfferIds.firstOrNull()
+                        ?: ""
         }
+
+        Log.d(TAG, "Launching purchase: Product=$productId, Offer=$offerId")
+
         showPurchaseLoading()
-        billingManager.launchPurchaseFlow(this, isLifetimeSelected, selectedOfferId)
+        billingManager.launchPurchaseFlow(
+            activity = this,
+            productId = productId,
+            offerId = offerId,
+            lifetimeId = lifetimeId
+        )
     }
 
     private fun setupInitialState() {
@@ -222,9 +276,7 @@ class PaywallBottomSheetActivity : AppCompatActivity(), BillingListener {
 
         binding.btnTryTree.text = when {
             isLifetimeSelected -> getString(R.string.paywall_full_btn_continue)
-
             hasTrial && !hasTriedFreeTrial -> getString(R.string.paywall_bottom_sheet_btn_free)
-
             else -> getString(R.string.paywall_full_btn_continue)
         }
     }
@@ -261,22 +313,25 @@ class PaywallBottomSheetActivity : AppCompatActivity(), BillingListener {
             if (weeklyPrice.isNotEmpty()) {
                 txtPwWeeklyPlanPrice.text = weeklyPrice
             } else {
-                Log.d(TAG, "weeklyPrice null")
+                Log.w(TAG, "Weekly price is empty")
             }
+
             if (lifetimePrice.isNotEmpty()) {
                 txtPwYearlyPlanPrice.text = lifetimePrice
                 txtPwYearlyPlanContent.text = getString(R.string.paywall_lifetime_label)
             } else {
-                Log.d(TAG, "lifetimePrice null")
+                Log.w(TAG, "Lifetime price is empty")
             }
         }
     }
+
+    // ============ BillingListener Callbacks ============
 
     override fun onBillingSetupFinished(isSuccess: Boolean) {
         if (!isSuccess) {
             Toast.makeText(
                 this,
-                "Không thể kết nối Google Play. Vui lòng thử lại.",
+                "Khong the ket noi Google Play. Vui long thu lai.",
                 Toast.LENGTH_LONG
             ).show()
             showSuccess()
@@ -290,15 +345,25 @@ class PaywallBottomSheetActivity : AppCompatActivity(), BillingListener {
         lifetimePrice: String,
         weeklyOffer: OfferInfo?
     ) {
-        this.weeklyPrice = weeklyPrice
+        val targetOfferId = subscriptionOfferIds.firstOrNull() ?: ""
+
+        val offerLoad = if (targetOfferId.isNotEmpty()) {
+            billingManager.getOfferByOfferId(targetOfferId)
+        } else {
+            null
+        } ?: billingManager.getOfferByTrialDays(3)
+        ?: weeklyOffer
+
+        this.weeklyOffer = offerLoad
+        this.weeklyPrice = offerLoad?.formattedPrice ?: weeklyPrice
         this.lifetimePrice = lifetimePrice
-        this.weeklyOffer = weeklyOffer
 
         if (weeklyPrice.isEmpty() && lifetimePrice.isEmpty()) {
-            Toast.makeText(this, "Không tải được thông tin giá từ Google Play", Toast.LENGTH_SHORT)
-                .show()
-        } else {
-            Log.d(TAG, "Prices loaded successfully")
+            Toast.makeText(
+                this,
+                "Khong tai duoc thong tin gia tu Google Play",
+                Toast.LENGTH_SHORT
+            ).show()
         }
 
         runOnUiThread {
@@ -307,16 +372,16 @@ class PaywallBottomSheetActivity : AppCompatActivity(), BillingListener {
     }
 
     override fun onPurchaseSuccess() {
-        Log.d(TAG, "onPurchaseSuccess")
+        Log.d(TAG, "Purchase successful")
         hidePurchaseLoading()
-        Toast.makeText(this, "Đăng ký thành công!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, "Thanh toan thanh cong!", Toast.LENGTH_SHORT).show()
 
         setResult(RESULT_OK)
         finish()
     }
 
     override fun onPurchaseFailed(errorMessage: String) {
-        Log.e(TAG, "onPurchaseFailed: $errorMessage")
+        Log.e(TAG, "Purchase failed: $errorMessage")
         hidePurchaseLoading()
         Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
     }
