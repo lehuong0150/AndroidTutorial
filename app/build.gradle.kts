@@ -55,7 +55,8 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.6.0")
     implementation("com.android.support.constraint:constraint-layout:1.1.0-beta1")
     implementation("com.intuit.sdp:sdp-android:1.1.1")
-    implementation("com.android.billingclient:billing-ktx:7.1.1")
+    implementation(project(":billing"))
+    implementation("com.android.billingclient:billing-ktx:8.0.0")
     implementation("com.facebook.shimmer:shimmer:0.5.0")
     implementation(platform("com.google.firebase:firebase-bom:34.4.0"))
     //add remote config

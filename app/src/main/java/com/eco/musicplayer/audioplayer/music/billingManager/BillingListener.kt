@@ -1,4 +1,4 @@
-package com.eco.musicplayer.audioplayer.music.billing
+package com.eco.musicplayer.audioplayer.music.billingManager
 
 import com.eco.musicplayer.audioplayer.music.models.OfferInfo
 
@@ -11,6 +11,7 @@ interface BillingListener {
         weeklyOffer: OfferInfo?
     )
 
+    fun checkTrialEligibility(hasUsedTrial: Boolean)
     fun onPurchaseSuccess()
     fun onPurchaseFailed(errorMessage: String)
 }

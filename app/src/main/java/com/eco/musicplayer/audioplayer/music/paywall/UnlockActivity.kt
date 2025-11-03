@@ -45,7 +45,7 @@ class UnlockActivity : AppCompatActivity() {
     private fun showLoading() = with(binding) {
         pgbLoadInfo.visibility = View.VISIBLE
         btnTryTree.isEnabled = false
-        btnTryTree.text = ""
+        btnTryTree.text = null
     }
 
     private fun showSuccess() = with(binding) {

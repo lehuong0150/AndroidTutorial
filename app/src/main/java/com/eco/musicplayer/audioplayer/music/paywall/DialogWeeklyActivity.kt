@@ -1,6 +1,5 @@
 package com.eco.musicplayer.audioplayer.music.paywall
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -9,7 +8,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.eco.musicplayer.audioplayer.music.R
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityDialogWeeklyBinding
 
-class DialogWeeklyActivity : AppCompatActivity() {
+class DialogWeeklyActivity : FullscreenActivity() {
     companion object {
         private const val TAG = "DialogWeeklyActivity"
     }

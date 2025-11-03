@@ -2,13 +2,12 @@ package com.eco.musicplayer.audioplayer.music.paywall
 
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.eco.musicplayer.audioplayer.music.R
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityDialogYearlyBinding
 
-class DialogYearlyActivity : AppCompatActivity() {
+class DialogYearlyActivity : FullscreenActivity() {
 
     private lateinit var binding: ActivityDialogYearlyBinding
 
@@ -57,7 +56,7 @@ class DialogYearlyActivity : AppCompatActivity() {
         layoutLoadFail.visibility = View.INVISIBLE
         btnClaimOffer.visibility = View.VISIBLE
         btnClaimOffer.isEnabled = false
-        btnClaimOffer.text = ""
+        btnClaimOffer.text = null
         pgbLoadInfo.visibility = View.VISIBLE
     }
 

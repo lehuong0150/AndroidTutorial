@@ -5,17 +5,16 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.eco.musicplayer.audioplayer.music.R
-import com.eco.musicplayer.audioplayer.music.billing.BillingListener
-import com.eco.musicplayer.audioplayer.music.billing.BillingManager
+import com.eco.musicplayer.audioplayer.music.billingManager.BillingListener
+import com.eco.musicplayer.audioplayer.music.billingManager.BillingManager
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityPaywallSaleBinding
 import com.eco.musicplayer.audioplayer.music.models.OfferInfo
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
-class PaywallSaleActivity : AppCompatActivity(), BillingListener {
+class PaywallSaleActivity : FullscreenActivity(), BillingListener {
 
     companion object {
         private const val TAG = "PaywallSaleActivity"
@@ -83,7 +82,7 @@ class PaywallSaleActivity : AppCompatActivity(), BillingListener {
         val topRatio = 0.68f
         val bottomRatio = 0.36f
 
-        topLayout?.let {
+        topLayout.let {
             val params = it.layoutParams
             params.height = (screenHeight * topRatio).toInt()
             it.layoutParams = params
@@ -143,7 +142,7 @@ class PaywallSaleActivity : AppCompatActivity(), BillingListener {
         layoutLoadFail.visibility = View.INVISIBLE
         pgbLoadInfo.visibility = View.VISIBLE
         btnClaimOffer.isEnabled = false
-        btnClaimOffer.text = ""
+        btnClaimOffer.text = null
         btnClaimOffer.visibility = View.VISIBLE
         shimmerLayout.startShimmer()
         shimmerLayout.visibility = View.VISIBLE
@@ -153,7 +152,7 @@ class PaywallSaleActivity : AppCompatActivity(), BillingListener {
     private fun showPurchaseLoading() = with(binding) {
         pgbLoadInfo.visibility = View.VISIBLE
         btnClaimOffer.isEnabled = false
-        btnClaimOffer.text = ""
+        btnClaimOffer.text = null
     }
 
     private fun hidePurchaseLoading() = with(binding) {
@@ -278,6 +277,10 @@ class PaywallSaleActivity : AppCompatActivity(), BillingListener {
                 showSuccess()
             }
         }
+    }
+
+    override fun checkTrialEligibility(hasUsedTrial: Boolean) {
+        TODO("Not yet implemented")
     }
 
     override fun onPurchaseSuccess() {

@@ -4,16 +4,15 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.eco.musicplayer.audioplayer.music.R
-import com.eco.musicplayer.audioplayer.music.billing.BillingListener
-import com.eco.musicplayer.audioplayer.music.billing.BillingManager
+import com.eco.musicplayer.audioplayer.music.billingManager.BillingListener
+import com.eco.musicplayer.audioplayer.music.billingManager.BillingManager
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityPaywallOnboardingBinding
 import com.eco.musicplayer.audioplayer.music.models.OfferInfo
 
-class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
+class PaywallOnboardingActivity : FullscreenActivity(), BillingListener {
 
     companion object {
         private const val TAG = "PaywallOnboarding"
@@ -31,7 +30,8 @@ class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
     private lateinit var billingManager: BillingManager
 
     private var isLifetimeSelected = true
-    private var hasTriedFreeTrial = false
+    private var hasUserAlreadyUsedTrial = false  // Trạng thái từ Google Play
+    private var hasClickedTrialButton = false     // User đã click switch trial
 
     private var weeklyPrice = ""
     private var lifetimePrice = ""
@@ -42,6 +42,13 @@ class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
         binding = ActivityPaywallOnboardingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        applyWindowInsets()
+        setupBillingManager()
+        setupClickListeners()
+        setupInitialState()
+    }
+
+    private fun applyWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.setPadding(
@@ -52,10 +59,6 @@ class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
             )
             insets
         }
-
-        setupBillingManager()
-        setupClickListeners()
-        setupInitialState()
     }
 
     private fun setupBillingManager() {
@@ -74,19 +77,11 @@ class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
 
     private fun setupClickListeners() = with(binding) {
         radioGroupPlan.setOnCheckedChangeListener { _, checkedId ->
-            isLifetimeSelected = (checkedId == R.id.rbYearly)
-            updateUI()
+            handlePlanSelection(checkedId)
         }
 
         swFree.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                if (!isLifetimeSelected && (weeklyOffer?.freeTrialDays ?: 0) > 0 && !hasTriedFreeTrial) {
-                    hasTriedFreeTrial = true
-                }
-            } else {
-                hasTriedFreeTrial = false
-            }
-            updateUI()
+            handleTrialSwitch(isChecked)
         }
 
         btnTryTree.setOnClickListener {
@@ -98,9 +93,38 @@ class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
         }
     }
 
+    private fun handlePlanSelection(checkedId: Int) {
+        isLifetimeSelected = (checkedId == R.id.rbYearly)
+
+        // Reset trial button state khi đổi plan
+        if (isLifetimeSelected) {
+            hasClickedTrialButton = false
+        }
+
+        updateUI()
+    }
+
+    private fun handleTrialSwitch(isChecked: Boolean) {
+        val trialDays = weeklyOffer?.freeTrialDays ?: 0
+        val canUseTrial = !isLifetimeSelected &&
+                trialDays > 0 &&
+                !hasUserAlreadyUsedTrial
+
+        if (isChecked && canUseTrial) {
+            hasClickedTrialButton = true
+        } else {
+            hasClickedTrialButton = false
+        }
+
+        updateUI()
+    }
+
     private fun handlePurchaseClick() {
         val trialDays = weeklyOffer?.freeTrialDays ?: 0
-        val hasTrial = !isLifetimeSelected && trialDays > 0
+        val canShowTrial = !isLifetimeSelected &&
+                trialDays > 0 &&
+                !hasUserAlreadyUsedTrial &&
+                hasClickedTrialButton
 
         when {
             isLifetimeSelected -> {
@@ -108,21 +132,19 @@ class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
                 launchPurchase()
             }
 
-            hasTrial && !hasTriedFreeTrial -> {
-                Log.d(TAG, "Use Free Trial ($trialDays days)")
-                hasTriedFreeTrial = true
-                updateUI()
+            canShowTrial -> {
+                Log.d(TAG, "User confirmed trial via switch - showing trial offer ($trialDays days)")
+                launchPurchase()
             }
 
             else -> {
-                Log.d(TAG, "Purchase Weekly (continue)")
+                Log.d(TAG, "Purchase Weekly (direct payment)")
                 launchPurchase()
             }
         }
     }
 
     private fun launchPurchase() {
-        // Xác định productId và offerId
         val productId = if (isLifetimeSelected) {
             LIFETIME_ID
         } else {
@@ -130,18 +152,19 @@ class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
         }
 
         val offerId = if (isLifetimeSelected) {
-            "" // Lifetime không cần offer ID
+            ""
         } else {
             weeklyOffer?.offerId ?: ""
         }
 
-        Log.d(TAG, "Launching purchase: productId=$productId, offerId=$offerId, hasFreeTrial=$hasTriedFreeTrial")
+        Log.d(TAG, "Launching purchase: productId=$productId, offerId=$offerId, hasClickedTrial=$hasClickedTrialButton")
 
         showPurchaseLoading()
         billingManager.launchPurchaseFlow(
             activity = this,
             productId = productId,
-            offerId = offerId
+            offerId = offerId,
+            lifetimeId = LIFETIME_ID
         )
     }
 
@@ -154,15 +177,15 @@ class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
 
     private fun updateContentText() = with(binding) {
         val trialDays = weeklyOffer?.freeTrialDays ?: 0
+        val canUseTrial = !isLifetimeSelected &&
+                trialDays > 0 &&
+                !hasUserAlreadyUsedTrial
 
         txtContent.text = when {
             isLifetimeSelected ->
                 getString(R.string.paywall_onboarding_content_lifetime, lifetimePrice)
 
-            trialDays > 0 && !hasTriedFreeTrial ->
-                getString(R.string.paywall_onboarding_content_weekly_direct, weeklyPrice)
-
-            !isLifetimeSelected && hasTriedFreeTrial ->
+            canUseTrial && hasClickedTrialButton ->
                 getString(R.string.paywall_onboarding_content_weekly, weeklyPrice, trialDays)
 
             else ->
@@ -172,33 +195,44 @@ class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
 
     private fun updateButtonText() = with(binding) {
         val trialDays = weeklyOffer?.freeTrialDays ?: 0
-        val hasTrial = !isLifetimeSelected && trialDays > 0
+        val canUseTrial = !isLifetimeSelected &&
+                trialDays > 0 &&
+                !hasUserAlreadyUsedTrial
 
         btnTryTree.text = when {
             isLifetimeSelected -> getString(R.string.paywall_btn_free_trial_continue)
-            hasTrial && hasTriedFreeTrial -> getString(R.string.paywall_onboarding_btn_free)
+            canUseTrial && hasClickedTrialButton -> getString(R.string.paywall_onboarding_btn_free)
             else -> getString(R.string.paywall_btn_free_trial_continue)
         }
     }
 
     private fun updateFreeTrialText() = with(binding) {
         val trialDays = weeklyOffer?.freeTrialDays ?: 0
+        val canUseTrial = !isLifetimeSelected &&
+                trialDays > 0 &&
+                !hasUserAlreadyUsedTrial
 
         txtFreeTrial.text = when {
             isLifetimeSelected -> getString(R.string.paywall_free_trial_disabled)
-            !hasTriedFreeTrial && trialDays > 0 -> getString(R.string.paywall_free_trial_disabled)
-            else -> getString(R.string.paywall_free_trial_enabled)
+            !canUseTrial -> getString(R.string.paywall_free_trial_disabled)
+            hasClickedTrialButton -> getString(R.string.paywall_free_trial_enabled)
+            else -> getString(R.string.paywall_free_trial_disabled)
         }
     }
 
     private fun updateSwitchVisibility() = with(binding) {
         val trialDays = weeklyOffer?.freeTrialDays ?: 0
-        val shouldShowSwitch = !isLifetimeSelected && trialDays > 0
+        val canUseTrial = !isLifetimeSelected &&
+                trialDays > 0 &&
+                !hasUserAlreadyUsedTrial
 
-        layoutFreeTrial.visibility = if (shouldShowSwitch) View.VISIBLE else View.GONE
+        layoutFreeTrial.visibility = if (canUseTrial) View.VISIBLE else View.GONE
 
-        if (shouldShowSwitch) {
-            swFree.isChecked = hasTriedFreeTrial
+        if (canUseTrial) {
+            // Chỉ update switch khi không đang được user tương tác
+            if (!swFree.isPressed) {
+                swFree.isChecked = hasClickedTrialButton
+            }
         }
     }
 
@@ -206,16 +240,20 @@ class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
         pgbLoadInfo.visibility = View.VISIBLE
         txtContent.visibility = View.VISIBLE
         rbYearly.text = getString(R.string.paywall_lifetime_title)
-        btnTryTree.isEnabled = false
-        btnTryTree.setBackgroundResource(R.drawable.bg_pw_loading)
-        btnTryTree.text = ""
+        btnTryTree.apply {
+            isEnabled = false
+            setBackgroundResource(R.drawable.bg_pw_loading)
+            text = null
+        }
         layoutFreeTrial.visibility = View.GONE
     }
 
     private fun showPurchaseLoading() = with(binding) {
         pgbLoadInfo.visibility = View.VISIBLE
-        btnTryTree.isEnabled = false
-        btnTryTree.text = ""
+        btnTryTree.apply {
+            isEnabled = false
+            text = null
+        }
     }
 
     private fun hidePurchaseLoading() = with(binding) {
@@ -227,12 +265,14 @@ class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
     private fun showSuccess() = with(binding) {
         pgbLoadInfo.visibility = View.INVISIBLE
         txtContent.visibility = View.VISIBLE
-        btnTryTree.isEnabled = true
-        btnTryTree.setBackgroundResource(R.drawable.bg_pw_btn_free)
+        btnTryTree.apply {
+            isEnabled = true
+            setBackgroundResource(R.drawable.bg_pw_btn_free)
+        }
         updateUI()
     }
 
-    // ---------BillingListener callbacks ------------
+    // ============ BillingListener Callbacks ============
 
     override fun onBillingSetupFinished(isSuccess: Boolean) {
         if (!isSuccess) {
@@ -242,7 +282,7 @@ class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
                     "Không thể kết nối Google Play. Vui lòng thử lại.",
                     Toast.LENGTH_LONG
                 ).show()
-                showSuccess()
+                showLoading()
             }
         } else {
             Log.d(TAG, "Billing setup success, waiting for products...")
@@ -265,6 +305,14 @@ class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
         this.weeklyPrice = offer3Days?.formattedPrice ?: weeklyPrice
         this.lifetimePrice = lifetimePrice
 
+        Log.d(TAG, """
+            Products loaded:
+              Weekly Offer: ${offer3Days?.offerId}
+              Weekly Price: ${this.weeklyPrice}
+              Lifetime Price: $lifetimePrice
+              Free Trial: ${offer3Days?.freeTrialDays} days
+        """.trimIndent())
+
         if (this.weeklyPrice.isEmpty() && lifetimePrice.isEmpty()) {
             Toast.makeText(
                 this,
@@ -273,8 +321,20 @@ class PaywallOnboardingActivity : AppCompatActivity(), BillingListener {
             ).show()
         }
 
+        // Check trial eligibility sau khi load product details
+        billingManager.checkTrialEligibility(SUBSCRIPTION_ID)
+
         runOnUiThread {
             showSuccess()
+        }
+    }
+
+    override fun checkTrialEligibility(hasUsedTrial: Boolean) {
+        Log.d(TAG, "Trial eligibility checked: hasUsedTrial = $hasUsedTrial")
+        hasUserAlreadyUsedTrial = hasUsedTrial
+
+        runOnUiThread {
+            updateUI()
         }
     }
 

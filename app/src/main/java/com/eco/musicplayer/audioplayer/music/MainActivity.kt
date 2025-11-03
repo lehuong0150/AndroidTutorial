@@ -45,8 +45,10 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         var instanceCount = 0
+        private const val CLICK_THROTTLE_MS = 500L
     }
 
+    private var lastClickTime = 0L
     private var choose: String? = null
 
     private val getResultFromSecondActivity =
@@ -87,7 +89,7 @@ class MainActivity : AppCompatActivity() {
         Log.d("LaunchMode", "MainActivity created")
         Log.d("LaunchMode", "Task ID: $taskId")
         Log.d("LaunchMode", "Instance ID: $instanceId")
-        Log.d("LaunchMode", "Total instances: ${com.eco.musicplayer.audioplayer.music.MainActivity.Companion.instanceCount}")
+        Log.d("LaunchMode", "Total instances: ${instanceCount}")
     }
 
     private fun setupLifecycleButtons(savedInstanceState: Bundle?) {
@@ -105,7 +107,7 @@ class MainActivity : AppCompatActivity() {
             toggleScreenOrientation()
         }
 
-        binding.btnShare.setOnClickListener {
+        binding.btnShare.setOnClickListenerDebounced {
             Log.d("LifecycleMainActivity", "App is paused by the system (Share intent)")
             shareText("App is paused by the system")
         }
@@ -126,12 +128,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupLaunchModeButtons() {
-        binding.btnStandard.setOnClickListener {
+        binding.btnStandard.setOnClickListenerDebounced {
             Log.d("LaunchMode", "Opening StandardActivity")
 
             val bundle = Bundle().apply {
                 putInt("task_id", taskId)
-                putString("instance_label", "MainActivity Instance #${com.eco.musicplayer.audioplayer.music.MainActivity.Companion.instanceCount + 1}")
+                putString(
+                    "instance_label",
+                    "MainActivity Instance #${com.eco.musicplayer.audioplayer.music.MainActivity.Companion.instanceCount + 1}"
+                )
                 putLong("start_time", System.currentTimeMillis())
                 putBoolean("is_foreground", true)
             }
@@ -143,22 +148,22 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        binding.btnSingleTop.setOnClickListener {
+        binding.btnSingleTop.setOnClickListenerDebounced {
             Log.d("LaunchMode", "Opening SingleTopActivity")
             launchActivity<SingleTopActivity>()
         }
 
-        binding.btnSingleTask.setOnClickListener {
+        binding.btnSingleTask.setOnClickListenerDebounced {
             Log.d("LaunchMode", "Opening SingleTaskActivity")
             launchActivity<SingleTaskActivity>()
         }
 
-        binding.btnSingleInstance.setOnClickListener {
+        binding.btnSingleInstance.setOnClickListenerDebounced {
             Log.d("LaunchMode", "Opening SingleInstanceActivity")
             launchActivity<SingleInstanceActivity>()
         }
 
-        binding.btnIntentFlag.setOnClickListener {
+        binding.btnIntentFlag.setOnClickListenerDebounced {
             val launchModes = arrayOf("Standard", "SingleTop", "SingleTask", "SingleInstance")
 
             AlertDialog.Builder(this)
@@ -265,6 +270,9 @@ class MainActivity : AppCompatActivity() {
             "LifecycleMainActivity",
             "onDestroy - Instance: ${System.identityHashCode(this)}"
         )
-        Log.d("LaunchMode", "Remaining instances: ${com.eco.musicplayer.audioplayer.music.MainActivity.Companion.instanceCount}")
+        Log.d(
+            "LaunchMode",
+            "Remaining instances: ${com.eco.musicplayer.audioplayer.music.MainActivity.Companion.instanceCount}"
+        )
     }
 }

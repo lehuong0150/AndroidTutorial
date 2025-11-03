@@ -5,26 +5,23 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.eco.musicplayer.audioplayer.music.R
-import com.eco.musicplayer.audioplayer.music.billing.BillingListener
-import com.eco.musicplayer.audioplayer.music.billing.BillingManager
+import com.eco.musicplayer.audioplayer.music.billingManager.BillingListener
+import com.eco.musicplayer.audioplayer.music.billingManager.BillingManager
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityPaywallFullBinding
 import com.eco.musicplayer.audioplayer.music.models.OfferInfo
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
-class PaywallFullActivity : AppCompatActivity(), BillingListener {
+class PaywallFullActivity : FullscreenActivity(), BillingListener {
 
     companion object {
         private const val TAG = "PaywallFullActivity"
 
-        // Product IDs
         private const val SUBSCRIPTION_ID = "free_123"
         private const val LIFETIME_ID = "test3"
 
-        // Offer IDs
         private const val OFFER_7_DAYS = "7days"
         private const val OFFER_3_DAYS = "3days"
     }
@@ -33,9 +30,10 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<*>
     private lateinit var billingManager: BillingManager
 
-    // State variables
     private var isLifetimeSelected = true
-    private var hasTriedFreeTrial = false
+    private var hasUserAlreadyUsedTrial = false  // Trạng thái từ Google Play
+    private var hasClickedTrialButton = false
+
     private var weeklyPrice = ""
     private var lifetimePrice = ""
     private var weeklyOffer: OfferInfo? = null
@@ -47,6 +45,14 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
         binding = ActivityPaywallFullBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        applyWindowInsets()
+        setupBillingManager()
+        setupBottomSheet()
+        setupClickListeners()
+        setupInitialState()
+    }
+
+    private fun applyWindowInsets() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             view.setPadding(
@@ -57,11 +63,6 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
             )
             insets
         }
-
-        setupBillingManager()
-        setupBottomSheet()
-        setupClickListeners()
-        setupInitialState()
     }
 
     private fun setupBillingManager() {
@@ -82,7 +83,7 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
         val topRatio = 0.38f
         val bottomRatio = 0.69f
 
-        topLayout?.let {
+        topLayout.let {
             val params = it.layoutParams
             params.height = (screenHeight * topRatio).toInt()
             it.layoutParams = params
@@ -101,23 +102,15 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
     private fun setupClickListeners() {
         with(binding) {
             layoutPwFull.setOnClickListener {
-                if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
-                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
-                }
+                expandBottomSheet()
             }
 
             layoutPwYearly.setOnClickListener {
-                if (!isLifetimeSelected) {
-                    isLifetimeSelected = true
-                    updateUI()
-                }
+                selectLifetimePlan()
             }
 
             layoutPwWeekly.setOnClickListener {
-                if (isLifetimeSelected) {
-                    isLifetimeSelected = false
-                    updateUI()
-                }
+                selectWeeklyPlan()
             }
 
             btnTryTree.setOnClickListener {
@@ -130,13 +123,36 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
         }
     }
 
+    private fun expandBottomSheet() {
+        if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_COLLAPSED) {
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        }
+    }
+
+    private fun selectLifetimePlan() {
+        if (!isLifetimeSelected) {
+            isLifetimeSelected = true
+            updateUI()
+        }
+    }
+
+    private fun selectWeeklyPlan() {
+        if (isLifetimeSelected) {
+            isLifetimeSelected = false
+            updateUI()
+        }
+    }
+
     private fun setupInitialState() {
         showLoading()
     }
 
     private fun handlePurchaseClick() {
         val trialDays = weeklyOffer?.freeTrialDays ?: 0
-        val hasTrial = !isLifetimeSelected && trialDays > 0
+        val canShowTrial = !isLifetimeSelected &&
+                trialDays > 0 &&
+                !hasUserAlreadyUsedTrial &&
+                !hasClickedTrialButton
 
         when {
             isLifetimeSelected -> {
@@ -144,9 +160,9 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
                 launchPurchase()
             }
 
-            hasTrial && !hasTriedFreeTrial -> {
-                Log.d(TAG, "Use Free Trial ($trialDays days)")
-                hasTriedFreeTrial = true
+            canShowTrial -> {
+                Log.d(TAG, "User clicked 'Try Free' - showing trial offer ($trialDays days)")
+                hasClickedTrialButton = true
                 updateUI()
             }
 
@@ -158,7 +174,6 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
     }
 
     private fun launchPurchase() {
-        // Xác định productId và offerId
         val productId = if (isLifetimeSelected) {
             LIFETIME_ID
         } else {
@@ -166,7 +181,7 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
         }
 
         val offerId = if (isLifetimeSelected) {
-            "" // Lifetime không cần offer ID
+            ""
         } else {
             weeklyOffer?.offerId ?: ""
         }
@@ -177,15 +192,18 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
         billingManager.launchPurchaseFlow(
             activity = this,
             productId = productId,
-            offerId = offerId
+            offerId = offerId,
+            lifetimeId = LIFETIME_ID
         )
     }
 
     private fun showPurchaseLoading() {
         with(binding) {
             pgbLoadInfo.visibility = View.VISIBLE
-            btnTryTree.isEnabled = false
-            btnTryTree.text = ""
+            btnTryTree.apply {
+                isEnabled = false
+                text = null
+            }
         }
     }
 
@@ -207,9 +225,11 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
             groupYearly.visibility = View.INVISIBLE
             groupContent.visibility = View.INVISIBLE
 
-            btnTryTree.isEnabled = false
-            btnTryTree.text = ""
-            btnTryTree.setBackgroundResource(R.drawable.bg_pw_loading)
+            btnTryTree.apply {
+                isEnabled = false
+                text = null
+                setBackgroundResource(R.drawable.bg_pw_loading)
+            }
 
             txtPwYearlyPlan.text = getString(R.string.paywall_lifetime_title)
         }
@@ -225,10 +245,11 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
             groupYearly.visibility = View.VISIBLE
             groupContent.visibility = View.VISIBLE
 
-            btnTryTree.isEnabled = true
-            btnTryTree.text = getString(R.string.paywall_bottom_sheet_btn_free)
-            btnTryTree.setBackgroundResource(R.drawable.btn_pw_bottom_sheet_free)
-            txtPwYearly.text = ""
+            btnTryTree.apply {
+                isEnabled = true
+                setBackgroundResource(R.drawable.btn_pw_bottom_sheet_free)
+            }
+            txtPwYearly.text = null
 
             updateUI()
         }
@@ -258,20 +279,27 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
 
     private fun updateButtonText() {
         val trialDays = weeklyOffer?.freeTrialDays ?: 0
-        val hasTrial = !isLifetimeSelected && trialDays > 0
+        val canShowTrial = !isLifetimeSelected &&
+                trialDays > 0 &&
+                !hasUserAlreadyUsedTrial &&
+                !hasClickedTrialButton
 
         binding.btnTryTree.text = when {
             isLifetimeSelected -> getString(R.string.paywall_full_btn_continue)
-            hasTrial && !hasTriedFreeTrial -> getString(R.string.paywall_bottom_sheet_btn_free)
+            canShowTrial -> getString(R.string.paywall_bottom_sheet_btn_free)
             else -> getString(R.string.paywall_full_btn_continue)
         }
     }
 
     private fun updateFreeTrialText() {
         val trialDays = weeklyOffer?.freeTrialDays ?: 0
+        val canShowTrial = !isLifetimeSelected &&
+                trialDays > 0 &&
+                !hasUserAlreadyUsedTrial
+
         binding.txtPwFreeTrial.text = when {
             isLifetimeSelected -> getString(R.string.paywall_lifetime_label)
-            !hasTriedFreeTrial && trialDays > 0 -> getString(
+            canShowTrial && !hasClickedTrialButton -> getString(
                 R.string.paywall_bottom_sheet_free_trial,
                 trialDays
             )
@@ -281,11 +309,15 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
 
     private fun updateContentText() {
         val trialDays = weeklyOffer?.freeTrialDays ?: 0
+        val canShowTrial = !isLifetimeSelected &&
+                trialDays > 0 &&
+                !hasUserAlreadyUsedTrial
+
         binding.txtPwContent.text = when {
             isLifetimeSelected ->
                 getString(R.string.paywall_lifetime_content_yearly, lifetimePrice)
 
-            trialDays > 0 && !hasTriedFreeTrial ->
+            canShowTrial && !hasClickedTrialButton ->
                 getString(R.string.paywall_bottom_sheet_content_weekly, weeklyPrice)
 
             else ->
@@ -310,6 +342,8 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
         }
     }
 
+    // ============ BillingListener Callbacks ============
+
     override fun onBillingSetupFinished(isSuccess: Boolean) {
         if (!isSuccess) {
             Toast.makeText(
@@ -317,7 +351,7 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
                 "Không thể kết nối Google Play. Vui lòng thử lại.",
                 Toast.LENGTH_LONG
             ).show()
-            showSuccess()
+            showLoading()
         } else {
             Log.d(TAG, "Billing setup success, waiting for products...")
         }
@@ -333,6 +367,7 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
             ?: billingManager.getOfferByOfferId(OFFER_3_DAYS)
             ?: billingManager.getOfferByTrialDays(3)
             ?: weeklyOffer
+
         this.weeklyOffer = offer7Days
         this.weeklyPrice = offer7Days?.formattedPrice ?: weeklyPrice
         this.lifetimePrice = lifetimePrice
@@ -353,8 +388,20 @@ class PaywallFullActivity : AppCompatActivity(), BillingListener {
             ).show()
         }
 
+        // Check trial eligibility sau khi load product details
+        billingManager.checkTrialEligibility(SUBSCRIPTION_ID)
+
         runOnUiThread {
             showSuccess()
+        }
+    }
+
+    override fun checkTrialEligibility(hasUsedTrial: Boolean) {
+        Log.d(TAG, "Trial eligibility checked: hasUsedTrial = $hasUsedTrial")
+        hasUserAlreadyUsedTrial = hasUsedTrial
+
+        runOnUiThread {
+            updateUI()
         }
     }
 
