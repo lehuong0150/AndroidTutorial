@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.util.Log
 import com.android.billingclient.api.*
-import com.eco.musicplayer.audioplayer.music.models.OfferInfo
+import com.eco.musicplayer.audioplayer.music.models.paywall.OfferInfo
 import com.eco.musicplayer.audioplayer.music.utils.OfferType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -35,7 +35,7 @@ class BillingManager(
     fun initialize() {
         billingClient = BillingClient.newBuilder(context)
             .setListener(this)
-            .enablePendingPurchases()
+            //.enablePendingPurchases()
             .build()
 
         connectToBilling()
@@ -297,57 +297,57 @@ class BillingManager(
     }
 
     fun checkTrialEligibility(subscriptionId: String) {
-        Log.d(TAG, "--- Checking Trial Eligibility for: $subscriptionId ---")
-
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                //1 : KIEM TRA ACTIVE SUBSCRIPTION
-                val activeParams = QueryPurchasesParams.newBuilder()
-                    .setProductType(BillingClient.ProductType.SUBS)
-                    .build()
-
-                val activePurchases = billingClient?.queryPurchasesAsync(activeParams)
-                val hasActive = activePurchases?.purchasesList?.any {
-                    it.products.contains(subscriptionId) &&
-                            it.purchaseState == Purchase.PurchaseState.PURCHASED
-                } ?: false
-
-                if (hasActive) {
-                    Log.d(TAG, "User has ACTIVE subscription - NOT eligible for trial")
-                    withContext(Dispatchers.Main) {
-                        listener.checkTrialEligibility(true) // đã dùng trial
-                    }
-                    return@launch
-                }
-
-                // 2: KIEM TRA DA TUNG MUA
-                val historyParams = QueryPurchaseHistoryParams.newBuilder()
-                    .setProductType(BillingClient.ProductType.SUBS)
-                    .build()
-
-                val historyResult = billingClient?.queryPurchaseHistory(historyParams)
-                val hasHistory = historyResult?.purchaseHistoryRecordList?.any {
-                    it.products.contains(subscriptionId)
-                } ?: false
-
-                if (hasHistory) {
-                    Log.d(TAG, "User has PURCHASE HISTORY - NOT eligible for trial")
-                } else {
-                    Log.d(TAG, "User has NO purchase history - ELIGIBLE for trial")
-                }
-
-                withContext(Dispatchers.Main) {
-                    listener.checkTrialEligibility(hasHistory) // true = đã dùng, false = chưa dùng
-                }
-
-            } catch (e: Exception) {
-                Log.e(TAG, "Error checking trial eligibility: ${e.message}", e)
-                withContext(Dispatchers.Main) {
-                    // Nếu lỗi, cho phép trial (an toàn cho user)
-                    listener.checkTrialEligibility(false)
-                }
-            }
-        }
+//        Log.d(TAG, "--- Checking Trial Eligibility for: $subscriptionId ---")
+//
+//        CoroutineScope(Dispatchers.IO).launch {
+//            try {
+//                //1 : KIEM TRA ACTIVE SUBSCRIPTION
+//                val activeParams = QueryPurchasesParams.newBuilder()
+//                    .setProductType(BillingClient.ProductType.SUBS)
+//                    .build()
+//
+//                val activePurchases = billingClient?.queryPurchasesAsync(activeParams)
+//                val hasActive = activePurchases?.purchasesList?.any {
+//                    it.products.contains(subscriptionId) &&
+//                            it.purchaseState == Purchase.PurchaseState.PURCHASED
+//                } ?: false
+//
+//                if (hasActive) {
+//                    Log.d(TAG, "User has ACTIVE subscription - NOT eligible for trial")
+//                    withContext(Dispatchers.Main) {
+//                        listener.checkTrialEligibility(true) // đã dùng trial
+//                    }
+//                    return@launch
+//                }
+//
+//                // 2: KIEM TRA DA TUNG MUA
+//                val historyParams = QueryPurchaseHistoryParams.newBuilder()
+//                    .setProductType(BillingClient.ProductType.SUBS)
+//                    .build()
+//
+//                val historyResult = billingClient?.queryPurchaseHistory(historyParams)
+//                val hasHistory = historyResult?.purchaseHistoryRecordList?.any {
+//                    it.products.contains(subscriptionId)
+//                } ?: false
+//
+//                if (hasHistory) {
+//                    Log.d(TAG, "User has PURCHASE HISTORY - NOT eligible for trial")
+//                } else {
+//                    Log.d(TAG, "User has NO purchase history - ELIGIBLE for trial")
+//                }
+//
+//                withContext(Dispatchers.Main) {
+//                    listener.checkTrialEligibility(hasHistory) // true = đã dùng, false = chưa dùng
+//                }
+//
+//            } catch (e: Exception) {
+//                Log.e(TAG, "Error checking trial eligibility: ${e.message}", e)
+//                withContext(Dispatchers.Main) {
+//                    // Nếu lỗi, cho phép trial (an toàn cho user)
+//                    listener.checkTrialEligibility(false)
+//                }
+//            }
+//        }
     }
 
 

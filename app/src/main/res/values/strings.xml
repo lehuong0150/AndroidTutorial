@@ -148,7 +148,8 @@
 
     <!--    Unlock  -->
     <string name="unlock_title">high-quality compression</string>
-    <string name="unlock_content">%s/year after free trial ends.\nAuto renew, cancel anytime</string>
+    <string name="unlock_content">%s/year after %d/%s free trial ends.\nAuto renew, cancel anytime</string>
+    <string name="unlock_offer">%s → %s/tháng</string>
     <string name="unlock_btn_free">Try for free</string>
     <string name="unlock_btn_continue">Continue</string>
     <string name="unlock_policy">By continuing you agree to our <u><b>Terms</b></u> and <u><b>Privacy policies</b></u>

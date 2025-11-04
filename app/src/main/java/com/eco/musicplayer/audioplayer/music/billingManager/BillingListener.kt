@@ -1,6 +1,6 @@
 package com.eco.musicplayer.audioplayer.music.billingManager
 
-import com.eco.musicplayer.audioplayer.music.models.OfferInfo
+import com.eco.musicplayer.audioplayer.music.models.paywall.OfferInfo
 
 interface BillingListener {
     fun onBillingSetupFinished(isSuccess: Boolean)

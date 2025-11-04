@@ -1,4 +1,4 @@
-package com.eco.musicplayer.audioplayer.music.models
+package com.eco.musicplayer.audioplayer.music.models.paywall
 
 import com.eco.musicplayer.audioplayer.music.utils.OfferType
 

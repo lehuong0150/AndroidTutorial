@@ -65,7 +65,7 @@ class PaywallActivity : AppCompatActivity() {
             "2" -> DialogWeeklyActivity::class.java
             "3" -> DialogYearlyActivity::class.java
             "4" -> PaywallOnboardingActivity::class.java
-            "5" -> UnlockActivity::class.java
+          //  "5" -> UnlockActivity::class.java
             "6" -> PaywallBottomSheetActivity::class.java
             "7" -> PaywallFullActivity::class.java
             else -> PaywallBottomSheetActivity::class.java
@@ -140,7 +140,7 @@ class PaywallActivity : AppCompatActivity() {
         }
 
         btnPayWall5.setOnClickListener {
-            startActivity(Intent(this@PaywallActivity, UnlockActivity::class.java))
+        //    startActivity(Intent(this@PaywallActivity, UnlockActivity::class.java))
         }
 
         btnPayWall6.setOnClickListener {

@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -18,6 +19,10 @@ import com.eco.musicplayer.audioplayer.music.launchmode.SingleInstanceActivity
 import com.eco.musicplayer.audioplayer.music.launchmode.SingleTaskActivity
 import com.eco.musicplayer.audioplayer.music.launchmode.SingleTopActivity
 import com.eco.musicplayer.audioplayer.music.launchmode.StandardActivity
+import com.eco.musicplayer.audioplayer.music.models.modelActivity.ActivityResult
+import com.eco.musicplayer.audioplayer.music.models.modelActivity.BundleData
+import com.eco.musicplayer.audioplayer.music.utils.NavigationEvent
+import com.eco.musicplayer.audioplayer.music.viewmodel.MainViewModel
 
 /*Demo tổng hợp về:
 * Vòng đời của Activity (Lifecycle):
@@ -42,21 +47,18 @@ import com.eco.musicplayer.audioplayer.music.launchmode.StandardActivity
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val viewModel: MainViewModel by viewModels()
 
     companion object {
         var instanceCount = 0
-        private const val CLICK_THROTTLE_MS = 500L
     }
-
-    private var lastClickTime = 0L
-    private var choose: String? = null
 
     private val getResultFromSecondActivity =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             result.takeIf { it.resultCode == RESULT_OK }?.data?.let { data ->
                 data.getStringExtra("info_send_result")?.let { message ->
-                    binding.edtSend.setText(message)
-                    showToast(message)
+                    val activityResult = ActivityResult(message)
+                    viewModel.onActivityResult(activityResult)
                 }
             }
         }
@@ -75,50 +77,60 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        logInstanceInfo()
-        setupLifecycleButtons(savedInstanceState)
-        setupNavigationButtons(savedInstanceState)
+        viewModel.logInstanceCreation(taskId)
+
+        setupObservers()
+        setupLifecycleButtons()
+        setupNavigationButtons()
         setupLaunchModeButtons()
     }
 
-    private fun logInstanceInfo() {
-        com.eco.musicplayer.audioplayer.music.MainActivity.Companion.instanceCount++
-        val instanceId = System.identityHashCode(this)
+    private fun setupObservers() {
+        viewModel.uiState.observe(this) { state ->
+            if (binding.edtSend.text.toString() != state.editTextContent) {
+                binding.edtSend.setText(state.editTextContent)
+            }
 
-        Log.d("LaunchMode", "-----------------------------")
-        Log.d("LaunchMode", "MainActivity created")
-        Log.d("LaunchMode", "Task ID: $taskId")
-        Log.d("LaunchMode", "Instance ID: $instanceId")
-        Log.d("LaunchMode", "Total instances: ${instanceCount}")
+            state.toastMessage?.let { message ->
+                showToast(message)
+                viewModel.clearToastMessage()
+            }
+        }
+
+        viewModel.navigationEvent.observe(this) { event ->
+            event?.let {
+                handleNavigationEvent(it)
+                viewModel.clearNavigationEvent()
+            }
+        }
     }
 
-    private fun setupLifecycleButtons(savedInstanceState: Bundle?) {
-        choose = savedInstanceState?.getString("0")
-
+    private fun setupLifecycleButtons() {
         binding.btnFinish.setOnClickListener {
             Log.d("LifecycleMainActivity", "App finished and restarted")
-            savedInstanceState?.getString("Finish")?.also { choose = it }
+            viewModel.onFinishClicked()
             finish()
         }
 
         binding.btnRotation.setOnClickListener {
             Log.d("LifecycleMainActivity", "Configuration changes (Rotation)")
-            savedInstanceState?.getString("Rotation")?.also { choose = it }
+            viewModel.onRotationClicked()
             toggleScreenOrientation()
         }
 
         binding.btnShare.setOnClickListenerDebounced {
             Log.d("LifecycleMainActivity", "App is paused by the system (Share intent)")
+            viewModel.onShareClicked()
             shareText("App is paused by the system")
         }
     }
 
-    private fun setupNavigationButtons(savedInstanceState: Bundle?) {
+    private fun setupNavigationButtons() {
         binding.btnSecondActivity.setOnClickListener {
             Log.d("LifecycleMainActivity", "Navigating to SecondActivity")
-            savedInstanceState?.getString("SecondActivity")?.also { choose = it }
+            viewModel.onSecondActivityClicked()
 
-            Intent(this, com.eco.musicplayer.audioplayer.music.SecondActivity::class.java).apply {
+            Intent(this, SecondActivity::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 putExtra("info_send", binding.edtSend.text.toString())
             }.also { intent ->
@@ -130,75 +142,90 @@ class MainActivity : AppCompatActivity() {
     private fun setupLaunchModeButtons() {
         binding.btnStandard.setOnClickListenerDebounced {
             Log.d("LaunchMode", "Opening StandardActivity")
-
-            val bundle = Bundle().apply {
-                putInt("task_id", taskId)
-                putString(
-                    "instance_label",
-                    "MainActivity Instance #${com.eco.musicplayer.audioplayer.music.MainActivity.Companion.instanceCount + 1}"
-                )
-                putLong("start_time", System.currentTimeMillis())
-                putBoolean("is_foreground", true)
-            }
-            val intent = Intent(this, StandardActivity::class.java).apply {
-                putExtras(bundle)
-            }
-
-            startActivity(intent)
+            viewModel.onLaunchModeClicked("Standard", taskId)
         }
-
 
         binding.btnSingleTop.setOnClickListenerDebounced {
             Log.d("LaunchMode", "Opening SingleTopActivity")
-            launchActivity<SingleTopActivity>()
+            viewModel.onLaunchModeClicked("SingleTop", taskId)
         }
 
         binding.btnSingleTask.setOnClickListenerDebounced {
             Log.d("LaunchMode", "Opening SingleTaskActivity")
-            launchActivity<SingleTaskActivity>()
+            viewModel.onLaunchModeClicked("SingleTask", taskId)
         }
 
         binding.btnSingleInstance.setOnClickListenerDebounced {
             Log.d("LaunchMode", "Opening SingleInstanceActivity")
-            launchActivity<SingleInstanceActivity>()
+            viewModel.onLaunchModeClicked("SingleInstance", taskId)
         }
 
         binding.btnIntentFlag.setOnClickListenerDebounced {
-            val launchModes = arrayOf("Standard", "SingleTop", "SingleTask", "SingleInstance")
-
-            AlertDialog.Builder(this)
-                .setTitle("Select Launch Mode to demo: ")
-                .setItems(launchModes) { _, which ->
-                    val intent = Intent(this, IntentFlagActivity::class.java)
-
-                    when (which) {
-                        0 -> {
-                            //standard khong can gan co
-                        }
-
-                        1 -> {
-                            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                        }
-
-                        2 -> {
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        }
-
-                        3 -> {
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
-                        }
-                    }
-
-                    Log.d("LaunchMode", "Opening ${launchModes[which]} | flags=${intent.flags}")
-                    intent.putExtra("launch_mode", launchModes[which])
-                    startActivity(intent)
-                }
-                .show()
+            showLaunchModeDialog()
         }
     }
 
-    private inline fun <reified T : AppCompatActivity> launchActivity() {
-        startActivity(Intent(this, T::class.java))
+    private fun showLaunchModeDialog() {
+        val launchModes = arrayOf("Standard", "SingleTop", "SingleTask", "SingleInstance")
+
+        AlertDialog.Builder(this)
+            .setTitle("Select Launch Mode to demo: ")
+            .setItems(launchModes) { _, which ->
+                viewModel.onIntentFlagSelected(launchModes[which])
+            }
+            .show()
+    }
+
+    private fun handleNavigationEvent(event: NavigationEvent) {
+        when (event) {
+            is NavigationEvent.OpenStandardActivity -> {
+                val bundleData = BundleData(
+                    taskId = event.taskId,
+                    instanceLabel = "MainActivity Instance #${event.instanceCount}",
+                    startTime = System.currentTimeMillis(),
+                    isForeground = true
+                )
+
+                val bundle = Bundle().apply {
+                    putInt("task_id", bundleData.taskId)
+                    putString("instance_label", bundleData.instanceLabel)
+                    putLong("start_time", bundleData.startTime)
+                    putBoolean("is_foreground", bundleData.isForeground)
+                }
+
+                startActivity(Intent(this, StandardActivity::class.java).apply {
+                    putExtras(bundle)
+                })
+            }
+
+            is NavigationEvent.OpenSingleTopActivity -> {
+                startActivity(Intent(this, SingleTopActivity::class.java))
+            }
+
+            is NavigationEvent.OpenSingleTaskActivity -> {
+                startActivity(Intent(this, SingleTaskActivity::class.java))
+            }
+
+            is NavigationEvent.OpenSingleInstanceActivity -> {
+                startActivity(Intent(this, SingleInstanceActivity::class.java))
+            }
+
+            is NavigationEvent.OpenIntentFlagActivity -> {
+                val intent = Intent(this, IntentFlagActivity::class.java)
+
+                when (event.mode) {
+                    "SingleTop" -> intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                    "SingleTask" -> intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    "SingleInstance" -> intent.addFlags(
+                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
+                    )
+                }
+
+                Log.d("LaunchMode", "Opening ${event.mode} | flags=${intent.flags}")
+                intent.putExtra("launch_mode", event.mode)
+                startActivity(intent)
+            }
+        }
     }
 
     private fun toggleScreenOrientation() {
@@ -229,14 +256,17 @@ class MainActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         savedInstanceState.getString("EDIT_TEXT_CONTENT")?.let { text ->
-            binding.edtSend.setText(text)
+            viewModel.updateEditTextContent(text)
         }
     }
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        Log.d("LaunchMode", "onNewIntent triggered for instance: ${System.identityHashCode(this)}")
-    }
+//    override fun onNewIntent(intent: Intent?) {
+//        super.onNewIntent(intent)
+//        Log.d(
+//            "LaunchMode", "onNewIntent triggered for instance: " +
+//                    "${System.identityHashCode(this)}"
+//        )
+//    }
 
     override fun onStart() {
         super.onStart()
@@ -265,14 +295,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        com.eco.musicplayer.audioplayer.music.MainActivity.Companion.instanceCount--
+        viewModel.onActivityDestroy()
         Log.d(
-            "LifecycleMainActivity",
-            "onDestroy - Instance: ${System.identityHashCode(this)}"
-        )
-        Log.d(
-            "LaunchMode",
-            "Remaining instances: ${com.eco.musicplayer.audioplayer.music.MainActivity.Companion.instanceCount}"
+            "LifecycleMainActivity", "onDestroy - Instance: " +
+                    "${System.identityHashCode(this)}"
         )
     }
 }

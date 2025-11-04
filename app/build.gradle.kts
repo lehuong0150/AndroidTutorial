@@ -36,6 +36,7 @@ android {
     }
     buildFeatures {
         viewBinding = true
+        dataBinding = true
     }
 
 }
@@ -53,7 +54,7 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("com.github.castorflex.smoothprogressbar:library:1.1.0")
     implementation("com.airbnb.android:lottie:6.6.0")
-    implementation("com.android.support.constraint:constraint-layout:1.1.0-beta1")
+    //implementation("com.android.support.constraint:constraint-layout:1.1.0-beta1")
     implementation("com.intuit.sdp:sdp-android:1.1.1")
     implementation(project(":billing"))
     implementation("com.android.billingclient:billing-ktx:8.0.0")
@@ -62,5 +63,7 @@ dependencies {
     //add remote config
     implementation("com.google.firebase:firebase-config")
     implementation("com.google.firebase:firebase-analytics")
-    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    //view model
+    implementation ("androidx.activity:activity-ktx:1.9.2")
 }

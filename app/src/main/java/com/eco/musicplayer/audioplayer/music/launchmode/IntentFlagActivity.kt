@@ -32,13 +32,13 @@ class IntentFlagActivity : AppCompatActivity() {
         }
     }
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        Log.d(
-            "LaunchMode", "onNewIntent triggered for instance: " +
-                    "${System.identityHashCode(this)}"
-        )
-    }
+//    override fun onNewIntent(intent: Intent?) {
+//        super.onNewIntent(intent)
+//        Log.d(
+//            "LaunchMode", "onNewIntent triggered for instance: " +
+//                    "${System.identityHashCode(this)}"
+//        )
+//    }
 
     private fun logInstanceInfo() {
         instanceCount++

@@ -10,7 +10,7 @@ import com.eco.musicplayer.audioplayer.music.R
 import com.eco.musicplayer.audioplayer.music.billingManager.BillingListener
 import com.eco.musicplayer.audioplayer.music.billingManager.BillingManager
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityPaywallOnboardingBinding
-import com.eco.musicplayer.audioplayer.music.models.OfferInfo
+import com.eco.musicplayer.audioplayer.music.models.paywall.OfferInfo
 
 class PaywallOnboardingActivity : FullscreenActivity(), BillingListener {
 

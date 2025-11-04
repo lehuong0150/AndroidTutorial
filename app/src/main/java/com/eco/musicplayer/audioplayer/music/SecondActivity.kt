@@ -99,11 +99,11 @@ class SecondActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        Log.d("LifecycleSecondActivity", "onNewIntent")
-        Log.d("LaunchMode", "onNewIntent triggered for instance: ${System.identityHashCode(this)}")
-    }
+//    override fun onNewIntent(intent: Intent?) {
+//        super.onNewIntent(intent)
+//        Log.d("LifecycleSecondActivity", "onNewIntent")
+//        Log.d("LaunchMode", "onNewIntent triggered for instance: ${System.identityHashCode(this)}")
+//    }
 
     override fun onStart() {
         super.onStart()
