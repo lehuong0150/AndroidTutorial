@@ -8,9 +8,9 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.eco.musicplayer.audioplayer.music.MainActivity.Companion.instanceCount
 import com.eco.musicplayer.audioplayer.music.R
 import com.eco.musicplayer.audioplayer.music.databinding.ActivitySingleTaskBinding
+import com.eco.musicplayer.audioplayer.music.viewmodel.MainViewModel.Companion.instanceCount
 
 class SingleTaskActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySingleTaskBinding

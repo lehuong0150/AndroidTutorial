@@ -7,7 +7,9 @@
     <string name="rotation">Rotation</string>
     <string name="share">Share Text</string>
     <string name="second_activity">To Second Activity</string>
-    <string name="standard">Standard</string>
+    <string name="btn_parcelable">Parcelable</string>
+    <string name="btn_serializable">Serializable</string>
+    <string name="btn_bundle">Bundle</string>
     <string name="single_top">SingleTop</string>
     <string name="single_task">SingleTask</string>
     <string name="single_instance">SingleInstance</string>
@@ -22,15 +24,21 @@
     <string name="header_single_task">SingleTaskActivity </string>
     <string name="header_single_instance">SingleInstanceActivity </string>
     <string name="header_intent_flag">Intent Flag</string>
+    <!-- StandardActivity - Labels -->
+    <string name="method">Method: %s</string>
+    <string name="label_task_id">Task ID: %1$d</string>
+    <string name="label_instance">Instance: %1$s</string>
+    <string name="label_start_time">Start Time: %1$s</string>
+    <string name="label_is_foreground">Is Foreground: %1$s</string>
 
+    <!-- Format cho boolean -->
+    <string name="value_true">true</string>
+    <string name="value_false">false</string>
+
+    <!-- Format cho thời gian -->
+    <string name="time_format_pattern">EEE MMM dd HH:mm:ss z yyyy</string>
     <string name="click">Click </string>
     <string name="open_browser">Open Browser </string>
-
-    <string name="label_task_id">Task ID:</string>
-    <string name="label_instance_label">Instance Label:</string>
-    <string name="label_start_time">Start Time:</string>
-    <string name="label_is_foreground">Is Foreground:</string>
-
 
     <!--    LayoutActivity-->
     <string name="user_name">Trương Trạch Vũ</string>

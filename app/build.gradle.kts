@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.gms.google-services")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -54,7 +55,6 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
     implementation("com.github.castorflex.smoothprogressbar:library:1.1.0")
     implementation("com.airbnb.android:lottie:6.6.0")
-    //implementation("com.android.support.constraint:constraint-layout:1.1.0-beta1")
     implementation("com.intuit.sdp:sdp-android:1.1.1")
     implementation(project(":billing"))
     implementation("com.android.billingclient:billing-ktx:8.0.0")
@@ -66,4 +66,8 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     //view model
     implementation ("androidx.activity:activity-ktx:1.9.2")
+    //event bus
+    implementation ("org.greenrobot:eventbus:3.2.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
 }

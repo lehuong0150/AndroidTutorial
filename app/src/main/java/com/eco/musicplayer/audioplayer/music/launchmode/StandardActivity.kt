@@ -9,54 +9,61 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.eco.musicplayer.audioplayer.music.MainActivity.Companion.instanceCount
+import com.eco.musicplayer.audioplayer.music.MainActivity
 import com.eco.musicplayer.audioplayer.music.R
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityStandardBinding
+import com.eco.musicplayer.audioplayer.music.models.modelActivity.BundleData
+import com.eco.musicplayer.audioplayer.music.viewmodel.MainViewModel
 import java.util.Date
-
-/*
-    Demo launchMode: standard
-    - Mỗi lần startActivity() → tạo 1 instance mới của Activity.
-    - Có thể có nhiều instance cùng tồn tại trong cùng 1 task.
-    - Khi bấm back → quay lại instance trước (theo ngăn xếp stack).
-    - Ví dụ: Mỗi lần mở StandardActivity từ MainActivity → tạo thêm 1 bản mới.
-*/
 
 class StandardActivity : AppCompatActivity() {
     private lateinit var binding: ActivityStandardBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityStandardBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
         displayIntentData()
-        //button quay lai MainActivity ma khong destroy() StandardActivity
+
         binding.btnFinish.setOnClickListener {
-            val intent = Intent(this, com.eco.musicplayer.audioplayer.music.MainActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, MainActivity::class.java))
         }
+
         logInstanceInfo()
     }
 
     @SuppressLint("SetTextI18n")
     private fun displayIntentData() {
-        val extras = intent.extras
-        extras?.let {
-            binding.layoutInfo.visibility = View.VISIBLE
-            val taskId = extras.getInt("task_id", -1)
-            val instanceLabel = extras.getString("instance_label") ?: "N/A"
-            val startTime = extras.getLong("start_time", 0L)
-            val isForeground = extras.getBoolean("is_foreground", false)
+        val bundleData = intent.getParcelableExtra<BundleData>("BUNDLE_DATA")
 
-            binding.txtTaskId.text = "Task ID: $taskId"
-            binding.txtInstanceLabel.text = "Instance: $instanceLabel"
-            binding.txtStartTime.text = "Start Time: ${Date(startTime)}"
-            binding.txtIsForeground.text = "Is Foreground: $isForeground"
+        bundleData?.let {
+            binding.layoutInfo.visibility = View.VISIBLE
+
+            binding.txtTaskId.text = getString(R.string.label_task_id, it.taskId)
+            binding.txtInstanceLabel.text = getString(R.string.label_instance, it.instanceLabel)
+
+            val dateFormat = java.text.SimpleDateFormat(
+                getString(R.string.time_format_pattern),
+                java.util.Locale.getDefault()
+            )
+            binding.txtStartTime.text = getString(
+                R.string.label_start_time,
+                dateFormat.format(Date(it.startTime))
+            )
+
+            val foregroundText = if (it.isForeground) {
+                getString(R.string.value_true)
+            } else {
+                getString(R.string.value_false)
+            }
+            binding.txtIsForeground.text = getString(R.string.label_is_foreground, foregroundText)
         } ?: run {
             binding.layoutInfo.visibility = View.INVISIBLE
         }
@@ -64,19 +71,17 @@ class StandardActivity : AppCompatActivity() {
 
 //    override fun onNewIntent(intent: Intent?) {
 //        super.onNewIntent(intent)
-//        Log.d(
-//            "LaunchMode", "onNewIntent triggered for instance: " +
-//                    "${System.identityHashCode(this)}"
-//        )
+//        setIntent(intent)
+//        displayIntentData()
 //    }
 
     private fun logInstanceInfo() {
-        instanceCount++
+        MainViewModel.instanceCount++
         val instanceId = System.identityHashCode(this)
         Log.d("LaunchMode", "-----------------------------")
         Log.d("LaunchMode", "Standard Activity created")
         Log.d("LaunchMode", "Task ID: $taskId")
         Log.d("LaunchMode", "Instance ID: $instanceId")
-        Log.d("LaunchMode", "Total instances: $instanceCount")
+        Log.d("LaunchMode", "Total instances: ${MainViewModel.instanceCount}")
     }
 }

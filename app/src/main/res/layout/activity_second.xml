@@ -5,80 +5,89 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="16dp"
     tools:context=".SecondActivity">
 
-    <TextView
-        android:id="@+id/txt_header"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txtHeader"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
         android:text="@string/header_second"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="22sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.083" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/edt_receive"
-        android:layout_width="wrap_content"
-        android:layout_height="55dp"
-        android:hint="Return info to MainActivity..."
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/edSend"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:inputType="text"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/imgView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.168"
-        tools:ignore="LabelFor" />
+        app:layout_constraintTop_toBottomOf="@id/txtHeader"
+        app:layout_constraintVertical_bias="0.137" />
 
-    <ImageView
-        android:id="@+id/img_view"
-        android:layout_width="254dp"
-        android:layout_height="147dp"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtInfoReceive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edSend" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/imgView"
+        android:layout_width="0dp"
+        android:layout_height="180dp"
+        android:layout_marginBottom="24dp"
         android:contentDescription="@string/update_image"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@+id/btnUpdateImage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt_receive"
-        app:layout_constraintVertical_bias="0.209"
-        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toBottomOf="@+id/txtInfoReceive"
+        app:layout_constraintVertical_bias="0.964"
         tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="400dp"
-        android:layout_height="171dp"
-        android:gravity="center"
-        android:orientation="vertical"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnUpdateImage"
+        style="@style/Widget.Material3.Button.OutlinedButton"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="12dp"
+        android:text="@string/update_image"
+        android:textSize="16sp"
+        app:iconGravity="start"
+        app:layout_constraintBottom_toTopOf="@+id/btnBack"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Button: Back -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnBack"
+        style="@style/Widget.Material3.Button"
+        android:layout_width="0dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/back"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.835"
-        tools:ignore="MissingConstraints">
-
-        <Button
-            android:id="@+id/btn_update_image"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/start_border"
-            android:text="@string/update_image"
-            android:textColor="@color/black"
-            tools:ignore="MissingConstraints" />
-
-        <Button
-            android:id="@+id/btn_back"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:background="@drawable/start_border"
-            android:text="@string/back"
-            android:textColor="@color/black"
-            tools:ignore="MissingConstraints" />
-    </LinearLayout>
-
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

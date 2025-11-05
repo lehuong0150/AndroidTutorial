@@ -12,14 +12,16 @@ private var View.lastClickTime: Long
 fun View.setOnClickListenerDebounced(action: (View) -> Unit) {
     setOnClickListener { view ->
         val now = SystemClock.elapsedRealtime()
-        if (now - view.lastClickTime >= CLICK_THROTTLE_MS) {
-            view.lastClickTime = now
-            action(view)
-        }
-    }
-}
 
-// Tạo ID cho tag
-private object ViewTag {
-    val last_click_time = R.id.last_click_time
+        // Kiểm tra TRƯỚC khi thực hiện bất kỳ thao tác nào
+        if (now - view.lastClickTime < CLICK_THROTTLE_MS) {
+            return@setOnClickListener // Block ngay, không làm gì cả
+        }
+
+        // Update thời gian NGAY LẬP TỨC trước khi execute action
+        view.lastClickTime = now
+
+        // Thực hiện action
+        action(view)
+    }
 }

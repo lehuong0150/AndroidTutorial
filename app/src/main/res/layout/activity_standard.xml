@@ -8,12 +8,12 @@
     tools:context=".launchmode.StandardActivity">
 
     <TextView
-        android:id="@+id/txt_header"
+        android:id="@+id/txtHeader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/header_standard"
-        app:layout_constraintBottom_toTopOf="@+id/btn_finish"
+        app:layout_constraintBottom_toTopOf="@+id/btnFinish"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -24,15 +24,15 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/btn_finish"
+        app:layout_constraintBottom_toTopOf="@+id/btnFinish"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.309"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_header"
+        app:layout_constraintTop_toBottomOf="@+id/txtHeader"
         app:layout_constraintVertical_bias="0.482">
 
         <TextView
-            android:id="@+id/txt_task_id"
+            android:id="@+id/txtTaskId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -40,15 +40,14 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/txt_instance_label"
+            android:id="@+id/txtInstanceLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:text="@string/label_instance_label"
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/txt_start_time"
+            android:id="@+id/txtStartTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -56,7 +55,14 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/txt_is_foreground"
+            android:id="@+id/txtIsForeground"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/label_is_foreground"
+            android:textSize="16sp" />
+        <TextView
+            android:id="@+id/txtMethod"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
@@ -65,7 +71,7 @@
 
     </LinearLayout>
     <Button
-        android:id="@+id/btn_finish"
+        android:id="@+id/btnFinish"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"

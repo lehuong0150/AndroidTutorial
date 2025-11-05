@@ -11,10 +11,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.eco.musicplayer.audioplayer.music.MainActivity.Companion.instanceCount
 import com.eco.musicplayer.audioplayer.music.databinding.ActivitySecondBinding
 import com.eco.musicplayer.audioplayer.music.launchmode.SingleInstanceActivity
 import com.eco.musicplayer.audioplayer.music.permission.PermissionUtil
+import com.eco.musicplayer.audioplayer.music.viewmodel.MainViewModel.Companion.instanceCount
 
 class SecondActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySecondBinding
@@ -46,13 +46,14 @@ class SecondActivity : AppCompatActivity() {
         logInstanceInfo()
 
         intent.getStringExtra("info_send")?.let {
-            binding.edtReceive.setText(it)
+            binding.edSend.setText(it)
         }
 
         binding.btnBack.setOnClickListener {
-            Log.d("LaunchMode", "Opening SingleInstanceActivity")
-            val intent = Intent(this, SingleInstanceActivity::class.java)
-            startActivity(intent)
+//            Log.d("LaunchMode", "Opening SingleInstanceActivity")
+//            val intent = Intent(this, SingleInstanceActivity::class.java)
+//            startActivity(intent)
+            finish()
         }
         binding.btnUpdateImage.setOnClickListener { checkAndRequestPermission() }
     }
@@ -137,7 +138,7 @@ class SecondActivity : AppCompatActivity() {
 
     override fun finish() {
         Intent().apply {
-            putExtra("info_send_result", binding.edtReceive.text.toString())
+            putExtra("info_send_result", binding.edSend.text.toString())
         }.also { data ->
             setResult(RESULT_OK, data)
         }

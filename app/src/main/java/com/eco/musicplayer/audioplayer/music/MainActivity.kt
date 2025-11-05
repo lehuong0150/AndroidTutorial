@@ -3,7 +3,9 @@ package com.eco.musicplayer.audioplayer.music
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
+import android.net.ConnectivityManager
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -20,39 +22,18 @@ import com.eco.musicplayer.audioplayer.music.launchmode.SingleTaskActivity
 import com.eco.musicplayer.audioplayer.music.launchmode.SingleTopActivity
 import com.eco.musicplayer.audioplayer.music.launchmode.StandardActivity
 import com.eco.musicplayer.audioplayer.music.models.modelActivity.ActivityResult
-import com.eco.musicplayer.audioplayer.music.models.modelActivity.BundleData
+import com.eco.musicplayer.audioplayer.music.models.modelActivity.NetworkStateCallback
+import com.eco.musicplayer.audioplayer.music.permission.PermissionUtil
 import com.eco.musicplayer.audioplayer.music.utils.NavigationEvent
+import com.eco.musicplayer.audioplayer.music.utils.NetworkUtils
 import com.eco.musicplayer.audioplayer.music.viewmodel.MainViewModel
 
-/*Demo tổng hợp về:
-* Vòng đời của Activity (Lifecycle):
-*     - Quan sát các callback như onCreate, onStart, onResume, onPause, onStop, onDestroy.
-*     - Nút "Finish", "Rotation", "Share" minh họa quá trình kết thúc, xoay màn hình,
-*       và Activity bị tạm dừng khi có Intent khác mở chồng lên.
-*
-* Giao tiếp giữa các Activity:
-*     - Gửi dữ liệu qua Intent, Bundle (chuyen du lieu qua StandardActivity).
-*     - Nhận dữ liệu trả về từ SecondActivity bằng ActivityResultContracts.
-*
-* Các chế độ Launch Mode trong Android:
-*     - Nút "Standard" → mở StandardActivity.
-*     - Nút "SingleTop" → mở SingleTopActivity.
-*     - Nút "SingleTask" → mở SingleTaskActivity.
-*     - Nút "SingleInstance" → mở SingleInstanceActivity.
-*     - Nút "Flag" → mở bat ki mot loai launch mode.
-*
-* Lưu và khôi phục trạng thái:
-*     - Dữ liệu trong EditText được lưu lại khi xoay màn hình (onSaveInstanceState / onRestoreInstanceState).
-*/
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
-
-    companion object {
-        var instanceCount = 0
-    }
-
+    private var networkCallback: ConnectivityManager.NetworkCallback? = null
+    private lateinit var permissionUtil: PermissionUtil
     private val getResultFromSecondActivity =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             result.takeIf { it.resultCode == RESULT_OK }?.data?.let { data ->
@@ -76,13 +57,47 @@ class MainActivity : AppCompatActivity() {
             }
             insets
         }
-
+        permissionUtil = PermissionUtil(this)
         viewModel.logInstanceCreation(taskId)
-
+        registerNetworkMonitoring()
+        checkNetworkConnection()
+        checkAndRequestPermission()
         setupObservers()
         setupLifecycleButtons()
         setupNavigationButtons()
         setupLaunchModeButtons()
+    }
+
+    private fun checkAndRequestPermission() {
+        permissionUtil.checkNotificationPermission(
+            onGranted = {
+                showToast("Quyền thông báo đã được cấp")
+            },
+            onDenied = {
+                permissionUtil.requestNotificationPermission(this)
+            }
+        )
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (requestCode == PermissionUtil.REQUEST_CODE_PERMISSION_NOTIFICATION) {
+            permissionUtil.handlePermissionResult(
+                requestCode = requestCode,
+                grantResults = grantResults,
+                onGranted = {
+                    showToast("Đã cấp quyền thông báo")
+                },
+                onDenied = {
+                    showToast("Quyền thông báo bị từ chối!")
+                }
+            )
+        }
     }
 
     private fun setupObservers() {
@@ -120,9 +135,75 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnShare.setOnClickListenerDebounced {
             Log.d("LifecycleMainActivity", "App is paused by the system (Share intent)")
-            viewModel.onShareClicked()
-            shareText("App is paused by the system")
+            if (viewModel.onShareClicked()) {
+                shareText("App is paused by the system")
+            }
         }
+    }
+
+    private fun registerNetworkMonitoring() {
+        networkCallback = NetworkUtils.registerNetworkCallback(
+            context = this,
+            callback = object : NetworkStateCallback {
+                override fun onNetworkAvailable(networkType: String) {
+                    runOnUiThread {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Đã kết nối: $networkType",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        Log.d("NetworkMonitor", "Network connected: $networkType")
+                    }
+                }
+
+                override fun onNetworkLost() {
+                    runOnUiThread {
+                        showNetworkLostDialog()
+                    }
+                }
+            }
+        )
+    }
+
+    private fun showNetworkLostDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Mất kết nối mạng")
+            .setMessage("Kết nối internet đã bị ngắt. Vui lòng kiểm tra lại.")
+            .setPositiveButton("Thử lại") { _, _ ->
+                checkNetworkConnection()
+            }
+            .setNegativeButton("Đóng") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setCancelable(true)
+            .show()
+
+        Log.w("NetworkMonitor", "Network connection lost")
+    }
+
+    private fun checkNetworkConnection() {
+        if (NetworkUtils.isNetworkAvailable(this)) {
+            val networkType = NetworkUtils.getNetworkType(this)
+            Log.d("NetworkCheck", "Network available: $networkType")
+        } else {
+            showNetworkErrorDialog()
+        }
+    }
+
+    private fun showNetworkErrorDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Không có kết nối mạng")
+            .setMessage("Vui lòng kiểm tra kết nối internet và thử lại.")
+            .setPositiveButton("Thử lại") { _, _ ->
+                checkNetworkConnection()
+            }
+            .setNegativeButton("Đóng") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setCancelable(false)
+            .show()
+
+        Log.w("NetworkCheck", "No network connection available")
     }
 
     private fun setupNavigationButtons() {
@@ -131,7 +212,6 @@ class MainActivity : AppCompatActivity() {
             viewModel.onSecondActivityClicked()
 
             Intent(this, SecondActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 putExtra("info_send", binding.edtSend.text.toString())
             }.also { intent ->
                 getResultFromSecondActivity.launch(intent)
@@ -140,9 +220,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupLaunchModeButtons() {
-        binding.btnStandard.setOnClickListenerDebounced {
-            Log.d("LaunchMode", "Opening StandardActivity")
-            viewModel.onLaunchModeClicked("Standard", taskId)
+        binding.btnParcelable.setOnClickListenerDebounced {
+            Log.d("LaunchMode", "Demo Parcelable")
+            viewModel.onParcelableClicked(taskId)
+        }
+
+        binding.btnSerializable.setOnClickListenerDebounced {
+            Log.d("LaunchMode", "Demo Serializable")
+            viewModel.onSerializableClicked(taskId)
+        }
+
+        binding.btnBundle.setOnClickListenerDebounced {
+            Log.d("LaunchMode", "Demo Bundle Manual")
+            viewModel.onBundleManualClicked(taskId)
         }
 
         binding.btnSingleTop.setOnClickListenerDebounced {
@@ -179,23 +269,10 @@ class MainActivity : AppCompatActivity() {
     private fun handleNavigationEvent(event: NavigationEvent) {
         when (event) {
             is NavigationEvent.OpenStandardActivity -> {
-                val bundleData = BundleData(
-                    taskId = event.taskId,
-                    instanceLabel = "MainActivity Instance #${event.instanceCount}",
-                    startTime = System.currentTimeMillis(),
-                    isForeground = true
-                )
-
-                val bundle = Bundle().apply {
-                    putInt("task_id", bundleData.taskId)
-                    putString("instance_label", bundleData.instanceLabel)
-                    putLong("start_time", bundleData.startTime)
-                    putBoolean("is_foreground", bundleData.isForeground)
+                val intent = Intent(this, StandardActivity::class.java).apply {
+                    putExtra("BUNDLE_DATA", event.bundleData as Parcelable)
                 }
-
-                startActivity(Intent(this, StandardActivity::class.java).apply {
-                    putExtras(bundle)
-                })
+                startActivity(intent)
             }
 
             is NavigationEvent.OpenSingleTopActivity -> {
@@ -215,10 +292,10 @@ class MainActivity : AppCompatActivity() {
 
                 when (event.mode) {
                     "SingleTop" -> intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                    "SingleTask" -> intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    "SingleInstance" -> intent.addFlags(
-                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_MULTIPLE_TASK
-                    )
+                    "SingleTask" -> intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) // Sửa: dùng NEW_TASK
+                    "SingleInstance" -> intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) // Sửa: bỏ MULTIPLE_TASK
+                    "Standard" -> { /* Không cần flag */
+                    }
                 }
 
                 Log.d("LaunchMode", "Opening ${event.mode} | flags=${intent.flags}")
@@ -256,7 +333,7 @@ class MainActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         savedInstanceState.getString("EDIT_TEXT_CONTENT")?.let { text ->
-            viewModel.updateEditTextContent(text)
+            viewModel.restoreEditTextContent(text)
         }
     }
 
@@ -280,6 +357,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        viewModel.onShareDialogDismissed()
         Log.d("LifecycleMainActivity", "onResume")
     }
 
@@ -295,6 +373,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        networkCallback?.let { callback ->
+            NetworkUtils.unregisterNetworkCallback(this, callback)
+        }
         viewModel.onActivityDestroy()
         Log.d(
             "LifecycleMainActivity", "onDestroy - Instance: " +
