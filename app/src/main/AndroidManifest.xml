@@ -24,6 +24,12 @@
         android:theme="@style/Theme.AndroidTutorial"
         tools:targetApi="31">
         <activity
+            android:name=".eventbus.DownloadActivity"
+            android:exported="false" />
+        <activity
+            android:name=".eventbus.MainEventActivity"
+            android:exported="false" />
+        <activity
             android:name=".layout.SettingActivity"
             android:exported="false" />
         <activity

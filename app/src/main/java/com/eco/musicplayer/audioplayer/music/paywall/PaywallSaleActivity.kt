@@ -8,8 +8,8 @@ import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.eco.musicplayer.audioplayer.music.R
-import com.eco.musicplayer.audioplayer.music.billingManager.BillingListener
-import com.eco.musicplayer.audioplayer.music.billingManager.BillingManager
+import com.eco.musicplayer.audioplayer.music.manager.BillingListener
+import com.eco.musicplayer.audioplayer.music.manager.BillingManager
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityPaywallSaleBinding
 import com.eco.musicplayer.audioplayer.music.models.paywall.OfferInfo
 import com.google.android.material.bottomsheet.BottomSheetBehavior

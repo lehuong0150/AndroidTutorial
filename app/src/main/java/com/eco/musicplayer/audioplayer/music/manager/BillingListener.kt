@@ -1,4 +1,4 @@
-package com.eco.musicplayer.audioplayer.music.billingManager
+package com.eco.musicplayer.audioplayer.music.manager
 
 import com.eco.musicplayer.audioplayer.music.models.paywall.OfferInfo
 
