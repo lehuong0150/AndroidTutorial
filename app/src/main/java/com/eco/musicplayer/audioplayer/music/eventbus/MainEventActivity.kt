@@ -1,10 +1,12 @@
 package com.eco.musicplayer.audioplayer.music.eventbus
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.eco.musicplayer.audioplayer.music.R
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityMainEventBinding
+import com.eco.musicplayer.audioplayer.music.eventbus.fragment.MessageFragment
 import com.eco.musicplayer.audioplayer.music.models.event.MessageEvent
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -14,9 +16,15 @@ class MainEventActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainEventBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         binding = ActivityMainEventBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+//        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+//            insets.getInsets(WindowInsetsCompat.Type.systemBars()).let { systemBars ->
+//                v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+//            }
+//            insets
+//        }
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -43,6 +51,6 @@ class MainEventActivity : AppCompatActivity() {
     //Activity nhan message tu Fragment
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onMessageFromFragment(event: MessageEvent) {
-        binding.edMessage.setText(getString(R.string.message, event.message))
+        binding.edMessage.setText(getString(R.string.message_from, event.message))
     }
 }

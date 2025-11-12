@@ -33,7 +33,7 @@
             android:layout_width="@dimen/_12sdp"
             android:layout_height="@dimen/_12sdp"
             android:padding="@dimen/_2sdp"
-            android:src="@drawable/ic_close"
+            android:src="@drawable/ic_delete"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

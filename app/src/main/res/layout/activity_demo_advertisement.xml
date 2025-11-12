@@ -29,7 +29,7 @@
             android:layout_height="24dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/btn_close_description"
-            android:src="@drawable/ic_close"
+            android:src="@drawable/ic_delete"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

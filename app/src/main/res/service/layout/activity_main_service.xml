@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp"
+    tools:context=".service.MainServiceActivity">
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnDownload"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_gravity="end"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/bg_control_circle"
+        android:src="@drawable/ic_download" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imgCover"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:layout_marginBottom="32dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_album_cover" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Groovy Vibe"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="Đang dừng"
+        android:textColor="#AAAAAA"
+        android:textSize="14sp" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnPlay"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/bg_control_circle"
+            android:src="@drawable/ic_play"
+            android:tint="#FFFFFF" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnPause"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginHorizontal="16dp"
+            android:background="@drawable/bg_control_circle"
+            android:src="@drawable/ic_pause"
+            android:tint="#FFFFFF" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btnStop"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:background="@drawable/bg_control_circle"
+            android:src="@drawable/ic_stop"
+            android:tint="#FFFFFF" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.appcompat.widget.LinearLayoutCompat>
+

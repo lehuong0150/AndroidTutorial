@@ -44,6 +44,7 @@ android {
             assets.srcDir("src/main/assets")
             res.srcDir("src/main/res/main")
             res.srcDir("src/main/res/event")
+            res.srcDir("src/main/res/service")
         }
 
     }
