@@ -16,7 +16,6 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -28,13 +27,29 @@
         android:theme="@style/Theme.AndroidTutorial"
         tools:targetApi="31">
         <service
+            android:name=".service.MusicBoundService"
+            android:enabled="true"
+            android:exported="true"></service>
+        <service
+            android:name=".service.SmsSenderService"
+            android:enabled="true"
+            android:exported="false" />
+        <service
             android:name=".service.DownloadService"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
 
+        <receiver
+            android:name=".service.DownloadStopReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.eco.musicplayer.STOP_DOWNLOAD" />
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name=".service.MainServiceActivity"
-            android:exported="true" />
+            android:exported="false" />
 
         <service
             android:name=".service.MusicService"

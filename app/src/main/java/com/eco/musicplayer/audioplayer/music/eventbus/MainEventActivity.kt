@@ -1,5 +1,6 @@
 package com.eco.musicplayer.audioplayer.music.eventbus
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -8,6 +9,7 @@ import com.eco.musicplayer.audioplayer.music.R
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityMainEventBinding
 import com.eco.musicplayer.audioplayer.music.eventbus.fragment.MessageFragment
 import com.eco.musicplayer.audioplayer.music.models.event.MessageEvent
+import com.eco.musicplayer.audioplayer.music.service.MainServiceActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -35,6 +37,10 @@ class MainEventActivity : AppCompatActivity() {
             val message = binding.edMessage.text.toString()
             //post event
             EventBus.getDefault().post(MessageEvent(message))
+        }
+        binding.btnDemoService.setOnClickListener {
+            val intent= Intent(this,MainServiceActivity::class.java)
+            startActivity(intent)
         }
     }
 

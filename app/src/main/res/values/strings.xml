@@ -246,4 +246,14 @@
     <string name="message_from">To Fragment: %s</string>
     <string name="received_message">Received: %s</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="message_sms">Da nhan broadcast tu service!Thanh cong!!!!!</string>
+    <string name="status_sms">Đang chạy Background Service…\nChờ 10 giây…</string>
+    <string name="status_music_play">Đang phát nhạc...</string>
+    <string name="status_music_pause">Đã tạm dừng!</string>
+    <string name="status_music_stop">Đang phát nhạc...</string>
+    <string name="sms_result">ĐÃ GỬI: \nSĐT: %1$s\nTin nhắn: %2$s</string>
+    <string name="sms_counting">Service đang chạy (Unbound)\nCòn lại: %1$d giây\nSĐT: %2$s\nTin nhắn: %3$s</string>
+    <string name="sms_started">Service đã được khởi động!\nBây giờ bạn có thể thoát app...\n(Service vẫn chạy độc lập)</string>
+    <string name="service_completed">Service HOÀN THÀNH!\nDù bạn đã thoát app!</string>
 </resources>

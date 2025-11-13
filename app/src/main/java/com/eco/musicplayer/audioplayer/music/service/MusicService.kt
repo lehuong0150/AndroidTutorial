@@ -1,13 +1,16 @@
 package com.eco.musicplayer.audioplayer.music.service
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.IBinder
+import android.util.Log
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.eco.musicplayer.audioplayer.music.MainActivity
@@ -26,6 +29,7 @@ class MusicService : Service() {
     }
 
     override fun onCreate() {
+        Log.d("MusicService", "onCreate")
         super.onCreate()
         player = MediaPlayer.create(this, R.raw.groovy_vibe)
         player.isLooping = true
@@ -33,6 +37,7 @@ class MusicService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        Log.d("MusicService", "onStartCommand")
         when (intent?.action) {
             ACTION_PLAY -> {
                 if (!isPlaying) {
@@ -54,7 +59,7 @@ class MusicService : Service() {
                 stopSelf()
             }
         }
-        return super.onStartCommand(intent, flags, startId)
+        return START_STICKY
     }
 
     private fun updateNotification(title: String, text: String, isPlayingNow: Boolean) {
@@ -62,7 +67,9 @@ class MusicService : Service() {
             action = if (isPlayingNow) ACTION_PAUSE else ACTION_PLAY
         }
         val playPausePending = PendingIntent.getService(
-            this, 0, playPauseIntent,
+            this,
+            0,
+            playPauseIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
@@ -70,13 +77,14 @@ class MusicService : Service() {
             action = ACTION_STOP
         }
         val stopPending = PendingIntent.getService(
-            this, 1, stopIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            this, 1, stopIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
         val openAppIntent = Intent(this, MainActivity::class.java)
         val openPending = PendingIntent.getActivity(
-            this, 2, openAppIntent,
+            this,
+            2,
+            openAppIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
@@ -85,38 +93,44 @@ class MusicService : Service() {
             setTextViewText(R.id.tvStatus, text)
             setImageViewResource(R.id.imgAlbum, R.drawable.img_album_cover)
             setImageViewResource(
-                R.id.btnPlayPause,
-                if (isPlayingNow) R.drawable.ic_pause else R.drawable.ic_play
+                R.id.btnPlayPause, if (isPlayingNow) R.drawable.ic_pause else R.drawable.ic_play
             )
             setOnClickPendingIntent(R.id.btnPlayPause, playPausePending)
             setOnClickPendingIntent(R.id.btnStop, stopPending)
         }
 
-        val notification = NotificationCompat.Builder(this, CHANNED_ID)
-            .setSmallIcon(R.drawable.ic_music_note)
-            .setContentIntent(openPending)
-            .setOngoing(true)
-            .setCustomContentView(collapsedView)
-            .setStyle(NotificationCompat.DecoratedCustomViewStyle())
-            .build()
+        val notification =
+            NotificationCompat.Builder(this, CHANNED_ID).setSmallIcon(R.drawable.ic_music_note)
+                .setContentIntent(openPending).setOngoing(true).setCustomContentView(collapsedView)
+                .setStyle(NotificationCompat.DecoratedCustomViewStyle()).apply {
+                    // Android 14: BẮT BUỘC khai báo type
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+                        setForegroundServiceBehavior(Notification.FOREGROUND_SERVICE_IMMEDIATE)
+                    }
+                }.build()
 
-        startForeground(NOTIF_ID, notification)
+        //android 14
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            startForeground(
+                NOTIF_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK
+            )
+        } else {
+            startForeground(NOTIF_ID, notification)
+        }
     }
 
     private fun createChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel =
-                NotificationChannel(
-                    CHANNED_ID, "Music",
-                    NotificationManager.IMPORTANCE_LOW
-                )
-            getSystemService(NotificationManager::class.java)
-                .createNotificationChannel(channel)
+            val channel = NotificationChannel(
+                CHANNED_ID, "Music", NotificationManager.IMPORTANCE_LOW
+            )
+            getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
         }
     }
 
     override fun onBind(p0: Intent?): IBinder? = null
     override fun onDestroy() {
+        Log.d("MusicService", "onDestroy")
         player.stop()
         player.release()
         stopForeground(STOP_FOREGROUND_REMOVE)
