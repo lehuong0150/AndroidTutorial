@@ -1,6 +1,7 @@
 [versions]
 agp = "8.5.2"
 kotlin = "2.1.0"
+ksp = "2.1.0-1.0.29"
 coreKtx = "1.12.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
@@ -26,4 +27,5 @@ firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-cra
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 

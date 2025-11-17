@@ -256,4 +256,5 @@
     <string name="sms_counting">Service đang chạy (Unbound)\nCòn lại: %1$d giây\nSĐT: %2$s\nTin nhắn: %3$s</string>
     <string name="sms_started">Service đã được khởi động!\nBây giờ bạn có thể thoát app...\n(Service vẫn chạy độc lập)</string>
     <string name="service_completed">Service HOÀN THÀNH!\nDù bạn đã thoát app!</string>
+    <string name="number_water_drink">Hôm nay bạn đã uống: %s cốc nước</string>
 </resources>

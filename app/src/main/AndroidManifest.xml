@@ -26,18 +26,23 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidTutorial"
         tools:targetApi="31">
+        <activity
+            android:name=".demoroom.MainWorkActivity"
+            android:exported="true" />
+
+        <service
+            android:name=".service.DownloadService"
+            android:enabled="true"
+            android:exported="true"
+            android:foregroundServiceType="dataSync" />
         <service
             android:name=".service.MusicBoundService"
             android:enabled="true"
-            android:exported="true"></service>
+            android:exported="true" />
         <service
             android:name=".service.SmsSenderService"
             android:enabled="true"
             android:exported="false" />
-        <service
-            android:name=".service.DownloadService"
-            android:exported="false"
-            android:foregroundServiceType="dataSync" />
 
         <receiver
             android:name=".service.DownloadStopReceiver"

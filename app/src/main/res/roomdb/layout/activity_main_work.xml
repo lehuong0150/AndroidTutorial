@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/_12sdp"
+    android:gravity="center"
+    tools:context=".demoroom.MainWorkActivity">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="@string/number_water_drink" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnDrinkNow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:padding="@dimen/_10sdp"
+        android:background="@drawable/bg_category"
+        android:textAllCaps="false"
+        android:textSize="@dimen/_12sdp"
+        android:fontFamily="@font/funnel_sans_bold"
+        android:text="Uống ngay (test)" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
