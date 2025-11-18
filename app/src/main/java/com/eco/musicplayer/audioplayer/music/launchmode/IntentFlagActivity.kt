@@ -9,7 +9,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.eco.musicplayer.audioplayer.music.R
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityIntentFlagBinding
-import com.eco.musicplayer.audioplayer.music.viewmodel.MainViewModel.Companion.instanceCount
 
 class IntentFlagActivity : AppCompatActivity() {
     private lateinit var binding: ActivityIntentFlagBinding
@@ -41,12 +40,10 @@ class IntentFlagActivity : AppCompatActivity() {
 //    }
 
     private fun logInstanceInfo() {
-        instanceCount++
         val instanceId = System.identityHashCode(this)
         Log.d("LaunchMode", "-----------------------------")
         Log.d("LaunchMode", "SingleInstance Activity created")
         Log.d("LaunchMode", "Task ID: $taskId")
         Log.d("LaunchMode", "Instance ID: $instanceId")
-        Log.d("LaunchMode", "Total instances: $instanceCount")
     }
 }

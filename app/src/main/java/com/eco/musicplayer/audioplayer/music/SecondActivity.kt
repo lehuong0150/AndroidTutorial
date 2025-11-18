@@ -12,9 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.eco.musicplayer.audioplayer.music.databinding.ActivitySecondBinding
-import com.eco.musicplayer.audioplayer.music.launchmode.SingleInstanceActivity
 import com.eco.musicplayer.audioplayer.music.permission.PermissionUtil
-import com.eco.musicplayer.audioplayer.music.viewmodel.MainViewModel.Companion.instanceCount
 
 class SecondActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySecondBinding
@@ -146,13 +144,11 @@ class SecondActivity : AppCompatActivity() {
     }
 
     private fun logInstanceInfo() {
-        instanceCount++
         val instanceId = System.identityHashCode(this)
 
         Log.d("LaunchMode", "-----------------------------")
         Log.d("LaunchMode", "SingleTop Activity created")
         Log.d("LaunchMode", "Task ID: $taskId")
         Log.d("LaunchMode", "Instance ID: $instanceId")
-        Log.d("LaunchMode", "Total instances: $instanceCount")
     }
 }

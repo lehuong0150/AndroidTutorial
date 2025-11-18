@@ -123,13 +123,11 @@ class MainActivity : AppCompatActivity() {
     private fun setupLifecycleButtons() {
         binding.btnFinish.setOnClickListener {
             Log.d("LifecycleMainActivity", "App finished and restarted")
-            viewModel.onFinishClicked()
             finish()
         }
 
         binding.btnRotation.setOnClickListener {
             Log.d("LifecycleMainActivity", "Configuration changes (Rotation)")
-            viewModel.onRotationClicked()
             toggleScreenOrientation()
         }
 
@@ -209,7 +207,6 @@ class MainActivity : AppCompatActivity() {
     private fun setupNavigationButtons() {
         binding.btnSecondActivity.setOnClickListener {
             Log.d("LifecycleMainActivity", "Navigating to SecondActivity")
-            viewModel.onSecondActivityClicked()
 
             Intent(this, SecondActivity::class.java).apply {
                 putExtra("info_send", binding.edtSend.text.toString())
@@ -376,7 +373,6 @@ class MainActivity : AppCompatActivity() {
         networkCallback?.let { callback ->
             NetworkUtils.unregisterNetworkCallback(this, callback)
         }
-        viewModel.onActivityDestroy()
         Log.d(
             "LifecycleMainActivity", "onDestroy - Instance: " +
                     "${System.identityHashCode(this)}"

@@ -76,12 +76,12 @@ class StandardActivity : AppCompatActivity() {
 //    }
 
     private fun logInstanceInfo() {
-        MainViewModel.instanceCount++
+        //MainViewModel.instanceCount++
         val instanceId = System.identityHashCode(this)
         Log.d("LaunchMode", "-----------------------------")
         Log.d("LaunchMode", "Standard Activity created")
         Log.d("LaunchMode", "Task ID: $taskId")
         Log.d("LaunchMode", "Instance ID: $instanceId")
-        Log.d("LaunchMode", "Total instances: ${MainViewModel.instanceCount}")
+        //Log.d("LaunchMode", "Total instances: ${MainViewModel.instanceCount}")
     }
 }

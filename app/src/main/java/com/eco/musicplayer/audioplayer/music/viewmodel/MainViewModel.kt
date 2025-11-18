@@ -7,86 +7,61 @@ import androidx.lifecycle.ViewModel
 import com.eco.musicplayer.audioplayer.music.models.modelActivity.ActivityResult
 import com.eco.musicplayer.audioplayer.music.models.modelActivity.ActivityUiState
 import com.eco.musicplayer.audioplayer.music.models.modelActivity.BundleData
-import com.eco.musicplayer.audioplayer.music.models.modelActivity.InstanceInfo
-import com.eco.musicplayer.audioplayer.music.models.modelActivity.LaunchModeInfo
 import com.eco.musicplayer.audioplayer.music.utils.NavigationEvent
 
 class MainViewModel : ViewModel() {
+
     companion object {
-        var instanceCount = 0
-        private const val TAG_LIFECYCLE = "LifecycleMainActivity"
         private const val TAG_LAUNCH_MODE = "LaunchMode"
     }
 
-    private val _uiState = MutableLiveData<ActivityUiState>()
+    private var localInstanceCounter = 0
+
+    private val _uiState = MutableLiveData(ActivityUiState())
     val uiState: LiveData<ActivityUiState> = _uiState
 
     private val _navigationEvent = MutableLiveData<NavigationEvent?>()
     val navigationEvent: LiveData<NavigationEvent?> = _navigationEvent
 
-    private var currentState = ActivityUiState()
-    private var chosenAction: String? = null
     private var isShareDialogOpen = false
 
-    init {
-        _uiState.value = currentState
+    private fun nextInstanceNumber(): Int = ++localInstanceCounter
+
+    fun logInstanceCreation(taskId: Int) {
+        val instanceId = System.identityHashCode(this)
+        val count = localInstanceCounter
+
+        _uiState.value = _uiState.value?.copy(
+            taskId = taskId,
+            instanceId = instanceId,
+            instanceCount = count
+        )
+
+        Log.d(TAG_LAUNCH_MODE, "=============================")
+        Log.d(TAG_LAUNCH_MODE, "MainActivity instance created")
+        Log.d(TAG_LAUNCH_MODE, "Task ID: $taskId")
+        Log.d(TAG_LAUNCH_MODE, "ViewModel ID: $instanceId")
+        Log.d(TAG_LAUNCH_MODE, "Local instance count: $count")
+        Log.d(TAG_LAUNCH_MODE, "=============================")
     }
 
     fun updateEditTextContent(content: String) {
-        currentState = currentState.copy(
+        _uiState.value = _uiState.value?.copy(
             editTextContent = content,
             toastMessage = content
         )
-        _uiState.value = currentState
     }
 
     fun onActivityResult(result: ActivityResult) {
-        currentState = currentState.copy(
+        _uiState.value = _uiState.value?.copy(
             editTextContent = result.message,
             toastMessage = result.message
         )
-        _uiState.value = currentState
-    }
-
-    fun logInstanceCreation(taskId: Int) {
-        instanceCount++
-        val instanceId = System.identityHashCode(this)
-
-        val instanceInfo = InstanceInfo(
-            taskId = taskId,
-            instanceId = instanceId,
-            totalInstances = instanceCount
-        )
-
-        currentState = currentState.copy(
-            taskId = instanceInfo.taskId,
-            instanceId = instanceInfo.instanceId,
-            instanceCount = instanceInfo.totalInstances
-        )
-        _uiState.value = currentState
-
-        Log.d(TAG_LAUNCH_MODE, "-----------------------------")
-        Log.d(TAG_LAUNCH_MODE, "MainActivity created")
-        Log.d(TAG_LAUNCH_MODE, "Task ID: ${instanceInfo.taskId}")
-        Log.d(TAG_LAUNCH_MODE, "Instance ID: ${instanceInfo.instanceId}")
-        Log.d(TAG_LAUNCH_MODE, "Total instances: ${instanceInfo.totalInstances}")
-    }
-
-    fun onFinishClicked() {
-        chosenAction = "Finish"
-    }
-
-    fun onRotationClicked() {
-        chosenAction = "Rotation"
     }
 
     fun onShareClicked(): Boolean {
-        if (isShareDialogOpen) {
-            return false
-        }
-
+        if (isShareDialogOpen) return false
         isShareDialogOpen = true
-        chosenAction = "Share"
         return true
     }
 
@@ -94,45 +69,33 @@ class MainViewModel : ViewModel() {
         isShareDialogOpen = false
     }
 
-    fun onSecondActivityClicked() {
-        chosenAction = "SecondActivity"
-    }
-
     fun onLaunchModeClicked(mode: String, taskId: Int) {
-        val launchModeInfo = LaunchModeInfo(
-            mode = mode,
-            taskId = taskId,
-            instanceCount = instanceCount + 1
-        )
-
-        Log.d(TAG_LAUNCH_MODE, "Launch mode clicked: ${launchModeInfo.mode}")
-
-        when (launchModeInfo.mode) {
-            "Standard" -> {
-                val count = ++instanceCount
-                val bundleData = BundleData(
-                    taskId = -1,
-                    instanceLabel = "Standard via Flag #${count}",
-                    startTime = System.currentTimeMillis(),
-                    isForeground = true
-                )
-                _navigationEvent.value = NavigationEvent.OpenStandardActivity(
-                    taskId = -1,
-                    instanceCount = count,
-                    bundleData = bundleData,
-                    method = "STANDARD_VIA_FLAG"
-                )
-            }
-
+        when (mode) {
+            "Standard" -> openStandardActivity(taskId)
             "SingleTop" -> _navigationEvent.value = NavigationEvent.OpenSingleTopActivity
             "SingleTask" -> _navigationEvent.value = NavigationEvent.OpenSingleTaskActivity
             "SingleInstance" -> _navigationEvent.value = NavigationEvent.OpenSingleInstanceActivity
-            else -> Log.w(TAG_LAUNCH_MODE, "Unknown launch mode: ${launchModeInfo.mode}")
         }
     }
 
+    private fun openStandardActivity(taskId: Int) {
+        val count = nextInstanceNumber()
+        val bundleData = BundleData(
+            taskId = taskId,
+            instanceLabel = "Standard #${count}",
+            startTime = System.currentTimeMillis(),
+            isForeground = true
+        )
+        _navigationEvent.value = NavigationEvent.OpenStandardActivity(
+            taskId = taskId,
+            instanceCount = count,
+            bundleData = bundleData,
+            method = "STANDARD"
+        )
+    }
+
     fun onParcelableClicked(taskId: Int) {
-        val count = ++instanceCount
+        val count = nextInstanceNumber()
         val bundleData = BundleData(
             taskId = taskId,
             instanceLabel = "Parcelable Demo #${count}",
@@ -148,7 +111,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun onSerializableClicked(taskId: Int) {
-        val count = ++instanceCount
+        val count = nextInstanceNumber()
         val bundleData = BundleData(
             taskId = taskId,
             instanceLabel = "Serializable Demo #${count}",
@@ -164,7 +127,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun onBundleManualClicked(taskId: Int) {
-        val count = ++instanceCount
+        val count = nextInstanceNumber()
         val bundleData = BundleData(
             taskId = taskId,
             instanceLabel = "Bundle Manual #${count}",
@@ -185,8 +148,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun clearToastMessage() {
-        currentState = currentState.copy(toastMessage = null)
-        _uiState.value = currentState
+        _uiState.value = _uiState.value?.copy(toastMessage = null)
     }
 
     fun clearNavigationEvent() {
@@ -194,18 +156,11 @@ class MainViewModel : ViewModel() {
     }
 
     fun restoreEditTextContent(content: String) {
-        currentState = currentState.copy(editTextContent = content)
-        _uiState.value = currentState
-    }
-
-    fun onActivityDestroy() {
-        instanceCount--
-        Log.d(TAG_LAUNCH_MODE, "Activity destroyed. Remaining instances: $instanceCount")
+        _uiState.value = _uiState.value?.copy(editTextContent = content)
     }
 
     override fun onCleared() {
         super.onCleared()
-        instanceCount--
-        Log.d(TAG_LAUNCH_MODE, "ViewModel cleared - Remaining instances: $instanceCount")
+        Log.d(TAG_LAUNCH_MODE, "MainViewModel cleared - was serving instance #$localInstanceCounter")
     }
 }

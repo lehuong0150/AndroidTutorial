@@ -15,9 +15,6 @@ import org.greenrobot.eventbus.ThreadMode
 class MessageFragment : Fragment() {
     private var _binding: FragmentMessageBinding? = null
     private val binding get() = _binding!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,7 +23,7 @@ class MessageFragment : Fragment() {
         _binding = FragmentMessageBinding.inflate(inflater, container, false)
         //Fragment gui den message den Activity
         binding.btnSendToActivity.setOnClickListener {
-            EventBus.getDefault().post(MessageEvent("Hello from Fragment!"))
+            EventBus.getDefault().post(MessageEvent(getString(R.string.hello_blank_fragment)))
         }
         return binding.root
     }

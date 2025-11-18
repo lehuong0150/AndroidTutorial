@@ -1,10 +1,9 @@
 package com.eco.musicplayer.audioplayer.music.eventbus
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.eco.musicplayer.audioplayer.music.R
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityMainEventBinding
 import com.eco.musicplayer.audioplayer.music.eventbus.fragment.MessageFragment
@@ -16,6 +15,7 @@ import org.greenrobot.eventbus.ThreadMode
 
 class MainEventActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainEventBinding
+    @SuppressLint("CommitTransaction")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainEventBinding.inflate(layoutInflater)

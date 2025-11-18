@@ -1,13 +1,11 @@
-import android.Manifest
+package com.eco.musicplayer.audioplayer.music.worker
+
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Build
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.eco.musicplayer.audioplayer.music.R
@@ -18,59 +16,43 @@ class DrinkWaterWorker(
     context: Context,
     params: WorkerParameters
 ) : CoroutineWorker(context, params) {
-
-    companion object {
-        private const val CHANNEL_ID = "drink_channel"
-        private const val NOTIFICATION_ID = 999
-    }
-
-    private val notificationManager = NotificationManagerCompat.from(context)
-
+    private val dao = AppDatabase.getDatabase(context).drinkDao()
     override suspend fun doWork(): Result {
-        // Lưu record
-        AppDatabase.getDatabase(applicationContext).drinkDao().insert(DrinkRecord())
-
-        // Hiện thông báo
-        createNotificationChannel()
+        dao.insert(DrinkRecord())
         showNotification()
-
         return Result.success()
     }
 
-    private fun createNotificationChannel() {
+    private fun showNotification() {
+        val channelId = "drink_channel"
+        val notificationId = 999
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
-                CHANNEL_ID,
-                "Nhắc uống nước",
+                channelId, "Nhac nho uong nuoc!!!!",
                 NotificationManager.IMPORTANCE_HIGH
-            ).apply {
-                description = "Thông báo nhắc uống nước mỗi 30 phút"
-                setShowBadge(true)
-            }
-            notificationManager.createNotificationChannel(channel)
+            )
+            (applicationContext.getSystemService(Context.NOTIFICATION_SERVICE)
+                    as NotificationManager)
+                .createNotificationChannel(channel)
         }
-    }
-
-    private fun showNotification() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(
-                    applicationContext,
-                    Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                return  // Không có quyền → không hiện
-            }
-        }
-
-        val notification = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_new)
+        val soundUri = android.media.RingtoneManager.getDefaultUri(android.media.RingtoneManager.TYPE_NOTIFICATION)
+        val notification = NotificationCompat.Builder(applicationContext, channelId)
+            .setSmallIcon(R.drawable.ic_music_note)
             .setContentTitle("Đã đến giờ uống nước rồi!!!")
-            .setContentText("Uống ngay 1 cốc nước đi nào")
+            .setContentText("Uống ngay 100-200ml nước nào  ")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setAutoCancel(true)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
+            .setSound(soundUri)
+            .setVibrate(longArrayOf(0, 500, 300, 500))
+            .setAutoCancel(true)
+            .setCategory(NotificationCompat.CATEGORY_REMINDER)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .build()
-
-        notificationManager.notify(NOTIFICATION_ID, notification)
+        try {
+            NotificationManagerCompat.from(applicationContext)
+                .notify(notificationId, notification)
+        } catch (e: SecurityException) {
+            // Người dùng từ chối quyền
+        }
     }
 }
