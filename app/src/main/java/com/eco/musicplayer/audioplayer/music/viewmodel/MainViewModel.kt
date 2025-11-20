@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.eco.musicplayer.audioplayer.music.models.modelActivity.ActivityResult
-import com.eco.musicplayer.audioplayer.music.models.modelActivity.ActivityUiState
-import com.eco.musicplayer.audioplayer.music.models.modelActivity.BundleData
+import com.eco.musicplayer.audioplayer.music.models.modelactivity.ActivityResult
+import com.eco.musicplayer.audioplayer.music.models.modelactivity.ActivityUiState
+import com.eco.musicplayer.audioplayer.music.models.modelactivity.BundleData
 import com.eco.musicplayer.audioplayer.music.utils.NavigationEvent
 
 class MainViewModel : ViewModel() {

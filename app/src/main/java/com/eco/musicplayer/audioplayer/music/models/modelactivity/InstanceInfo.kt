@@ -1,4 +1,4 @@
-package com.eco.musicplayer.audioplayer.music.models.modelActivity
+package com.eco.musicplayer.audioplayer.music.models.modelactivity
 
 data class InstanceInfo(
     val taskId: Int,

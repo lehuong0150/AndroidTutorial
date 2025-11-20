@@ -12,8 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.eco.musicplayer.audioplayer.music.MainActivity
 import com.eco.musicplayer.audioplayer.music.R
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityStandardBinding
-import com.eco.musicplayer.audioplayer.music.models.modelActivity.BundleData
-import com.eco.musicplayer.audioplayer.music.viewmodel.MainViewModel
+import com.eco.musicplayer.audioplayer.music.models.modelactivity.BundleData
 import java.util.Date
 
 class StandardActivity : AppCompatActivity() {

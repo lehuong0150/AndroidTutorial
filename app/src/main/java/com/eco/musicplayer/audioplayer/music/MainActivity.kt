@@ -21,8 +21,8 @@ import com.eco.musicplayer.audioplayer.music.launchmode.SingleInstanceActivity
 import com.eco.musicplayer.audioplayer.music.launchmode.SingleTaskActivity
 import com.eco.musicplayer.audioplayer.music.launchmode.SingleTopActivity
 import com.eco.musicplayer.audioplayer.music.launchmode.StandardActivity
-import com.eco.musicplayer.audioplayer.music.models.modelActivity.ActivityResult
-import com.eco.musicplayer.audioplayer.music.models.modelActivity.NetworkStateCallback
+import com.eco.musicplayer.audioplayer.music.models.modelactivity.ActivityResult
+import com.eco.musicplayer.audioplayer.music.models.modelactivity.NetworkStateCallback
 import com.eco.musicplayer.audioplayer.music.permission.PermissionUtil
 import com.eco.musicplayer.audioplayer.music.utils.NavigationEvent
 import com.eco.musicplayer.audioplayer.music.utils.NetworkUtils

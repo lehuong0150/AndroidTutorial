@@ -1,6 +1,6 @@
 package com.eco.musicplayer.audioplayer.music.utils
 
-import com.eco.musicplayer.audioplayer.music.models.modelActivity.BundleData
+import com.eco.musicplayer.audioplayer.music.models.modelactivity.BundleData
 
 sealed class NavigationEvent {
     data class OpenStandardActivity(

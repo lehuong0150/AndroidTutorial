@@ -245,6 +245,7 @@
     <string name="message_to"> %s</string>
     <string name="message_from"> %s</string>
     <string name="received_message">Received: %s</string>
+    <string name="received_message_viewmodel">Received: %s</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="message_sms">Da nhan broadcast tu service!Thanh cong!!!!!</string>

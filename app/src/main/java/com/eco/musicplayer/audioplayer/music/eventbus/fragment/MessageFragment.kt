@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.eco.musicplayer.audioplayer.music.R
 import com.eco.musicplayer.audioplayer.music.databinding.FragmentMessageBinding
+import com.eco.musicplayer.audioplayer.music.viewmodel.MessageViewModel
 import com.eco.musicplayer.audioplayer.music.models.event.MessageEvent
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -15,6 +17,7 @@ import org.greenrobot.eventbus.ThreadMode
 class MessageFragment : Fragment() {
     private var _binding: FragmentMessageBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: MessageViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,7 +28,18 @@ class MessageFragment : Fragment() {
         binding.btnSendToActivity.setOnClickListener {
             EventBus.getDefault().post(MessageEvent(getString(R.string.hello_blank_fragment)))
         }
+        binding.btnSendToActivityViewModel.setOnClickListener {
+            viewModel.sendToActivity(getString(R.string.hello_blank_fragment))
+        }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.messageToFragment.observe(viewLifecycleOwner) { m ->
+            binding.tvMessageViewModel.text =
+                getString(R.string.received_message_viewmodel, m.message)
+        }
     }
 
     override fun onStart() {
@@ -37,8 +51,9 @@ class MessageFragment : Fragment() {
         super.onStop()
         EventBus.getDefault().unregister(this)
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onMessageEvent(event: MessageEvent){
+    fun onMessageEvent(event: MessageEvent) {
         binding.tvMessage.text = getString(R.string.received_message, event.message)
     }
 

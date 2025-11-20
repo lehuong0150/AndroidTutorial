@@ -1,4 +1,4 @@
-package com.eco.musicplayer.audioplayer.music.models.modelActivity
+package com.eco.musicplayer.audioplayer.music.models.modelactivity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
