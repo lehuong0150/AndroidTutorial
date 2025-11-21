@@ -28,6 +28,12 @@
         android:theme="@style/Theme.AndroidTutorial"
         tools:targetApi="31">
         <activity
+            android:name=".democontent.ObserveActivity"
+            android:exported="false" />
+        <activity
+            android:name=".democontent.ContactActivity"
+            android:exported="false" />
+        <activity
             android:name=".demoroom.MainWorkActivity"
             android:exported="true" />
 
@@ -42,6 +48,12 @@
             android:exported="true" />
         <service
             android:name=".service.SmsSenderService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <provider
+            android:name=".contentprovider.ContactsProvider"
+            android:authorities="com.eco.contacts.provider"
             android:enabled="true"
             android:exported="false" />
 

@@ -51,6 +51,7 @@ android {
             res.srcDir("src/main/res/event")
             res.srcDir("src/main/res/service")
             res.srcDir("src/main/res/roomdb")
+            res.srcDir("src/main/res/contentprovider")
         }
     }
 }
