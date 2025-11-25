@@ -18,6 +18,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <application
+        android:name="com.eco.musicplayer.audioplayer.music.ads.appopen.MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -28,24 +29,29 @@
         android:theme="@style/Theme.AndroidTutorial"
         tools:targetApi="31">
         <activity
-            android:name=".democontent.ObserveActivity"
+            android:name=".eventbus.MainEventActivity"
             android:exported="false" />
+        <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-3940256099942544~3347511713" />
+
         <activity
             android:name=".democontent.ContactActivity"
             android:exported="false" />
         <activity
             android:name=".demoroom.MainWorkActivity"
-            android:exported="true" />
+            android:exported="false" />
 
         <service
             android:name=".service.DownloadService"
             android:enabled="true"
-            android:exported="true"
+            android:exported="false"
             android:foregroundServiceType="dataSync" />
         <service
             android:name=".service.MusicBoundService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="false" />
         <service
             android:name=".service.SmsSenderService"
             android:enabled="true"
@@ -54,7 +60,7 @@
         <provider
             android:name=".contentprovider.ContactsProvider"
             android:authorities="com.eco.contacts.provider"
-            android:enabled="true"
+            android:enabled="false"
             android:exported="false" />
 
         <receiver
@@ -76,7 +82,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".layout.SettingActivity"
             android:exported="false" />
@@ -111,8 +117,9 @@
             android:name=".layout.LayoutActivity"
             android:exported="false" />
         <activity
-            android:name=".eventbus.MainEventActivity"
-            android:exported="true">
+            android:name=".ads.MainAdsActivity"
+            android:exported="true"
+            android:hardwareAccelerated="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

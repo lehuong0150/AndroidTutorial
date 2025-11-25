@@ -40,7 +40,11 @@ class ContactActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        setupWindowInsets()
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+            val sys = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(sys.left, sys.top, sys.right, sys.bottom)
+            insets
+        }
         setupRecyclerView()
         setupListeners()
 
@@ -51,14 +55,6 @@ class ContactActivity : AppCompatActivity() {
         )
 
         loadContacts()
-    }
-
-    private fun setupWindowInsets() {
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val sys = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(sys.left, sys.top, sys.right, sys.bottom)
-            insets
-        }
     }
 
     private fun setupRecyclerView() {

@@ -21,6 +21,8 @@ android {
         ksp {
             arg("room.schemaLocation", "$projectDir/schemas")
         }
+        multiDexEnabled = true
+
     }
 
     buildTypes {
@@ -52,6 +54,8 @@ android {
             res.srcDir("src/main/res/service")
             res.srcDir("src/main/res/roomdb")
             res.srcDir("src/main/res/contentprovider")
+            res.srcDir("src/main/res/ads")
+
         }
     }
 }
@@ -96,6 +100,11 @@ dependencies {
 
     // WorkManager
     implementation("androidx.work:work-runtime-ktx:2.9.1")
+
+    //ads
+    implementation("com.google.android.gms:play-services-ads:24.8.0")
+
+
 
 
 }

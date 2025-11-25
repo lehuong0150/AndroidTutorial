@@ -259,12 +259,12 @@
     <string name="service_completed">Service HOÀN THÀNH!\nDù bạn đã thoát app!</string>
     <string name="number_water_drink">Hôm nay bạn đã uống: %s cốc nước</string>
 
-<!--    ContentProvider-->
-        <!-- ObserveActivity -->
-        <string name="observe_tracking">Đang theo dõi thay đổi từ ContactProvider...</string>
-        <string name="observe_total_contacts">Tổng số contacts: %1$d ( %2$d)</string>
-        <string name="observe_no_contacts">Chưa có contact nào</string>
-        <string name="observe_update_time">Cập nhật lúc: %1$s (Lần %2$d)</string>
-        <string name="observe_stop_tracking">Đã ngừng theo dõi thay đổi</string>
+    <!--    ContentProvider-->
+    <!-- ObserveActivity -->
+    <string name="observe_tracking">Đang theo dõi thay đổi từ ContactProvider...</string>
+    <string name="observe_total_contacts">Tổng số contacts: %1$d ( %2$d)</string>
+    <string name="observe_no_contacts">Chưa có contact nào</string>
+    <string name="observe_update_time">Cập nhật lúc: %1$s (Lần %2$d)</string>
+    <string name="observe_stop_tracking">Đã ngừng theo dõi thay đổi</string>
 
 </resources>

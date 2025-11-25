@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.eco.musicplayer.audioplayer.music.ads.banner.admob.CustomBanner
+        android:id="@+id/banner_adaptive_top"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#E3F2FD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/scrollContent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingClass" />
+
+    <ScrollView
+        android:id="@+id/scrollContent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/banner_collapsible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/banner_adaptive_top">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="🎵 Danh sách bài hát"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp"/>
+
+            <!-- Danh sách các item giả lập -->
+            <include layout="@layout/item_song_demo"/>
+            <include layout="@layout/item_song_demo"/>
+            <include layout="@layout/item_song_demo"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="INLINE Banner (250dp)"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:textColor="#1976D2"/>
+
+            <com.eco.musicplayer.audioplayer.music.ads.banner.admob.CustomBanner
+                android:id="@+id/banner_inline_250"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFF3E0"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Thêm nội dung -->
+            <include layout="@layout/item_song_demo"/>
+            <include layout="@layout/item_song_demo"/>
+            <include layout="@layout/item_song_demo"/>
+
+            <!-- INLINE Banner 150dp - Giữa nội dung -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="INLINE Banner (150dp)"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:textColor="#388E3C"/>
+
+            <com.eco.musicplayer.audioplayer.music.ads.banner.admob.CustomBanner
+                android:id="@+id/banner_inline_150"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#E8F5E9"
+                android:layout_marginBottom="16dp"/>
+
+            <include layout="@layout/item_song_demo"/>
+            <include layout="@layout/item_song_demo"/>
+            <include layout="@layout/item_song_demo"/>
+            <include layout="@layout/item_song_demo"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <com.eco.musicplayer.audioplayer.music.ads.banner.admob.CustomBanner
+        android:id="@+id/banner_collapsible"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="#FFEBEE"
+        app:layout_constraintTop_toBottomOf="@id/scrollContent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingClass" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
