@@ -1,10 +1,8 @@
 package com.eco.musicplayer.audioplayer.music.ads.appopen
 
 import android.app.Activity
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.util.Log
-import com.google.android.gms.ads.AdActivity
 import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
@@ -13,83 +11,118 @@ import com.google.android.gms.ads.appopen.AppOpenAd
 import java.util.Date
 
 class AppOpenAdManager(private val context: Context) {
+
     private val AD_UNIT_ID = "ca-app-pub-3940256099942544/9257395921"
     private var appOpenAd: AppOpenAd? = null
     private var isLoadingAd = false
     private var isShowingAd = false
     private var loadTime: Long = 0
+    private var lastShowTime: Long = 0
 
-    private fun wasLoadTimeLessThanNHoursAgo(): Boolean {
+    private val SHOW_COOLDOWN_MS = 30_000L
+
+    private fun wasLoadTimeLessThan4HoursAgo(): Boolean {
         return Date().time - loadTime < 14400000
     }
 
     private fun isAdAvailable(): Boolean {
-        return appOpenAd != null && wasLoadTimeLessThanNHoursAgo()
+        return appOpenAd != null && wasLoadTimeLessThan4HoursAgo()
     }
 
-    //tai quang cao khi mo ung dung
+    private fun hasPassedCooldown(): Boolean {
+        val timeSinceLastShow = Date().time - lastShowTime
+        return timeSinceLastShow >= SHOW_COOLDOWN_MS
+    }
+
     fun loadAd() {
         if (isLoadingAd || isAdAvailable()) {
             return
         }
+
         isLoadingAd = true
+        Log.d(TAG, "Loading ad...")
+
         val request = AdRequest.Builder().build()
         AppOpenAd.load(
             context,
             AD_UNIT_ID,
             request,
             object : AppOpenAd.AppOpenAdLoadCallback() {
-
                 override fun onAdLoaded(ad: AppOpenAd) {
                     appOpenAd = ad
                     isLoadingAd = false
                     loadTime = Date().time
+                    Log.i(TAG, "✓ Ad loaded")
                 }
 
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                     isLoadingAd = false
                     appOpenAd = null
+                    Log.e(TAG, "✗ Load failed: ${loadAdError.message}")
                 }
             }
         )
     }
 
-    //hien thi qc neu co san
     fun showAdIfAvailable(activity: Activity) {
         if (isShowingAd) {
-            loadAd()
+            Log.d(TAG, "Ad is showing, skip")
             return
         }
+
+        if (!hasPassedCooldown()) {
+            Log.d(TAG, "Cooldown not passed (${(Date().time - lastShowTime) / 1000}s), skip")
+            return
+        }
+
+        if (activity.javaClass.name.contains("AdActivity") ||
+            activity.javaClass.simpleName.contains("Interstitial")) {
+            Log.d(TAG, "Skip in ad screen")
+            return
+        }
+
         if (!isAdAvailable()) {
+            Log.d(TAG, "Ad not available, loading...")
             loadAd()
             return
         }
+
+        Log.d(TAG, "Showing ad")
         isShowingAd = true
+        lastShowTime = Date().time
+
         appOpenAd?.fullScreenContentCallback = object : FullScreenContentCallback() {
             override fun onAdDismissedFullScreenContent() {
+                Log.d(TAG, "Ad dismissed")
                 appOpenAd = null
                 isShowingAd = false
                 loadAd()
             }
 
-            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+            override fun onAdFailedToShowFullScreenContent(error: AdError) {
+                Log.e(TAG, "Show failed: ${error.message}")
                 appOpenAd = null
                 isShowingAd = false
                 loadAd()
             }
 
             override fun onAdShowedFullScreenContent() {
-                Log.d(TAG, "Ad showed fullscreen content.")
+                Log.i(TAG, "Ad showed")
             }
 
             override fun onAdImpression() {
-                Log.d(TAG, "The ad recorded an impression.")
+                Log.d(TAG, "Ad impression")
             }
 
             override fun onAdClicked() {
-                Log.d(TAG, "The ad was clicked.")
+                Log.d(TAG, "Ad clicked")
             }
         }
+
         appOpenAd?.show(activity)
+    }
+
+    companion object {
+        private const val TAG = "AppOpenAd"
     }
 }

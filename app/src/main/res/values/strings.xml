@@ -267,4 +267,6 @@
     <string name="observe_update_time">Cập nhật lúc: %1$s (Lần %2$d)</string>
     <string name="observe_stop_tracking">Đã ngừng theo dõi thay đổi</string>
 
+    <!--    Ad-->
+    <string name="coins_earned_with_total">+%d coins earned!\nTotal: %d coins</string>
 </resources>
