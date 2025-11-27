@@ -15,10 +15,10 @@ class AppOpenAdManager(private val context: Context) {
     private val AD_UNIT_ID = "ca-app-pub-3940256099942544/9257395921"
     private var appOpenAd: AppOpenAd? = null
     private var isLoadingAd = false
-    private var isShowingAd = false
+    var isShowingAd = false
     private var loadTime: Long = 0
     private var lastShowTime: Long = 0
-
+    private var pendingActivity: Activity? = null
     private val SHOW_COOLDOWN_MS = 30_000L
 
     private fun wasLoadTimeLessThan4HoursAgo(): Boolean {
@@ -30,6 +30,8 @@ class AppOpenAdManager(private val context: Context) {
     }
 
     private fun hasPassedCooldown(): Boolean {
+        if (lastShowTime == 0L) return true
+
         val timeSinceLastShow = Date().time - lastShowTime
         return timeSinceLastShow >= SHOW_COOLDOWN_MS
     }
@@ -52,13 +54,20 @@ class AppOpenAdManager(private val context: Context) {
                     appOpenAd = ad
                     isLoadingAd = false
                     loadTime = Date().time
-                    Log.i(TAG, "✓ Ad loaded")
+                    Log.i(TAG, "Ad loaded")
+
+                    pendingActivity?.let { activity ->
+                        Log.d(TAG, "Auto showing ad for pending activity")
+                        showAdIfAvailable(activity)
+                        pendingActivity = null
+                    }
                 }
 
                 override fun onAdFailedToLoad(loadAdError: LoadAdError) {
                     isLoadingAd = false
                     appOpenAd = null
-                    Log.e(TAG, "✗ Load failed: ${loadAdError.message}")
+                    pendingActivity = null
+                    Log.e(TAG, "Load failed: ${loadAdError.message}")
                 }
             }
         )
@@ -75,14 +84,20 @@ class AppOpenAdManager(private val context: Context) {
             return
         }
 
-        if (activity.javaClass.name.contains("AdActivity") ||
-            activity.javaClass.simpleName.contains("Interstitial")) {
-            Log.d(TAG, "Skip in ad screen")
+        val activityName = activity.javaClass.simpleName
+        val shouldSkip = activityName == "SplashActivity" ||
+                activityName.contains("InterstitialActivity") ||
+                activityName.contains("RewardedActivity") ||
+                activityName == "AdActivity"
+
+        if (shouldSkip) {
+            Log.d(TAG, "Skip in ad screen: $activityName")
             return
         }
 
         if (!isAdAvailable()) {
             Log.d(TAG, "Ad not available, loading...")
+            pendingActivity = activity
             loadAd()
             return
         }

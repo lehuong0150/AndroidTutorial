@@ -1,3 +1,4 @@
+package com.eco.musicplayer.audioplayer.music.ads.interstitial
 import android.app.Activity
 import android.content.Context
 import android.util.Log

@@ -1,6 +1,5 @@
 package com.eco.musicplayer.audioplayer.music.ads.interstitial
 
-import InterstitialAdManager
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log

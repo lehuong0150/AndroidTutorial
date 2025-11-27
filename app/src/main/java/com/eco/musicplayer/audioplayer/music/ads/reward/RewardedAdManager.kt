@@ -25,7 +25,7 @@ class RewardedAdManager(private val context: Context) {
                 rewardedAd = ad
                 setAdCallbacks(ad)
 
-                (context as? MainRewardAdActivity)?.onAdLoaded()
+                adListener?.onAdLoaded()
             }
 
             override fun onAdFailedToLoad(adError: LoadAdError) {

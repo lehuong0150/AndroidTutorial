@@ -31,17 +31,24 @@ class MyApplication : Application() {
             }
 
             override fun onActivityCreated(a: Activity, b: Bundle?) {}
-            override fun onActivityStarted(a: Activity) {}
+
+            override fun onActivityStarted(activity: Activity) {
+                if (!appOpenAdManager.isShowingAd) {
+                    currentActivity = activity
+                }
+            }
+
             override fun onActivityPaused(a: Activity) {}
             override fun onActivityStopped(a: Activity) {}
             override fun onActivitySaveInstanceState(a: Activity, b: Bundle) {}
         })
 
-        // CHỈ dùng ProcessLifecycle để show ad khi app vào foreground
+        //để show ad khi app vào foreground
         ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
             override fun onStart(owner: LifecycleOwner) {
                 super.onStart(owner)
                 currentActivity?.let {
+                    val activityName = it.javaClass.simpleName
                     appOpenAdManager.showAdIfAvailable(it)
                 }
             }
