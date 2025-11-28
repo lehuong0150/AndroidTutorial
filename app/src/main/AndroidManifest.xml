@@ -16,6 +16,10 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
 
     <application
         android:name=".ads.appopen.MyApplication"
@@ -29,12 +33,34 @@
         android:theme="@style/Theme.AndroidTutorial"
         tools:targetApi="31">
         <activity
+            android:name=".overlay.AppSelectionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".overlay.OverlayLockActivity"
+            android:exported="false"
+            android:excludeFromRecents="true"
+            android:launchMode="singleTask"
+            android:taskAffinity=""
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait" />
+
+        <service
+            android:name=".overlay.OverlayService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <activity
             android:name=".ads.appopen.SplashActivity"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+        <activity
+            android:name=".overlay.MainOverlayActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -48,8 +74,7 @@
             android:hardwareAccelerated="true" />
         <activity
             android:name=".eventbus.MainEventActivity"
-            android:exported="false" />
-        <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
+            android:exported="false" /> <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3940256099942544~3347511713" />

@@ -48,7 +48,6 @@ class MyApplication : Application() {
             override fun onStart(owner: LifecycleOwner) {
                 super.onStart(owner)
                 currentActivity?.let {
-                    val activityName = it.javaClass.simpleName
                     appOpenAdManager.showAdIfAvailable(it)
                 }
             }

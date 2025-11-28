@@ -55,6 +55,8 @@ android {
             res.srcDir("src/main/res/roomdb")
             res.srcDir("src/main/res/contentprovider")
             res.srcDir("src/main/res/ads")
+            res.srcDir("src/main/res/overlay")
+
 
         }
     }
