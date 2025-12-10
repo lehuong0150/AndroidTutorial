@@ -37,12 +37,13 @@
             android:exported="false" />
         <activity
             android:name=".overlay.OverlayLockActivity"
-            android:exported="false"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:excludeFromRecents="true"
-            android:launchMode="singleTask"
+            android:exported="false"
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"
             android:taskAffinity=""
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:screenOrientation="portrait" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <service
             android:name=".overlay.OverlayService"
@@ -70,7 +71,7 @@
             android:hardwareAccelerated="true" />
         <activity
             android:name=".ads.MainAdsActivity"
-            android:exported="false"
+            android:exported="true"
             android:hardwareAccelerated="true" />
         <activity
             android:name=".eventbus.MainEventActivity"

@@ -6,7 +6,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.eco.musicplayer.audioplayer.music.R
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityMainAdsBinding
 import com.eco.musicplayer.audioplayer.music.models.ads.banner.BannerType
 import com.google.android.gms.ads.MobileAds
@@ -41,7 +40,7 @@ class MainAdsActivity : AppCompatActivity() {
 
     private fun loadAllBanners() {
         // Test Ad Unit ID của Google
-        val testAdUnitId = "ca-app-pub-3940256099942544/6300978111"
+        val testAdUnitId = "ca-app-pub-3940256099942544/9214589741"
 
         Log.d(TAG, "Loading ADAPTIVE banner at TOP")
         binding.bannerAdaptiveTop.loadBanner(
@@ -60,7 +59,7 @@ class MainAdsActivity : AppCompatActivity() {
         Log.d(TAG, "Loading INLINE 250dp banner in content")
         binding.bannerInline250.loadBanner(
             activity = this,
-            adUnitId = testAdUnitId,
+            adUnitId = "ca-app-pub-3940256099942544/6300978111",
             type = BannerType.INLINE,
             heightDp = 250
         )
@@ -75,7 +74,6 @@ class MainAdsActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        // Hủy tất cả banner khi destroy activity
         Log.d(TAG, "Destroying all banners")
         binding.bannerAdaptiveTop.destroy()
         binding.bannerCollapsible.destroy()

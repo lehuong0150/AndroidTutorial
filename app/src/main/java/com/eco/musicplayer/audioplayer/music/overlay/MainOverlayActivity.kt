@@ -29,17 +29,16 @@ class MainOverlayActivity : AppCompatActivity() {
         binding.btStartService.setOnClickListener {
             Log.d(TAG, "Click Start Service")
             if (checkPermission()) {
-                Log.d(TAG, "✓ Có quyền overlay")
-                // Kiểm tra quyền Usage Stats
+                Log.d(TAG, "Co quyen overlay")
                 if (checkUsageStatsPermission()) {
-                    Log.d(TAG, "✓ Có quyền Usage Stats → Start service")
+                    Log.d(TAG, "Co quyen Usage Stats - Start service")
                     startLockService()
                 } else {
-                    Log.d(TAG, "✗ Chưa có quyền Usage Stats")
+                    Log.d(TAG, "Chua co quyen Usage Stats")
                     requestUsageStatsPermission()
                 }
             } else {
-                Log.d(TAG, "✗ Chưa có quyền overlay → Yêu cầu quyền")
+                Log.d(TAG, "Chua co quyen overlay - Yeu cau quyen")
                 requestOverlayPermission()
             }
         }
@@ -49,10 +48,11 @@ class MainOverlayActivity : AppCompatActivity() {
             stopLockService()
         }
 
-        // BUTTON TEST - Long press để thêm app test
+        // Long press để thêm app test
         binding.btStartService.setOnLongClickListener {
             Log.d(TAG, "Long Click Start - Add Test Apps")
             addTestApp()
+            checkLockedAppsList()
             true
         }
 
@@ -63,14 +63,12 @@ class MainOverlayActivity : AppCompatActivity() {
             true
         }
 
-        // Kiểm tra quyền khi mở app
         checkPermissionOnStart()
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d(TAG, "onResume - Cập nhật UI")
-        // Cập nhật lại UI mỗi khi quay lại activity
+        Log.d(TAG, "onResume - Cap nhat UI")
         checkPermissionOnStart()
     }
 
@@ -78,16 +76,16 @@ class MainOverlayActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val hasPermission = Settings.canDrawOverlays(this)
             Log.d(TAG, "====================================")
-            Log.d(TAG, "Kiểm tra quyền overlay: $hasPermission")
+            Log.d(TAG, "Kiem tra quyen overlay: $hasPermission")
             Log.d(TAG, "====================================")
 
             if (!hasPermission) {
-                binding.btStartService.text = "Cấp quyền để bắt đầu"
+                binding.btStartService.text = "Cap quyen de bat dau"
             } else {
-                binding.btStartService.text = "Bắt đầu AppLock"
+                binding.btStartService.text = "Bat dau AppLock"
             }
         } else {
-            binding.btStartService.text = "Bắt đầu AppLock"
+            binding.btStartService.text = "Bat dau AppLock"
         }
     }
 
@@ -101,7 +99,6 @@ class MainOverlayActivity : AppCompatActivity() {
                 Log.d(TAG, "Package Name: $packageName")
                 Log.d(TAG, "Context: ${this.javaClass.simpleName}")
 
-                // Thử cách khác để check
                 val appOpsManager = getSystemService(Context.APP_OPS_SERVICE) as? android.app.AppOpsManager
                 if (appOpsManager != null) {
                     val mode = appOpsManager.checkOpNoThrow(
@@ -115,11 +112,11 @@ class MainOverlayActivity : AppCompatActivity() {
                 Log.d(TAG, "====================================")
                 hasPermission
             } catch (e: Exception) {
-                Log.e(TAG, "Lỗi check permission: ${e.message}", e)
+                Log.e(TAG, "Loi check permission: ${e.message}", e)
                 false
             }
         } else {
-            Log.d(TAG, "Android < M, không cần quyền overlay")
+            Log.d(TAG, "Android < M, khong can quyen overlay")
             true
         }
     }
@@ -129,23 +126,22 @@ class MainOverlayActivity : AppCompatActivity() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             try {
-                // Hiển thị dialog giải thích CHI TIẾT
                 AlertDialog.Builder(this)
-                    .setTitle("Cần cấp quyền")
-                    .setMessage("AppLock cần quyền 'Hiển thị trên màn hình' để hoạt động.\n\n" +
-                            "⚠️ LƯU Ý:\n" +
-                            "1. Trong màn hình tiếp theo, TÌM APP CỦA BẠN (có thể phải cuộn xuống)\n" +
-                            "2. CLICK vào tên app\n" +
-                            "3. BẬT công tắc 'Allow display...'\n" +
-                            "4. Nhấn BACK để quay lại")
-                    .setPositiveButton("Đi đến Cài đặt") { _, _ ->
+                    .setTitle("Can cap quyen")
+                    .setMessage("AppLock can quyen 'Hien thi tren man hinh' de hoat dong.\n\n" +
+                            "LUU Y:\n" +
+                            "1. Trong man hinh tiep theo, TIM APP CUA BAN (co the phai cuon xuong)\n" +
+                            "2. CLICK vao ten app\n" +
+                            "3. BAT cong tac 'Allow display...'\n" +
+                            "4. Nhan BACK de quay lai")
+                    .setPositiveButton("Di den Cai dat") { _, _ ->
                         openOverlaySettings()
                     }
-                    .setNegativeButton("Hủy", null)
+                    .setNegativeButton("Huy", null)
                     .show()
 
             } catch (e: Exception) {
-                Log.e(TAG, "Lỗi request permission: ${e.message}")
+                Log.e(TAG, "Loi request permission: ${e.message}")
                 e.printStackTrace()
             }
         }
@@ -154,7 +150,7 @@ class MainOverlayActivity : AppCompatActivity() {
     private fun openOverlaySettings() {
         try {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                Log.d(TAG, "Mở Settings overlay permission")
+                Log.d(TAG, "Mo Settings overlay permission")
                 Log.d(TAG, "Package: $packageName")
 
                 val intent = Intent(
@@ -162,30 +158,27 @@ class MainOverlayActivity : AppCompatActivity() {
                     Uri.parse("package:$packageName")
                 )
 
-                // Check xem intent có thể mở được không
                 if (intent.resolveActivity(packageManager) != null) {
                     startActivity(intent)
-                    Log.d(TAG, "✓ Đã mở Settings với package cụ thể")
+                    Log.d(TAG, "Da mo Settings voi package cu the")
                 } else {
-                    // Thử mở settings tổng quát
-                    Log.d(TAG, "Không mở được Settings cụ thể, thử tổng quát")
+                    Log.d(TAG, "Khong mo duoc Settings cu the, thu tong quat")
                     val generalIntent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION)
                     startActivity(generalIntent)
-                    Log.d(TAG, "✓ Đã mở Settings tổng quát")
+                    Log.d(TAG, "Da mo Settings tong quat")
                 }
             }
         } catch (e: Exception) {
-            Log.e(TAG, "Lỗi mở Settings: ${e.message}", e)
+            Log.e(TAG, "Loi mo Settings: ${e.message}", e)
 
-            // Hướng dẫn user vào thủ công
-            showDialog("Hướng dẫn cấp quyền",
-                "Vui lòng làm theo các bước:\n\n" +
-                        "1. Vào Cài đặt (Settings)\n" +
-                        "2. Chọn Ứng dụng (Apps)\n" +
-                        "3. Tìm app này trong danh sách\n" +
-                        "4. Chọn 'Quyền đặc biệt' hoặc 'Nâng cao'\n" +
-                        "5. Chọn 'Hiển thị trên các ứng dụng khác'\n" +
-                        "6. BẬT quyền này")
+            showDialog("Huong dan cap quyen",
+                "Vui long lam theo cac buoc:\n\n" +
+                        "1. Vao Cai dat (Settings)\n" +
+                        "2. Chon Ung dung (Apps)\n" +
+                        "3. Tim app nay trong danh sach\n" +
+                        "4. Chon 'Quyen dac biet' hoac 'Nang cao'\n" +
+                        "5. Chon 'Hien thi tren cac ung dung khac'\n" +
+                        "6. BAT quyen nay")
         }
     }
 
@@ -194,11 +187,11 @@ class MainOverlayActivity : AppCompatActivity() {
             val intent = Intent(this, OverlayService::class.java)
             startService(intent)
             Log.d(TAG, "Service started successfully")
-            showDialog("Đã bắt đầu", "AppLock đang chạy")
+            showDialog("Da bat dau", "AppLock dang chay")
         } catch (e: Exception) {
-            Log.e(TAG, "Lỗi start service: ${e.message}")
+            Log.e(TAG, "Loi start service: ${e.message}")
             e.printStackTrace()
-            showDialog("Lỗi", "Không thể khởi động service: ${e.message}")
+            showDialog("Loi", "Khong the khoi dong service: ${e.message}")
         }
     }
 
@@ -207,9 +200,9 @@ class MainOverlayActivity : AppCompatActivity() {
             val intent = Intent(this, OverlayService::class.java)
             stopService(intent)
             Log.d(TAG, "Service stopped successfully")
-            showDialog("Đã dừng", "AppLock đã dừng")
+            showDialog("Da dung", "AppLock da dung")
         } catch (e: Exception) {
-            Log.e(TAG, "Lỗi stop service: ${e.message}")
+            Log.e(TAG, "Loi stop service: ${e.message}")
             e.printStackTrace()
         }
     }
@@ -222,25 +215,23 @@ class MainOverlayActivity : AppCompatActivity() {
             .show()
     }
 
-    // FUNCTION TEST - Mở Settings app thủ công
     private fun testPermissionManually() {
         try {
             val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
             intent.data = Uri.parse("package:$packageName")
             startActivity(intent)
 
-            showDialog("Hướng dẫn",
-                "1. Tìm 'Special app access' hoặc 'Advanced'\n" +
-                        "2. Chọn 'Display over other apps'\n" +
-                        "3. BẬT quyền\n" +
-                        "4. Quay lại app")
+            showDialog("Huong dan",
+                "1. Tim 'Special app access' hoac 'Advanced'\n" +
+                        "2. Chon 'Display over other apps'\n" +
+                        "3. BAT quyen\n" +
+                        "4. Quay lai app")
         } catch (e: Exception) {
-            Log.e(TAG, "Lỗi mở app settings: ${e.message}")
-            showDialog("Lỗi", "Không thể mở Settings: ${e.message}")
+            Log.e(TAG, "Loi mo app settings: ${e.message}")
+            showDialog("Loi", "Khong the mo Settings: ${e.message}")
         }
     }
 
-    // Kiểm tra quyền Usage Stats
     private fun checkUsageStatsPermission(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             try {
@@ -260,32 +251,29 @@ class MainOverlayActivity : AppCompatActivity() {
         return false
     }
 
-    // Yêu cầu quyền Usage Stats
     private fun requestUsageStatsPermission() {
         AlertDialog.Builder(this)
-            .setTitle("Cần thêm quyền")
-            .setMessage("AppLock cần quyền 'Truy cập dữ liệu sử dụng' để phát hiện app nào đang chạy.\n\n" +
-                    "Trong màn hình tiếp theo:\n" +
-                    "1. Tìm app của bạn\n" +
-                    "2. BẬT quyền 'Permit usage access'\n" +
-                    "3. Quay lại app")
-            .setPositiveButton("Đi đến Cài đặt") { _, _ ->
+            .setTitle("Can them quyen")
+            .setMessage("AppLock can quyen 'Truy cap du lieu su dung' de phat hien app nao dang chay.\n\n" +
+                    "Trong man hinh tiep theo:\n" +
+                    "1. Tim app cua ban\n" +
+                    "2. BAT quyen 'Permit usage access'\n" +
+                    "3. Quay lai app")
+            .setPositiveButton("Di den Cai dat") { _, _ ->
                 try {
                     startActivity(Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS))
                 } catch (e: Exception) {
-                    Log.e(TAG, "Không thể mở Usage Settings: ${e.message}")
+                    Log.e(TAG, "Khong the mo Usage Settings: ${e.message}")
                 }
             }
-            .setNegativeButton("Hủy", null)
+            .setNegativeButton("Huy", null)
             .show()
     }
 
-    // Thêm app vào danh sách khóa để test
     private fun addTestApp() {
         val prefs = getSharedPreferences("AppLock", MODE_PRIVATE)
         val editor = prefs.edit()
 
-        // Thêm các app Trung Quốc phổ biến để test
         val testApps = listOf(
             "com.sina.weibo" to "Weibo",
             "com.tencent.mm" to "WeChat",
@@ -296,7 +284,11 @@ class MainOverlayActivity : AppCompatActivity() {
             "com.taobao.taobao" to "Taobao",
             "com.tmall.wireless" to "Tmall",
             "com.jd.lib.android.main" to "JD",
-            "com.baidu.searchbox" to "Baidu"
+            "com.baidu.searchbox" to "Baidu",
+            "com.android.chrome" to "Chrome",
+            "com.google.android.youtube" to "YouTube",
+            "com.facebook.katana" to "Facebook",
+            "com.instagram.android" to "Instagram"
         )
 
         val savedApps = mutableSetOf<String>()
@@ -310,7 +302,31 @@ class MainOverlayActivity : AppCompatActivity() {
         editor.apply()
 
         Log.d(TAG, "Added test apps: $testApps")
-        showDialog("Test Mode", "Đã thêm ${testApps.size} app Trung Quốc để test:\n" +
-                testApps.joinToString("\n") { it.second })
+        Log.d(TAG, "Total apps added: ${testApps.size}")
+    }
+
+    private fun checkLockedAppsList() {
+        val prefs = getSharedPreferences("AppLock", MODE_PRIVATE)
+        val lockedApps = prefs.getStringSet("locked_apps", emptySet()) ?: emptySet()
+
+        Log.d(TAG, "========================================")
+        Log.d(TAG, "DANH SACH APP DA KHOA:")
+        Log.d(TAG, "Tong so: ${lockedApps.size}")
+
+        if (lockedApps.isEmpty()) {
+            Log.e(TAG, "DANH SACH TRONG!")
+            showDialog("Loi", "Khong them duoc app vao danh sach!")
+        } else {
+            val appList = StringBuilder()
+            lockedApps.forEach { packageName ->
+                val appName = prefs.getString("app_name_$packageName", packageName)
+                val isLocked = prefs.getBoolean("is_locked_$packageName", false)
+                Log.d(TAG, "- $appName ($packageName) - Locked: $isLocked")
+                appList.append("$appName\n")
+            }
+            Log.d(TAG, "========================================")
+
+            showDialog("Da them ${lockedApps.size} app", appList.toString().trim())
+        }
     }
 }

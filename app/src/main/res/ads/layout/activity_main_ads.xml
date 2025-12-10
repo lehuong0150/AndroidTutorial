@@ -41,7 +41,6 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp"/>
 
-            <!-- Danh sách các item giả lập -->
             <include layout="@layout/item_song_demo"/>
             <include layout="@layout/item_song_demo"/>
             <include layout="@layout/item_song_demo"/>
@@ -64,12 +63,10 @@
                 android:background="#FFF3E0"
                 android:layout_marginBottom="16dp"/>
 
-            <!-- Thêm nội dung -->
             <include layout="@layout/item_song_demo"/>
             <include layout="@layout/item_song_demo"/>
             <include layout="@layout/item_song_demo"/>
 
-            <!-- INLINE Banner 150dp - Giữa nội dung -->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
