@@ -10,11 +10,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.eco.musicplayer.audioplayer.music.MainActivity
 import com.eco.musicplayer.audioplayer.music.R
 import com.eco.musicplayer.audioplayer.music.ads.AdListener
 import com.eco.musicplayer.audioplayer.music.ads.MainAdsActivity
+import com.eco.musicplayer.audioplayer.music.ads.interstitial.InterstitialAdManager
+import com.eco.musicplayer.audioplayer.music.ads.interstitial.MainInterstitialAdActivity
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityMainRewardAdBinding
+import com.eco.musicplayer.audioplayer.music.utils.ButtonState
 import com.google.android.gms.ads.MobileAds
 import com.google.android.gms.ads.rewarded.RewardItem
 
@@ -143,12 +145,24 @@ class MainRewardAdActivity : AppCompatActivity() {
             isAdShowing = false
 
             binding.btViewAd.isEnabled = true
+            binding.btViewAd.postDelayed({
+                if (!isFinishing) {
+                    rewardedAdManager.loadAd()
+                }
+            }, 3000)
         }
     }
     private val interstitialListener = object : AdListener {
         override fun onAdLoaded() {
             binding.btGoToActivity.isEnabled = true
             isAdShowing = true
+        }
+
+        override fun onAdFailedToLoad(error: String) {
+            binding.btGoToActivity.isEnabled = true
+            if (pendingNavigation != null) {
+                startNavigation()
+            }
         }
 
         override fun onUserEarnedReward(item: RewardItem) {
@@ -165,6 +179,7 @@ class MainRewardAdActivity : AppCompatActivity() {
 
         override fun onAdDismissed() {
             startNavigation()
+            rewardedInterstitialManager.loadAd()
         }
 
         override fun onAdShowed() {}
@@ -193,6 +208,30 @@ class MainRewardAdActivity : AppCompatActivity() {
             }
             .setCancelable(false)
             .show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        rewardedInterstitialManager.onActivityResumed(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        rewardedInterstitialManager.onActivityStopped()
+    }
+
+    private fun updateButtonState(state: ButtonState) {
+        when (state) {
+            ButtonState.LOADING -> {
+                binding.btGoToActivity.isEnabled = false
+                binding.btGoToActivity.text = "Đang tải..."
+            }
+
+            ButtonState.READY -> {
+                binding.btGoToActivity.isEnabled = true
+                binding.btGoToActivity.text = "Go to Activity"
+            }
+        }
     }
 
     companion object {

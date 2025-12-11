@@ -12,6 +12,8 @@ class MyApplication : Application() {
 
     private lateinit var appOpenAdManager: AppOpenAdManager
     private var currentActivity: Activity? = null
+    private var isFromBackground = false
+    private var isFirstLaunch = true
 
     override fun onCreate() {
         super.onCreate()
@@ -19,7 +21,7 @@ class MyApplication : Application() {
         MobileAds.initialize(this) {}
 
         appOpenAdManager = AppOpenAdManager(this)
-        appOpenAdManager.loadAd()
+//        appOpenAdManager.loadAd()
 
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             override fun onActivityResumed(activity: Activity) {
@@ -30,7 +32,17 @@ class MyApplication : Application() {
                 if (currentActivity == activity) currentActivity = null
             }
 
-            override fun onActivityCreated(a: Activity, b: Bundle?) {}
+            override fun onActivityCreated(activity: Activity, bundle: Bundle?) {
+                if (isFirstLaunch && activity.javaClass.simpleName == "MainRewardAdActivity") {
+                    android.util.Log.d("MyApplication", "MainActivity created - scheduling ad show")
+                    isFirstLaunch = false
+
+                    activity.window.decorView.post {
+                        android.util.Log.d("MyApplication", "Showing first launch ad")
+                        appOpenAdManager.showAdIfAvailable(activity)
+                    }
+                }
+            }
 
             override fun onActivityStarted(activity: Activity) {
                 if (!appOpenAdManager.isShowingAd) {
@@ -47,11 +59,21 @@ class MyApplication : Application() {
         ProcessLifecycleOwner.get().lifecycle.addObserver(object : DefaultLifecycleObserver {
             override fun onStart(owner: LifecycleOwner) {
                 super.onStart(owner)
-                currentActivity?.let {
-                    appOpenAdManager.showAdIfAvailable(it)
+//                currentActivity?.let {
+//                    appOpenAdManager.showAdIfAvailable(it)
+//                }
+                if (isFromBackground) {
+                    currentActivity?.let {
+                        appOpenAdManager.showAdIfAvailable(it)
+                    }
                 }
+                isFromBackground = true
             }
         })
+    }
+
+    fun getAppOpenAdManager(): AppOpenAdManager {
+        return appOpenAdManager
     }
 }
 

@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityMainAdsBinding
 import com.eco.musicplayer.audioplayer.music.models.ads.banner.BannerType
+import com.eco.musicplayer.audioplayer.music.utils.NetworkMonitor
 import com.google.android.gms.ads.MobileAds
 
 class MainAdsActivity : AppCompatActivity() {
@@ -15,6 +16,10 @@ class MainAdsActivity : AppCompatActivity() {
     private val binding by lazy {
         ActivityMainAdsBinding.inflate(layoutInflater)
     }
+    private val networkMonitor: NetworkMonitor by lazy {
+        NetworkMonitor(this)
+    }
+    private var hasLoadedAds = false
 
     companion object {
         private const val TAG = "BannerDemo"
@@ -31,14 +36,29 @@ class MainAdsActivity : AppCompatActivity() {
             insets
         }
 
-        // Khởi tạo Mobile Ads SDK
+        networkMonitor.startMonitoring {
+            runOnUiThread {
+                if (!hasLoadedAds) {
+                    Log.d(TAG, "Network available, loading ads...")
+                    loadAllBanners()
+                }
+            }
+        }
+
         MobileAds.initialize(this) { initStatus ->
-            Log.d(TAG, "AdMob initialized: ${initStatus.adapterStatusMap}")
-            loadAllBanners()
+            if (networkMonitor.isNetworkAvailable()) {
+                loadAllBanners()
+            } else {
+                Log.d(TAG, "No network available, waiting for connection...")
+            }
         }
     }
 
     private fun loadAllBanners() {
+        if (hasLoadedAds) {
+            Log.d(TAG, "Ads already loaded, skipping...")
+            return
+        }
         // Test Ad Unit ID của Google
         val testAdUnitId = "ca-app-pub-3940256099942544/9214589741"
 
@@ -56,29 +76,19 @@ class MainAdsActivity : AppCompatActivity() {
             type = BannerType.COLLAPSIBLE
         )
 
-        Log.d(TAG, "Loading INLINE 250dp banner in content")
-        binding.bannerInline250.loadBanner(
-            activity = this,
-            adUnitId = "ca-app-pub-3940256099942544/6300978111",
-            type = BannerType.INLINE,
-            heightDp = 250
-        )
-
-        Log.d(TAG, "Loading INLINE 150dp banner in content")
-        binding.bannerInline150.loadBanner(
+        Log.d(TAG, "Loading INLINE banner in content")
+        binding.bannerInline.loadBanner(
             activity = this,
             adUnitId = testAdUnitId,
-            type = BannerType.INLINE,
-            heightDp = 150
+            type = BannerType.INLINE
         )
+        hasLoadedAds = true
     }
 
     override fun onDestroy() {
-        Log.d(TAG, "Destroying all banners")
         binding.bannerAdaptiveTop.destroy()
         binding.bannerCollapsible.destroy()
-        binding.bannerInline250.destroy()
-        binding.bannerInline150.destroy()
+        binding.bannerInline.destroy()
         super.onDestroy()
     }
 }

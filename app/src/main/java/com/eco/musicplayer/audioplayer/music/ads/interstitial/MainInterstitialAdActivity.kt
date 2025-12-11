@@ -73,7 +73,7 @@ class MainInterstitialAdActivity : AppCompatActivity(), AdListener {
     }
 
     override fun onAdLoaded() {
-        Log.d(TAG, "✓ Ad loaded")
+        Log.d(TAG, "Ad loaded")
 
         // Bỏ qua nếu activity đang đóng
         if (isFinishing) {
@@ -90,6 +90,18 @@ class MainInterstitialAdActivity : AppCompatActivity(), AdListener {
         }
     }
 
+    override fun onAdFailedToLoad(error: String) {
+        if (isFinishing) return
+        Log.e(TAG, "Load failed: $error")
+
+        if (hasUserClickedNext) {
+            Log.d(TAG, "Ad load failed but user clicked next, moving forward")
+            goToNextLevel()
+        } else {
+            updateButtonState(ButtonState.READY)
+        }
+    }
+
     override fun onUserEarnedReward(item: RewardItem) {
         TODO("Not yet implemented")
     }
@@ -97,7 +109,7 @@ class MainInterstitialAdActivity : AppCompatActivity(), AdListener {
     override fun onAdShowed() {
         if (isFinishing) return
         isAdShowing = true
-        Log.i(TAG, "✓ Ad showing")
+        Log.i(TAG, "Ad showing")
     }
 
     override fun onAdDismissed() {
@@ -123,8 +135,19 @@ class MainInterstitialAdActivity : AppCompatActivity(), AdListener {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        adManager.onActivityResumed(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        adManager.onActivityStopped()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
+        adManager.destroy()
         adManager.adListener = null
         Log.d(TAG, "Activity destroyed")
     }
