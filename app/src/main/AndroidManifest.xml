@@ -34,7 +34,7 @@
         tools:targetApi="31">
         <activity
             android:name=".ads.native_ad.MainNativeAdActivity"
-            android:exported="true" />
+            android:exported="false" />
         <activity
             android:name=".overlay.AppSelectionActivity"
             android:exported="false" />
@@ -54,11 +54,11 @@
             android:exported="false" />
 
         <activity
-            android:name=".ads.appopen.SplashActivity"
-            android:excludeFromRecents="true"
-            android:exported="true" />
-        <activity
             android:name=".overlay.MainOverlayActivity"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+        <activity
+            android:name=".ads.appopen.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -70,11 +70,11 @@
         </activity>
         <activity
             android:name=".ads.reward.MainRewardAdActivity"
-            android:exported="true"
+            android:exported="false"
             android:hardwareAccelerated="true" />
         <activity
             android:name=".ads.MainAdsActivity"
-            android:exported="true"
+            android:exported="false"
             android:hardwareAccelerated="true" />
         <activity
             android:name=".eventbus.MainEventActivity"

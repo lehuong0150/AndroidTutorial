@@ -1,11 +1,13 @@
 package com.eco.musicplayer.audioplayer.music.ads
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.eco.musicplayer.audioplayer.music.ads.interstitial.MainInterstitialAdActivity
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityMainAdsBinding
 import com.eco.musicplayer.audioplayer.music.models.ads.banner.BannerType
 import com.eco.musicplayer.audioplayer.music.utils.NetworkMonitor
@@ -51,6 +53,9 @@ class MainAdsActivity : AppCompatActivity() {
             } else {
                 Log.d(TAG, "No network available, waiting for connection...")
             }
+        }
+        binding.btBack.setOnClickListener {
+            finish()
         }
     }
 

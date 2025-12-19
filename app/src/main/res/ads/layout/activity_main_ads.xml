@@ -44,6 +44,14 @@
             <include layout="@layout/item_song_demo" />
 
             <include layout="@layout/item_song_demo" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btBack"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_34sdp"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:background="@drawable/bg_category"
+                android:text="Back"
+                android:textSize="@dimen/_20sdp" />
 
             <include layout="@layout/item_song_demo" />
 

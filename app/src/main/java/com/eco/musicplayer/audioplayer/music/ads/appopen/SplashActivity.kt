@@ -43,7 +43,12 @@ class SplashActivity : AppCompatActivity() {
                 override fun onAdLoaded() {
                     Log.d(TAG, "Ad loaded successfully")
                     timeoutHandler.removeCallbacks(timeoutRunnable)
-                    navigateToMain()
+                    app.getAppOpenAdManager().showAdIfAvailable(
+                        activity = this@SplashActivity,
+                        onAdClosed = {
+                            navigateToMain()
+                        }
+                    )
                 }
 
                 override fun onAdFailedToLoad() {

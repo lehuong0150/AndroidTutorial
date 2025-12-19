@@ -15,6 +15,7 @@ import com.eco.musicplayer.audioplayer.music.ads.AdListener
 import com.eco.musicplayer.audioplayer.music.ads.MainAdsActivity
 import com.eco.musicplayer.audioplayer.music.ads.interstitial.InterstitialAdManager
 import com.eco.musicplayer.audioplayer.music.ads.interstitial.MainInterstitialAdActivity
+import com.eco.musicplayer.audioplayer.music.ads.native_ad.MainNativeAdActivity
 import com.eco.musicplayer.audioplayer.music.databinding.ActivityMainRewardAdBinding
 import com.eco.musicplayer.audioplayer.music.utils.ButtonState
 import com.google.android.gms.ads.MobileAds
@@ -32,6 +33,7 @@ class MainRewardAdActivity : AppCompatActivity() {
     private var pendingNavigation: Intent? = null
     private var totalCoins = 0
     private var coin = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,6 +67,21 @@ class MainRewardAdActivity : AppCompatActivity() {
         }
         binding.btGoToActivity.setOnClickListener {
             handleGoToActivityButtonClick()
+        }
+        binding.btAdBanner.setOnClickListener {
+            val intent = Intent(this, MainAdsActivity::class.java)
+            startActivity(intent)
+        }
+        binding.btAdNative.setOnClickListener {
+            val intent = Intent(this, MainNativeAdActivity::class.java)
+            startActivity(intent)
+        }
+        binding.btAdInterstitial.setOnClickListener {
+            val intent = Intent(
+                this, MainInterstitialAdActivity
+                ::class.java
+            )
+            startActivity(intent)
         }
     }
 

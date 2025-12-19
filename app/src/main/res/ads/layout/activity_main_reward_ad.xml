@@ -6,20 +6,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ads.reward.MainRewardAdActivity">
-
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitleReward"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_22sdp"
+        android:text="Reward + Interstitial..."
+        android:textAllCaps="false"
+        android:textSize="@dimen/_18sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btViewAd"
         android:layout_width="0dp"
         android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_34sdp"
         android:layout_marginHorizontal="@dimen/_20sdp"
         android:background="@drawable/bg_category"
         android:text="View Ad to continue..."
         android:textAllCaps="false"
         android:textSize="@dimen/_20sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tvTitleReward" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btGoToActivity"
@@ -46,4 +56,46 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btGoToActivity" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btAdBanner"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_22sdp"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:background="@drawable/bg_category"
+        android:text="Ads Banner"
+        android:textAllCaps="false"
+        android:textSize="@dimen/_20sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCoin" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btAdNative"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_22sdp"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:background="@drawable/bg_item_product"
+        android:text="Ads Native"
+        android:textAllCaps="false"
+        android:textSize="@dimen/_20sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btAdBanner" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btAdInterstitial"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_22sdp"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:background="@drawable/bg_category"
+        android:text="Ads Interstitial"
+        android:textAllCaps="false"
+        android:textSize="@dimen/_20sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btAdNative" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

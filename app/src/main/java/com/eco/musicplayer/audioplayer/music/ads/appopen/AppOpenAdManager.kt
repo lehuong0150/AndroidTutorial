@@ -54,10 +54,10 @@ class AppOpenAdManager(private val context: Context) {
             setCanceledOnTouchOutside(false)
             window?.setBackgroundDrawable(ColorDrawable(Color.WHITE))
 
-//            val progressBar = ProgressBar(context).apply {
-//                isIndeterminate = true
-//            }
-//            setContentView(progressBar)
+            val progressBar = ProgressBar(context).apply {
+                isIndeterminate = true
+            }
+            setContentView(progressBar)
         }
     }
 
@@ -138,42 +138,6 @@ class AppOpenAdManager(private val context: Context) {
         )
     }
 
-    //    fun loadAd() {
-//        if (isLoadingAd || isAdAvailable()) {
-//            return
-//        }
-//
-//        isLoadingAd = true
-//        Log.d(TAG, "Loading ad...")
-//
-//        val request = AdRequest.Builder().build()
-//        AppOpenAd.load(
-//            context,
-//            AD_UNIT_ID,
-//            request,
-//            object : AppOpenAd.AppOpenAdLoadCallback() {
-//                override fun onAdLoaded(ad: AppOpenAd) {
-//                    appOpenAd = ad
-//                    isLoadingAd = false
-//                    loadTime = Date().time
-//                    Log.i(TAG, "Ad loaded")
-//
-//                    pendingActivity?.let { activity ->
-//                        Log.d(TAG, "Auto showing ad for pending activity")
-//                        showAdIfAvailable(activity)
-//                        pendingActivity = null
-//                    }
-//                }
-//
-//                override fun onAdFailedToLoad(loadAdError: LoadAdError) {
-//                    isLoadingAd = false
-//                    appOpenAd = null
-//                    pendingActivity = null
-//                    Log.e(TAG, "Load failed: ${loadAdError.message}")
-//                }
-//            }
-//        )
-//    }
 
     fun loadAd() {
         if (isLoadingAd || isAdAvailable()) {
@@ -199,10 +163,9 @@ class AppOpenAdManager(private val context: Context) {
         }
 
         val activityName = activity.javaClass.simpleName
-        val shouldSkip = activityName == "SplashActivity" ||
-                activityName.contains("InterstitialActivity") ||
-                activityName.contains("MainAdsActivity") ||
-                activityName == "AdActivity"
+        val shouldSkip = activityName.contains("InterstitialActivity") ||
+                    activityName.contains("MainAdsActivity") ||
+                    activityName == "AdActivity"
 
         if (shouldSkip) {
             Log.d(TAG, "Skip in ad screen: $activityName")
@@ -261,10 +224,6 @@ class AppOpenAdManager(private val context: Context) {
 
         appOpenAd?.show(activity)
     }
-
-//    fun resetFirstLaunch() {
-//        isFirstLaunch = true
-//    }
 
     companion object {
         private const val TAG = "AppOpenAd"
